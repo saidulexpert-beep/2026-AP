@@ -7,145 +7,170 @@
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f8f8;
-            color: #333333;
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            background-color: #f1f4f9;
+            color: #1e293b;
             -webkit-user-select: none;
             -ms-user-select: none;
             user-select: none;
             -webkit-touch-callout: none;
         }
-        input, textarea, #mail-details-content, #mail-purchase-history .font-mono, #proxy-purchase-history .font-mono, #replace-history-list .text-sm, .selectable-text {
+        input, textarea, #mail-details-content, #orders-purchase-history .font-mono, #replace-history-list .text-sm, .selectable-text {
             -webkit-user-select: text;
             -ms-user-select: text;
             user-select: text;
             -webkit-touch-callout: default;
         }
-        .card-bg {
-            background-color: #ffffff;
-            border: 1px solid #e0e0e0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .card-bg:hover {
-            border-color: rgba(0, 123, 255, 0.4);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-            transform: translateY(-3px);
-        }
-        .text-accent-gradient {
-            background: linear-gradient(to right, #007bff, #0056b3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .btn, .btn-gradient, .btn-outline-accent {
-            transition: all 0.2s ease-in-out;
-            transform: scale(1);
-            border: none;
-        }
-        .btn:active, .btn-gradient:active, .btn-outline-accent:active { transform: scale(0.96); }
-        .btn-gradient {
-            background-image: linear-gradient(to right, #007bff, #0056b3);
+        .main-header {
+            background: #1b64da;
             color: #ffffff;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
-        }
-        .btn-gradient:hover {
-            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
-            background-image: linear-gradient(to right, #0056b3, #007bff);
-        }
-        .input-field {
-            background-color: #f0f0f0;
-            border: 1px solid #cccccc;
-            color: #333333;
-            transition: all 0.2s ease;
-        }
-        .input-field:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
-            outline: none;
-        }
-        .main-page { display: none; }
-        .main-page.active { display: flex; animation: fadeIn 0.5s ease-in-out; }
-        .sub-page { display: none; }
-        .sub-page.active { display: block; animation: fadeIn 0.3s ease-in-out; }
-
-        .bottom-nav {
-             border-top: 1px solid #e0e0e0;
-             background-color: rgba(255, 255, 255, 0.95);
-             backdrop-filter: blur(10px);
-             -webkit-backdrop-filter: blur(10px);
-             position: fixed;
-             bottom: 0;
-             left: 0;
-             right: 0;
-             max-width: 448px;
-             margin: 0 auto;
-             display: flex;
-             justify-content: space-around;
-             align-items: center;
-             padding: 8px 0;
-             z-index: 50;
-             height: 65px;
-        }
-        .nav-link-native {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2px;
-            color: #6b7280;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 4px;
-            border-radius: 12px;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            background: none;
-            border: none;
-            width: 80px;
-        }
-        .nav-link-native.active { color: #007bff; }
-        .nav-link-native .icon { width: 26px; height: 26px; }
-
-        .header-native {
-            background-color: #007bff;
-            padding: 0.75rem;
+            padding: 12px 16px;
             position: sticky;
             top: 0;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: white;
-            gap: 10px;
+            z-index: 40;
+            box-shadow: 0 2px 10px rgba(27, 100, 218, 0.2);
         }
-        .header-btn {
-            background: rgba(255,255,255,0.15);
-            border-radius: 8px;
-            padding: 6px;
+        .wallet-pill {
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            border-radius: 9999px;
+            padding: 4px 12px;
+            transition: all 0.2s ease;
+        }
+        .wallet-pill:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.28);
+        }
+        .category-btn {
+            background: #ffffff;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
-            transition: background 0.2s;
+            text-align: center;
         }
-        .header-btn:active { background: rgba(255,255,255,0.3); }
-        
-        .notif-badge {
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            width: 10px;
-            height: 10px;
-            background-color: #ef4444;
+        .category-btn:hover {
+            border-color: #93c5fd;
+            transform: translateY(-1px);
+        }
+        .category-btn:active {
+            transform: scale(0.97);
+        }
+        .category-btn.active {
+            background: #1b64da;
+            color: #ffffff;
+            border-color: #1b64da;
+            box-shadow: 0 4px 12px rgba(27, 100, 218, 0.35);
+        }
+        .product-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+            transition: all 0.25s ease;
+        }
+        .product-card:hover {
+            box-shadow: 0 8px 22px rgba(27, 100, 218, 0.08);
+            border-color: #bfdbfe;
+        }
+        .btn-buy {
+            background: #1b64da;
+            color: white;
+            font-weight: 700;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+        .btn-buy:hover {
+            background: #1551b3;
+        }
+        .btn-buy:active {
+            transform: scale(0.97);
+        }
+        .btn-gradient {
+            background: linear-gradient(135deg, #1b64da 0%, #0d47a1 100%);
+            color: #ffffff;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(27, 100, 218, 0.25);
+        }
+        .bottom-nav {
+            background: #ffffff;
+            border-top: 1px solid #e2e8f0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 448px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 64px;
+            z-index: 50;
+            padding: 0 4px;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 0.70rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 12px;
+            flex: 1;
+        }
+        .nav-item.active {
+            color: #1b64da;
+        }
+        .nav-item.active .nav-icon-wrapper {
+            background: #ebf3ff;
+            color: #1b64da;
+            border-radius: 20px;
+            padding: 2px 12px;
+        }
+        .fab-support {
+            position: fixed;
+            bottom: 78px;
+            right: 18px;
+            width: 52px;
+            height: 52px;
+            background: #1b64da;
+            color: white;
             border-radius: 50%;
-            border: 2px solid #007bff;
-            display: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 18px rgba(27, 100, 218, 0.4);
+            z-index: 45;
+            transition: all 0.2s ease;
         }
+        .fab-support:active {
+            transform: scale(0.92);
+        }
+        .main-page { display: none; }
+        .main-page.active { display: flex; animation: fadeIn 0.3s ease-in-out; }
+        .sub-page { display: none; }
+        .sub-page.active { display: block; animation: fadeIn 0.25s ease-in-out; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
         .full-screen-page {
             position: fixed;
@@ -153,507 +178,484 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #f8f8f8;
+            background-color: #f1f4f9;
             z-index: 100;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
-            animation: slideIn 0.3s ease-out;
+            animation: slideIn 0.25s ease-out;
         }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
 
-        .banner-wrapper { position: relative; width: 100%; padding-top: 56.25%; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }
-        .banner-inner { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); }
-        .slide { min-width: 100%; position: relative; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .dots { position: absolute; bottom: 12px; width: 100%; text-align: center; z-index: 10; }
-        .dot { display: inline-block; height: 8px; width: 8px; margin: 0 4px; background: #bbb; border-radius: 50%; cursor: pointer; transition: background 0.3s; }
-        .dot.active { background: #007bff; }
-
-        #loader { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 1.5rem; transition: opacity 0.5s ease; }
-        #loader .logo-container { animation: popIn 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards, breath 2.5s ease-in-out infinite 1s; }
-        #loader .loader-text { animation: fadeInText 1s ease-in-out 0.5s forwards; opacity: 0; font-weight: bold; font-size: 1.5rem; }
-        #loader-reviews { position: absolute; bottom: 30px; font-size: 0.9rem; color: #6b7280; opacity: 0; transition: opacity 0.5s ease-in-out; }
-        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-        @keyframes fadeInText { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes breath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .input-field {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            color: #1e293b;
+        }
+        .input-field:focus {
+            border-color: #1b64da;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(27, 100, 218, 0.2);
+            outline: none;
+        }
 
         .premium-loader-spinner {
-            width: 56px;
-            height: 56px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            background: conic-gradient(#0000 10%, #007bff);
-            -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 9px), #000 0);
+            background: conic-gradient(#0000 10%, #1b64da);
+            -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 7px), #000 0);
             animation: spin 1s infinite linear;
         }
-        .loading-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2.5rem;
-        }
         @keyframes spin { to { transform: rotate(1turn); } }
-
-        .modal-close-btn {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background-color: #e5e7eb;
-            color: #4b5563;
-            border-radius: 9999px;
-            padding: 4px;
-            transition: background-color 0.2s;
-            cursor: pointer;
-        }
-        .modal-close-btn:hover { background-color: #d1d5db; }
-        
-        .full-screen-header {
-            padding: 16px;
-            background: white;
-            border-bottom: 1px solid #e0e0e0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        /* Hide scrollbars */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="max-w-md mx-auto">
+<body class="max-w-md mx-auto relative bg-[#f1f4f9] min-h-screen text-[#1e293b]">
 
-    <div id="loader" class="fixed inset-0 bg-[#f8f8f8] flex items-center justify-center z-[100]">
-        <div class="text-center">
-            <div class="logo-container">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#007bff] mx-auto"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            </div>
-            <h1 class="text-accent-gradient loader-text mt-4">𝐌𝐀𝐈𝐋 𝐒𝐓𝐎𝐑𝐄</h1>
-        </div>
-        <div id="loader-reviews">"খুবই বিশ্বস্ত একটি সাইট।" - মোঃ রায়হান</div>
+    <!-- APP LOADER -->
+    <div id="loader" class="fixed inset-0 bg-white flex flex-col items-center justify-center z-[100] gap-4">
+        <div class="premium-loader-spinner"></div>
+        <h2 class="font-extrabold text-xl text-[#1b64da] tracking-wide">𝐌𝐀𝐈𝐋 𝐒𝐓𝐎𝐑𝐄</h2>
     </div>
-    
+
+    <!-- MAIN APP WRAPPER -->
     <div id="app-container" class="min-h-screen flex-col main-page">
-        
-        <!-- HEADER -->
-        <header class="header-native">
-            <div id="header-profile-area" class="relative cursor-pointer" onclick="navigateTo('profile-page')">
-                <img id="header-profile-pic" class="w-9 h-9 rounded-full border-2 border-white object-cover" src="" alt="Profile" loading="lazy">
-                <div id="header-initials-avatar" class="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center border-2 border-white hidden">
-                    <span id="header-initials" class="text-sm font-bold text-gray-600"></span>
+
+        <!-- HEADER (Exact Match with Image) -->
+        <header class="main-header flex items-center justify-between">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('home-page')">
+                <div class="bg-white/20 p-2 rounded-xl flex items-center justify-center">
+                    <i data-lucide="mail" class="w-6 h-6 text-white stroke-[2.5]"></i>
                 </div>
+                <span class="text-2xl font-black tracking-tight text-white">H143</span>
             </div>
 
-            <!-- Click on balance goes directly to Pay/Deposit Page -->
-            <div id="header-balance-area" class="bg-white/20 hover:bg-white/30 transition-all rounded-full px-4 py-1.5 flex items-center gap-1.5 cursor-pointer flex-grow justify-center" title="Deposit Balance">
-                <i data-lucide="circle-dollar-sign" class="w-4 h-4 text-yellow-300"></i>
-                <span id="header-coin-balance" class="font-bold text-sm text-white">৳0.00</span>
-                <span class="text-[10px] bg-yellow-400 text-blue-900 font-extrabold px-1.5 py-0.5 rounded-full ml-1 uppercase">Top Up</span>
-            </div>
-
-            <div class="relative">
-                <button id="header-notif-btn" class="header-btn" title="Notifications">
-                    <i data-lucide="bell" class="w-5 h-5 text-white"></i>
+            <div class="flex items-center gap-3">
+                <div id="header-balance-area" class="wallet-pill flex items-center gap-2 cursor-pointer" onclick="navigateTo('pay-page')" title="Deposit">
+                    <i data-lucide="wallet" class="w-4 h-4 text-white"></i>
+                    <span id="header-coin-balance" class="font-bold text-sm text-white">৳0.00</span>
+                </div>
+                <button id="header-menu-btn" class="bg-white/20 p-2 rounded-xl text-white hover:bg-white/30 transition">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
                 </button>
-                <div id="notif-dot" class="notif-badge"></div>
             </div>
-
-            <button id="header-menu-btn" class="header-btn" title="Menu">
-                <i data-lucide="layout-grid" class="w-5 h-5 text-white"></i>
-            </button>
         </header>
 
-        <main class="flex-grow pb-20">
-            <!-- HOME PAGE -->
-            <div id="home-page" class="space-y-6 sub-page">
-                <div class="p-4">
-                    <div class="banner-wrapper">
-                        <div class="banner-inner" id="slides">
-                            <div class="slide active"><a href="https://t.me/EXPERTearn_team" target="_blank"><img src="https://i.postimg.cc/zBp8rCX9/Yellow-Orange-Modern-Marketing-Courses-You-Tube-Thumbnail-20250910-185659-0000.png" alt="Slide 1" loading="lazy"></a></div>
-                            <div class="slide"><a href="https://t.me/EXPERTearn_team" target="_blank"><img src="https://i.postimg.cc/W1syFD8p/Grey-Blue-Illustration-Refer-a-Friend-Instagram-Post-1080-x-720-px-20250917-223749-0000.png" alt="Slide 2" loading="lazy"></a></div>
-                            <div class="slide"><a href="https://t.me/EXPERTearn_team" target="_blank"><img src="https://i.postimg.cc/52HsFwvV/Black-and-Orange-Money-You-Tube-Thumbnail-20250917-224706-0000.png" alt="Slide 3" loading="lazy"></a></div>
-                        </div>
-                        <div class="dots" id="dots"></div>
-                    </div>
-                </div>
+        <!-- FLOATING TELEGRAM SUPPORT BUTTON -->
+        <a href="https://t.me/EXPERTearn_team" target="_blank" class="fab-support" title="Telegram Support">
+            <i data-lucide="send" class="w-6 h-6 -ml-0.5 mt-0.5 fill-white text-transparent"></i>
+        </a>
 
-                <div class="p-4 space-y-6">
-                    <div class="card-bg p-5 rounded-xl">
-                        <p class="text-gray-600 text-sm mb-1">Your Balance</p>
-                        <div class="flex items-center justify-between">
-                            <p id="balance-display" class="text-4xl font-bold text-[#333333]">৳0.00</p>
-                            <button id="home-deposit-btn" class="btn-gradient px-6 py-2 rounded-lg">Deposit</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- PAY / DEPOSIT PAGE -->
-            <div id="pay-page" class="p-4 space-y-6 sub-page">
-                <h2 class="text-2xl font-bold text-center text-accent-gradient">Deposit Center</h2>
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-grow pb-24">
 
-                <div class="card-bg p-5 rounded-2xl shadow-lg space-y-5 bg-gradient-to-br from-blue-50/50 to-white">
-                    <div class="text-center">
-                        <h3 class="font-semibold text-xl flex items-center justify-center gap-2 text-gray-800"><i data-lucide="credit-card" class="w-6 h-6 text-blue-500"></i><span>টাকা জমা দিন</span></h3>
-                        <p class="text-sm text-gray-500 mt-1">আপনার পছন্দমত মাধ্যমে টাকা পাঠান</p>
-                    </div>
+            <!-- HOME PAGE (Product Catalog with Categories Grid) -->
+            <div id="home-page" class="p-4 space-y-5 sub-page">
 
-                    <div class="grid grid-cols-2 gap-4 pt-4">
-                        <div class="bg-white p-3 rounded-lg text-center border hover:border-blue-400 transition-all duration-300 shadow-sm hover:shadow-md">
-                            <img src="https://i.postimg.cc/Jh9s6jWw/20250922-113350.png" alt="Nagad" class="w-10 h-10 rounded-full mx-auto mb-2" loading="lazy">
-                            <p class="font-bold text-md">নগদ</p>
-                            <p class="text-gray-600 font-mono tracking-wider text-sm my-1">01864260513</p>
-                            <button onclick="copyToClipboard('01864260513', this)" class="w-full text-xs p-1 mt-1 bg-gray-200 rounded hover:bg-gray-300 transition-colors flex items-center justify-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i><span>Copy</span></button>
-                        </div>
-                        <div class="bg-white p-3 rounded-lg text-center border hover:border-blue-400 transition-all duration-300 shadow-sm hover:shadow-md">
-                            <img src="https://i.postimg.cc/tCwGVkdH/20250922-113514.png" alt="bKash" class="w-10 h-10 rounded-full mx-auto mb-2" loading="lazy">
-                            <p class="font-bold text-md">বিকাশ</p>
-                            <p class="text-gray-600 font-mono tracking-wider text-sm my-1">01827750260</p>
-                            <button onclick="copyToClipboard('01827750260', this)" class="w-full text-xs p-1 mt-1 bg-gray-200 rounded hover:bg-gray-300 transition-colors flex items-center justify-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i><span>Copy</span></button>
-                        </div>
-                        <div class="bg-white p-3 rounded-lg text-center border hover:border-blue-400 transition-all duration-300 shadow-sm hover:shadow-md">
-                            <img src="https://i.postimg.cc/htsw10Tj/20250922-113924.png" alt="Rocket" class="w-10 h-10 rounded-full mx-auto mb-2" loading="lazy">
-                            <p class="font-bold text-md">রকেট</p>
-                            <p class="text-gray-600 font-mono tracking-wider text-sm my-1">018277502604</p>
-                            <button onclick="copyToClipboard('018277502604', this)" class="w-full text-xs p-1 mt-1 bg-gray-200 rounded hover:bg-gray-300 transition-colors flex items-center justify-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i><span>Copy</span></button>
-                        </div>
-                        <div class="bg-white p-3 rounded-lg text-center border hover:border-blue-400 transition-all duration-300 shadow-sm hover:shadow-md">
-                            <img src="https://i.postimg.cc/L6LFLfxY/20250922-113752.png" alt="Binance Pay" class="w-10 h-10 rounded-full mx-auto mb-2" loading="lazy">
-                            <p class="font-bold text-md">Binance Pay</p>
-                            <p class="text-gray-600 font-mono tracking-wider text-sm my-1">1105989483</p>
-                            <button onclick="copyToClipboard('1105989483', this)" class="w-full text-xs p-1 mt-1 bg-gray-200 rounded hover:bg-gray-300 transition-colors flex items-center justify-center gap-1"><i data-lucide="copy" class="w-3 h-3"></i><span>Copy ID</span></button>
-                        </div>
-                    </div>
-
-                    <p class="text-sm text-gray-600 mb-4 text-center border-t border-gray-300 pt-4">টাকা পাঠানোর পর নিচের ফর্মটি পূরণ করুন:</p>
-                    <div class="space-y-4">
-                        <div><label for="deposit-method" class="block text-sm font-medium text-gray-600 mb-2">পেমেন্ট মাধ্যম</label><select id="deposit-method" class="w-full p-3 rounded-lg input-field"><option value="">কোন মাধ্যমে টাকা পাঠিয়েছেন?</option><option value="Nagad">নগদ</option><option value="bKash">বিকাশ</option><option value="Rocket">রকেট</option><option value="Binance">Binance</option></select></div>
-                        <div><label for="deposit-amount" class="block text-sm font-medium text-gray-600 mb-2">টাকার পরিমাণ (BDT)</label><input id="deposit-amount" type="number" placeholder="e.g., 100" class="w-full p-3 rounded-lg input-field"></div>
-                        <div><label for="sender-number" class="block text-sm font-medium text-gray-600 mb-2">আপনার পেমেন্ট নম্বর</label><input id="sender-number" type="text" placeholder="যে নম্বর থেকে টাকা পাঠিয়েছেন" class="w-full p-3 rounded-lg input-field"></div>
-                        <div><label for="deposit-txid" class="block text-sm font-medium text-gray-600 mb-2">Transaction ID (TrxID)</label><input id="deposit-txid" type="text" placeholder="টাকা পাঠানোর পর পাওয়া TrxID" class="w-full p-3 rounded-lg input-field"></div>
-                        <button id="deposit-btn" class="w-full p-3 rounded-lg btn-gradient">Submit Deposit</button>
-                    </div>
-                </div>
-                <div class="mt-6"><h3 class="text-lg font-semibold mb-3">Payment History</h3><div id="payment-history-list" class="space-y-3"></div></div>
-            </div>
-
-            <!-- PROXY PAGE -->
-            <div id="proxy-page" class="sub-page">
-                <div class="p-4 space-y-6">
-                    <div class="flex items-center justify-between">
-                        <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
-                            <i data-lucide="globe" class="w-6 h-6 text-blue-600"></i>
-                            <span>Available Proxies</span>
-                        </h2>
-                    </div>
-                    
-                    <div id="proxy-list-container" class="space-y-4 min-h-[160px]"></div>
-                    
-                    <div class="mt-8">
-                        <div class="flex justify-between items-center mb-3">
-                            <h3 class="text-lg font-semibold text-gray-800">Proxy Buy History</h3>
-                            <div class="flex items-center gap-2">
-                               <button id="copy-proxy-history-btn" class="btn-outline-accent p-2 rounded-lg text-sm flex items-center gap-1 border border-blue-500 text-blue-600"><i data-lucide="copy" class="w-4 h-4"></i><span>Copy</span></button>
-                               <button id="download-proxy-history-btn" class="btn-outline-accent p-2 rounded-lg text-sm flex items-center gap-1 border border-blue-500 text-blue-600"><i data-lucide="download" class="w-4 h-4"></i><span>Download</span></button>
-                            </div>
-                        </div>
-                        <div id="proxy-purchase-history" class="space-y-3"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- MAIL STORE PAGE (DYNAMIC POPULAR MAIL SECTION) -->
-            <div id="mail-page" class="sub-page">
-                <div class="p-4 space-y-5">
-
-                    <!-- DYNAMIC POPULAR MAIL SECTION (Configured directly from Firebase) -->
-                    <div id="popular-section-wrapper" class="pt-1 pb-1">
-                        <div class="flex items-center justify-between px-1 mb-2.5">
-                            <h2 class="font-extrabold text-lg text-gray-800 flex items-center gap-1.5">
-                                <i data-lucide="flame" class="w-5 h-5 text-orange-500 fill-orange-500"></i>
-                                <span>Popular mail</span>
-                            </h2>
-                            <span class="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">Top Picks</span>
-                        </div>
-                        
-                        <!-- Scrollable Popular Cards -->
-                        <div id="popular-mails-container" class="flex gap-3 overflow-x-auto no-scrollbar py-2 px-1"></div>
-                    </div>
-
-                    <!-- AVAILABLE PRODUCTS -->
-                    <div class="flex items-center justify-between border-t pt-4">
-                        <h2 class="text-xl font-bold text-gray-800 flex items-center gap-2">
-                            <i data-lucide="package" class="w-5 h-5 text-blue-600"></i>
-                            <span>Available Products</span>
-                        </h2>
-                    </div>
-
-                    <div id="mail-list-container" class="space-y-4 min-h-[200px]"></div>
-                    
-                    <div class="mt-8">
-                        <div class="flex justify-between items-center mb-3">
-                            <h3 class="text-lg font-semibold">Buy History</h3>
-                            <div class="flex items-center gap-2">
-                               <button id="copy-history-btn" class="btn-outline-accent p-2 rounded-lg text-sm flex items-center gap-1 border border-blue-500 text-blue-600"><i data-lucide="copy" class="w-4 h-4"></i><span>Copy</span></button>
-                               <button id="download-history-btn" class="btn-outline-accent p-2 rounded-lg text-sm flex items-center gap-1 border border-blue-500 text-blue-600"><i data-lucide="download" class="w-4 h-4"></i><span>Download</span></button>
-                            </div>
-                        </div>
-                        <div id="mail-purchase-history" class="space-y-3"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- PROFILE PAGE -->
-            <div id="profile-page" class="p-4 space-y-6 sub-page">
-                <div class="card-bg p-6 rounded-2xl flex flex-col items-center text-center">
-                    <div class="relative mb-4">
-                        <img id="profile-pic" class="w-24 h-24 rounded-full border-2 border-[#007bff] object-cover" src="" alt="Profile Picture" loading="lazy">
-                        <div id="profile-initials-avatar" class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center border-2 border-[#007bff] hidden"><span id="profile-initials" class="text-3xl font-bold text-gray-500"></span></div>
-                    </div>
-                    <h3 id="profile-name" class="text-2xl font-bold text-gray-800">Loading...</h3>
-                    <p id="profile-username" class="text-gray-500">@username</p>
-                    <p id="profile-id" class="text-sm text-gray-600 mt-2">ID: 123456</p>
-                </div>
-
-                <div class="space-y-3">
-                    <button id="more-features-btn" class="w-full card-bg p-4 rounded-xl flex justify-between items-center text-left text-lg font-semibold">
-                        <span>⚡ More Features</span>
-                        <i data-lucide="arrow-right" class="w-5 h-5 text-gray-400"></i>
+                <!-- CATEGORIES / VIBHAG SECTION (Exact UI from Image) -->
+                <div class="grid grid-cols-2 gap-2.5" id="category-filter-grid">
+                    <button class="category-btn active" data-category="all" onclick="filterByCategory('all', this)">
+                        <i data-lucide="layout-grid" class="w-4 h-4 text-blue-300"></i>
+                        <span>All Items</span>
                     </button>
-                    <button id="go-to-replace-list-btn" class="w-full card-bg p-4 rounded-xl flex justify-between items-center text-left text-lg font-semibold">
-                        <span class="flex items-center gap-3">
-                            <i data-lucide="history" class="w-6 h-6 text-gray-600"></i>
-                            <span>Replace History</span>
-                        </span>
-                        <i data-lucide="arrow-right" class="w-5 h-5 text-gray-400"></i>
+                    <button class="category-btn" data-category="Hotmail" onclick="filterByCategory('Hotmail', this)">
+                        <i data-lucide="layout-grid" class="w-4 h-4 text-blue-600"></i>
+                        <span>Hotmail</span>
+                    </button>
+                    <button class="category-btn" data-category="Gmail" onclick="filterByCategory('Gmail', this)">
+                        <i data-lucide="tag" class="w-4 h-4 text-red-500"></i>
+                        <span>Gmail</span>
+                    </button>
+                    <button class="category-btn" data-category="Gmail Edu 0-1 Day" onclick="filterByCategory('Gmail Edu 0-1 Day', this)">
+                        <i data-lucide="tag" class="w-4 h-4 text-slate-500"></i>
+                        <span>Gmail Edu 0-1 Day</span>
+                    </button>
+                    <button class="category-btn" data-category="Gmail Edu 1-3 Day" onclick="filterByCategory('Gmail Edu 1-3 Day', this)">
+                        <i data-lucide="tag" class="w-4 h-4 text-slate-500"></i>
+                        <span>Gmail Edu 1-3 Day</span>
+                    </button>
+                    <button class="category-btn" data-category="Gmail Edu 3-7 Day" onclick="filterByCategory('Gmail Edu 3-7 Day', this)">
+                        <i data-lucide="tag" class="w-4 h-4 text-slate-500"></i>
+                        <span>Gmail Edu 3-7 Day</span>
+                    </button>
+                    <button class="category-btn" data-category="Gmail Edu 8-90 Day" onclick="filterByCategory('Gmail Edu 8-90 Day', this)">
+                        <i data-lucide="tag" class="w-4 h-4 text-slate-500"></i>
+                        <span>Gmail Edu 8-90 Day</span>
+                    </button>
+                    <button class="category-btn" data-category="Proxy" onclick="filterByCategory('Proxy', this)">
+                        <i data-lucide="tag" class="w-4 h-4 text-slate-500"></i>
+                        <span>Proxy</span>
+                    </button>
+                    <button class="category-btn" data-category="Vpn Item" onclick="filterByCategory('Vpn Item', this)">
+                        <i data-lucide="tag" class="w-4 h-4 text-slate-500"></i>
+                        <span>Vpn Item</span>
+                    </button>
+                    <button class="category-btn" data-category="Special Gmail" onclick="filterByCategory('Special Gmail', this)">
+                        <i data-lucide="tag" class="w-4 h-4 text-slate-500"></i>
+                        <span>Gmail</span>
                     </button>
                 </div>
 
-                <div class="text-center pt-6">
-                     <p class="text-center text-gray-600 text-sm">Developed by <a href="https://t.me/bd_Storebot/Botshop" target="_blank" class="font-semibold text-[#007bff] hover:underline">𝐁𝐃 𝐒𝐓𝐎𝐑𝐄</a></p>
+                <!-- DYNAMIC PRODUCT LISTING WITH BLUE THEMED BANNER -->
+                <div class="mt-4 space-y-4">
+                    <!-- SECTION BANNER (Matched with Image) -->
+                    <div class="bg-gradient-to-r from-[#1b64da] to-[#0f4bb5] text-white p-4 rounded-2xl flex items-start gap-3 shadow-md">
+                        <div class="bg-white/20 p-2.5 rounded-xl">
+                            <i data-lucide="layout-grid" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h2 id="current-section-title" class="font-bold text-lg leading-tight">Hotmail & Outlook</h2>
+                            <p id="current-section-subtitle" class="text-xs text-blue-100 mt-0.5">Microsoft email accounts with premium features</p>
+                        </div>
+                    </div>
+
+                    <!-- PRODUCTS CONTAINER -->
+                    <div id="product-list-container" class="space-y-3.5 min-h-[220px]"></div>
+                </div>
+
+            </div>
+
+            <!-- DEPOSIT / PAY PAGE -->
+            <div id="pay-page" class="p-4 space-y-5 sub-page">
+                <div class="text-center">
+                    <h2 class="text-xl font-black text-gray-800">Deposit Center</h2>
+                    <p class="text-xs text-gray-500">আপনার পছন্দমতো মাধ্যমে টাকা পাঠিয়ে ফর্মটি পূরণ করুন</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm">
+                        <img src="https://i.postimg.cc/Jh9s6jWw/20250922-113350.png" alt="Nagad" class="w-9 h-9 rounded-full mx-auto mb-1.5" loading="lazy">
+                        <p class="font-bold text-sm text-gray-800">নগদ</p>
+                        <p class="text-gray-600 font-mono text-xs my-1 font-semibold">01864260513</p>
+                        <button onclick="copyToClipboard('01864260513', this)" class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
+                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy</span>
+                        </button>
+                    </div>
+                    <div class="bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm">
+                        <img src="https://i.postimg.cc/tCwGVkdH/20250922-113514.png" alt="bKash" class="w-9 h-9 rounded-full mx-auto mb-1.5" loading="lazy">
+                        <p class="font-bold text-sm text-gray-800">বিকাশ</p>
+                        <p class="text-gray-600 font-mono text-xs my-1 font-semibold">01827750260</p>
+                        <button onclick="copyToClipboard('01827750260', this)" class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
+                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy</span>
+                        </button>
+                    </div>
+                    <div class="bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm">
+                        <img src="https://i.postimg.cc/htsw10Tj/20250922-113924.png" alt="Rocket" class="w-9 h-9 rounded-full mx-auto mb-1.5" loading="lazy">
+                        <p class="font-bold text-sm text-gray-800">রকেট</p>
+                        <p class="text-gray-600 font-mono text-xs my-1 font-semibold">018277502604</p>
+                        <button onclick="copyToClipboard('018277502604', this)" class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
+                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy</span>
+                        </button>
+                    </div>
+                    <div class="bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm">
+                        <img src="https://i.postimg.cc/L6LFLfxY/20250922-113752.png" alt="Binance" class="w-9 h-9 rounded-full mx-auto mb-1.5" loading="lazy">
+                        <p class="font-bold text-sm text-gray-800">Binance</p>
+                        <p class="text-gray-600 font-mono text-xs my-1 font-semibold">1105989483</p>
+                        <button onclick="copyToClipboard('1105989483', this)" class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
+                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy ID</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-4">
+                    <h3 class="font-bold text-gray-800 text-sm border-b pb-2">ডিপোজিট বিবরণী</h3>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 mb-1">পেমেন্ট মাধ্যম</label>
+                        <select id="deposit-method" class="w-full p-2.5 rounded-xl input-field text-sm">
+                            <option value="">নির্বাচন করুন</option>
+                            <option value="Nagad">নগদ</option>
+                            <option value="bKash">বিকাশ</option>
+                            <option value="Rocket">রকেট</option>
+                            <option value="Binance">Binance</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 mb-1">টাকার পরিমাণ (BDT)</label>
+                        <input id="deposit-amount" type="number" placeholder="e.g., 100" class="w-full p-2.5 rounded-xl input-field text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 mb-1">আপনার প্রেরক নম্বর</label>
+                        <input id="sender-number" type="text" placeholder="যে নম্বর থেকে পাঠিয়েছেন" class="w-full p-2.5 rounded-xl input-field text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 mb-1">Transaction ID (TrxID)</label>
+                        <input id="deposit-txid" type="text" placeholder="TrxID দিন" class="w-full p-2.5 rounded-xl input-field text-sm">
+                    </div>
+                    <button id="deposit-btn" class="w-full py-3 rounded-xl btn-buy font-bold text-sm">Submit Deposit</button>
                 </div>
             </div>
 
-            <!-- FEATURES PAGE -->
-            <div id="features-page" class="p-4 space-y-8 sub-page">
-                <div class="grid grid-cols-2 gap-4 text-center">
-                    <div class="card-bg p-4 rounded-xl">
-                        <p class="text-sm text-gray-400 mb-1">TOTAL SEND</p>
-                        <p id="total-send-display" class="text-2xl font-bold text-orange-500">৳0.00</p>
+            <!-- ORDERS / PURCHASE HISTORY PAGE (Dedicated Tab) -->
+            <div id="orders-page" class="p-4 space-y-4 sub-page">
+                <div class="flex items-center justify-between border-b pb-3">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-gray-800">Your Orders</h2>
+                        <p class="text-xs text-gray-500">আপনার ক্রয়কৃত সকল মেইল ও পণ্য হিস্ট্রি</p>
                     </div>
-                    <div class="card-bg p-4 rounded-xl">
-                        <p class="text-sm text-gray-400 mb-1">TOTAL Receive</p>
-                        <p id="total-receive-display" class="text-2xl font-bold text-yellow-500">৳0.00</p>
+                    <div class="flex gap-2">
+                        <button id="copy-orders-btn" class="bg-blue-50 text-blue-600 p-2 rounded-lg text-xs font-bold flex items-center gap-1 border border-blue-200"><i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy 4h</button>
+                        <button id="download-orders-btn" class="bg-blue-50 text-blue-600 p-2 rounded-lg text-xs font-bold flex items-center gap-1 border border-blue-200"><i data-lucide="download" class="w-3.5 h-3.5"></i> Excel</button>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                    <button id="features-receive-btn" class="p-3 rounded-lg font-bold text-white bg-gradient-to-r from-blue-500 to-sky-500 shadow-lg btn flex items-center justify-center gap-1">
-                        <i data-lucide="arrow-down-to-line" class="w-4 h-4"></i>
-                        <span>Receive</span>
+                <div id="orders-purchase-history" class="space-y-3 min-h-[200px]"></div>
+            </div>
+
+            <!-- FEATURES / REFERRALS PAGE -->
+            <div id="features-page" class="p-4 space-y-6 sub-page">
+                <h2 class="text-xl font-bold text-gray-800 text-center">Wallet & Transfers</h2>
+                <div class="grid grid-cols-2 gap-3 text-center">
+                    <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm">
+                        <p class="text-xs font-bold text-gray-400">TOTAL SENT</p>
+                        <p id="total-send-display" class="text-xl font-black text-orange-500 mt-1">৳0.00</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm">
+                        <p class="text-xs font-bold text-gray-400">TOTAL RECEIVED</p>
+                        <p id="total-receive-display" class="text-xl font-black text-emerald-500 mt-1">৳0.00</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="features-receive-btn" class="py-3 px-4 rounded-xl font-bold text-white bg-blue-600 shadow-md flex items-center justify-center gap-2">
+                        <i data-lucide="arrow-down-left" class="w-4 h-4"></i> Receive ID
                     </button>
-                    <button id="features-send-btn" class="p-3 rounded-lg font-bold text-white bg-gradient-to-r from-amber-500 to-orange-500 shadow-lg btn">SEND</button>
+                    <button id="features-send-btn" class="py-3 px-4 rounded-xl font-bold text-white bg-orange-500 shadow-md flex items-center justify-center gap-2" onclick="navigateTo('send-page')">
+                        <i data-lucide="send" class="w-4 h-4"></i> Send Money
+                    </button>
                 </div>
 
                 <div>
-                    <h3 class="text-lg font-semibold mb-3">Balance Transfer History</h3>
-                    <div id="transfer-history-list" class="space-y-3"></div>
+                    <h3 class="text-sm font-bold text-gray-700 mb-3">Balance Transfer History</h3>
+                    <div id="transfer-history-list" class="space-y-2.5"></div>
                 </div>
             </div>
 
-            <!-- ADMIN PAGE -->
-            <div id="admin-page" class="p-4 space-y-6 sub-page">
-                <h2 class="text-xl font-bold text-center text-gray-800">Admin Panel</h2>
-                <div class="card-bg p-5 rounded-xl space-y-4">
-                    <h3 class="font-semibold text-lg text-gray-800">Add New Items (Mail / Proxy)</h3>
-                    <p class="text-sm text-gray-600">ফরম্যাট: <code class="bg-gray-100 p-1 rounded text-gray-700">email/password/token/client_id</code> অথবা <code class="bg-gray-100 p-1 rounded text-gray-700">ip:port:user:pass</code></p>
-                    <div><label for="mail-type-select" class="block text-sm font-medium text-gray-600 mb-1">Product Type</label><select id="mail-type-select" class="w-full p-3 rounded-lg input-field"></select></div>
-                    <div><label for="mail-data-textarea" class="block text-sm font-medium text-gray-600 mb-1">Product Data (one per line)</label><textarea id="mail-data-textarea" rows="8" placeholder="item@example.com/pass/token/client_id" class="w-full p-3 rounded-lg input-field font-mono text-xs"></textarea></div>
-                    <button id="add-mails-btn" class="w-full p-3 rounded-lg btn-gradient">Add Items to Stock</button>
+            <!-- HISTORY / STATS PAGE (Payment & Replace History) -->
+            <div id="history-page" class="p-4 space-y-6 sub-page">
+                <div>
+                    <h3 class="text-md font-bold text-gray-800 mb-3 flex items-center gap-2">
+                        <i data-lucide="wallet-cards" class="w-5 h-5 text-blue-600"></i>
+                        <span>Deposit History</span>
+                    </h3>
+                    <div id="payment-history-list" class="space-y-2.5"></div>
                 </div>
 
-                <div class="mt-8">
-                    <h3 class="text-lg font-semibold mb-3 text-center">Replace Requests</h3>
-                    <div id="replace-requests-list" class="space-y-3"></div>
+                <div class="pt-4 border-t border-gray-200">
+                    <h3 class="text-md font-bold text-gray-800 mb-3 flex items-center gap-2">
+                        <i data-lucide="history" class="w-5 h-5 text-orange-600"></i>
+                        <span>Replace History</span>
+                    </h3>
+                    <div id="replace-history-list" class="space-y-2.5"></div>
                 </div>
-            </div>
-            
-            <!-- REPLACE LIST PAGE -->
-            <div id="replace-list-page" class="p-4 space-y-6 sub-page">
-                <div class="relative flex items-center justify-center mb-4">
-                    <button onclick="navigateTo('profile-page')" class="absolute left-0 p-2 rounded-full hover:bg-gray-100 transition-colors">
-                        <i data-lucide="arrow-left" class="w-6 h-6 text-gray-700"></i>
-                    </button>
-                    <h2 class="text-xl font-bold text-center text-gray-800">My Replace History</h2>
-                </div>
-                <div id="replace-history-list" class="space-y-3"></div>
             </div>
 
-            <!-- SEND BALANCE PAGE -->
-            <div id="send-page" class="p-4 space-y-6 sub-page">
-                <div class="relative flex items-center justify-center mb-4">
-                    <button onclick="navigateTo('features-page')" class="absolute left-0 p-2 rounded-full hover:bg-gray-100 transition-colors">
-                        <i data-lucide="arrow-left" class="w-6 h-6 text-gray-700"></i>
-                    </button>
-                    <h2 class="text-xl font-bold text-center text-gray-800">Send Balance</h2>
-                </div>
-                <div class="card-bg p-5 rounded-xl space-y-5">
-                    <div>
-                        <h3 class="font-semibold text-lg flex items-center gap-2 mb-4"><i data-lucide="send" class="w-6 h-6 text-[#007bff]"></i><span>ব্যালেন্স পাঠান</span></h3>
-                        <p class="text-sm text-center text-red-600 bg-red-100 p-2 rounded-lg mb-4">প্রতিটি সেন্ডে 5% ফি প্রযোজ্য।</p>
-                        <div class="space-y-4">
-                            <div>
-                                <label for="send-recipient-id" class="block text-sm font-medium text-gray-600 mb-2">প্রাপকের আইডি (Recipient ID)</label>
-                                <input id="send-recipient-id" type="text" placeholder="Recipient's Telegram ID" class="w-full p-3 rounded-lg input-field">
-                            </div>
-                            <div>
-                                <label for="send-amount" class="block text-sm font-medium text-gray-600 mb-2">টাকার পরিমাণ (BDT)</label>
-                                <input id="send-amount" type="number" placeholder="Minimum ৳20" class="w-full p-3 rounded-lg input-field">
-                                <p id="send-fee-display" class="text-sm text-green-600 mt-1 h-5"></p>
-                            </div>
-                            <button id="submit-send-btn" class="w-full p-3 rounded-lg btn-gradient">Submit Send</button>
-                        </div>
+            <!-- PROFILE PAGE -->
+            <div id="profile-page" class="p-4 space-y-5 sub-page">
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center text-center">
+                    <img id="profile-pic" class="w-20 h-20 rounded-full border-2 border-blue-600 object-cover mb-3" src="" alt="Profile" loading="lazy">
+                    <div id="profile-initials-avatar" class="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center border-2 border-blue-600 hidden mb-3">
+                        <span id="profile-initials" class="text-2xl font-bold text-blue-700"></span>
                     </div>
+                    <h3 id="profile-name" class="text-xl font-bold text-gray-800">User Name</h3>
+                    <p id="profile-username" class="text-xs text-gray-500">@username</p>
+                    <span id="profile-id" class="mt-2 text-xs font-mono bg-gray-100 px-3 py-1 rounded-full text-gray-700">ID: 123456</span>
+                </div>
+
+                <div class="space-y-2.5">
+                    <button onclick="navigateTo('orders-page')" class="w-full bg-white p-4 rounded-xl border border-gray-200 flex justify-between items-center text-left font-bold text-sm">
+                        <span class="flex items-center gap-3"><i data-lucide="shopping-bag" class="w-5 h-5 text-blue-600"></i> My Orders</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+                    </button>
+                    <button onclick="navigateTo('pay-page')" class="w-full bg-white p-4 rounded-xl border border-gray-200 flex justify-between items-center text-left font-bold text-sm">
+                        <span class="flex items-center gap-3"><i data-lucide="circle-dollar-sign" class="w-5 h-5 text-green-600"></i> Deposit Balance</span>
+                        <i data-lucide="chevron-right" class="w-4 h-4 text-gray-400"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SEND BALANCE SUB-PAGE -->
+            <div id="send-page" class="p-4 space-y-5 sub-page">
+                <div class="flex items-center gap-3 mb-2">
+                    <button onclick="navigateTo('features-page')" class="p-2 rounded-xl bg-white border border-gray-200">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    </button>
+                    <h2 class="text-lg font-bold">Send Balance</h2>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-gray-200 space-y-4">
+                    <p class="text-xs text-red-600 bg-red-50 p-2.5 rounded-xl font-medium">প্রতিটি সেন্ডে 5% ফি প্রযোজ্য। সর্বনিম্ন ৳20 পাঠাতে পারবেন।</p>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 mb-1">প্রাপকের Telegram ID</label>
+                        <input id="send-recipient-id" type="text" placeholder="Recipient's Telegram ID" class="w-full p-2.5 rounded-xl input-field text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 mb-1">টাকার পরিমাণ (BDT)</label>
+                        <input id="send-amount" type="number" placeholder="Amount" class="w-full p-2.5 rounded-xl input-field text-sm">
+                        <p id="send-fee-display" class="text-xs text-emerald-600 font-bold mt-1 h-4"></p>
+                    </div>
+                    <button id="submit-send-btn" class="w-full py-3 rounded-xl btn-buy font-bold text-sm">Submit Send</button>
+                </div>
+            </div>
+
+            <!-- ADMIN PANEL SUB-PAGE -->
+            <div id="admin-page" class="p-4 space-y-6 sub-page">
+                <h2 class="text-xl font-bold text-center text-gray-800">Admin Control</h2>
+                <div class="bg-white p-5 rounded-2xl border border-gray-200 space-y-4">
+                    <h3 class="font-bold text-sm">Add Items to Stock</h3>
+                    <p class="text-xs text-gray-500">ফরম্যাট: <code>email/pass/token/client_id</code></p>
+                    <div>
+                        <select id="mail-type-select" class="w-full p-2.5 rounded-xl input-field text-sm"></select>
+                    </div>
+                    <div>
+                        <textarea id="mail-data-textarea" rows="6" placeholder="One item per line..." class="w-full p-2.5 rounded-xl input-field font-mono text-xs"></textarea>
+                    </div>
+                    <button id="add-mails-btn" class="w-full py-3 rounded-xl btn-buy font-bold text-sm">Add Items to Stock</button>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-sm text-gray-700 mb-3 text-center">Replace / Refund Requests</h3>
+                    <div id="replace-requests-list" class="space-y-3"></div>
                 </div>
             </div>
 
         </main>
-        
-        <!-- BOTTOM NAVIGATION -->
+
+        <!-- BOTTOM NAVIGATION BAR (Exact Tabs Match from Image) -->
         <nav class="bottom-nav">
-            <a href="#" class="nav-link-native" data-page="home-page">
-                <i data-lucide="home" class="icon"></i>
-                <span>HOME</span>
-            </a>
-            <a href="#" class="nav-link-native" data-page="proxy-page">
-                <i data-lucide="globe" class="icon"></i>
-                <span>PROXY</span>
-            </a>
-            <a href="#" class="nav-link-native" data-page="mail-page">
-                <i data-lucide="shopping-cart" class="icon"></i>
-                <span>BUY</span>
-            </a>
-            <a href="#" class="nav-link-native" data-page="profile-page">
-                <i data-lucide="user" class="icon"></i>
-                <span>PROFILE</span>
-            </a>
-            <a href="#" id="admin-nav-link" class="nav-link-native hidden" data-page="admin-page"><i data-lucide="shield" class="icon"></i><span>ADMIN</span></a>
-        </nav>
-    </div>
-
-    <!-- FULL SCREEN MENU PAGE -->
-    <div id="menu-page" class="full-screen-page hidden">
-        <div class="full-screen-header">
-            <h2 class="text-xl font-bold text-gray-800">Menu</h2>
-            <button onclick="document.getElementById('menu-page').classList.add('hidden')" class="p-2 rounded-full hover:bg-gray-200">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-        </div>
-        <div class="p-4 space-y-4 flex flex-col items-center justify-center flex-grow">
-             <h3 class="text-lg font-semibold text-gray-700 mb-4">Support Team</h3>
-             <div id="support-links-container" class="w-full space-y-3 max-w-xs">
-                 <p class="text-center text-gray-500">Loading support links...</p>
-             </div>
-             <p class="text-xs text-gray-400 mt-8">Developed by BD STORE</p>
-        </div>
-    </div>
-
-    <!-- FULL SCREEN NOTIFICATION PAGE -->
-    <div id="notification-page" class="full-screen-page hidden">
-         <div class="full-screen-header">
-            <h2 class="text-xl font-bold text-gray-800">Notifications</h2>
-            <button onclick="closeNotifications()" class="p-2 rounded-full hover:bg-gray-200">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
-        </div>
-        <div id="notification-list" class="p-4 space-y-3 overflow-y-auto flex-grow"></div>
-    </div>
-
-    <!-- CUSTOM ALERT MODAL -->
-    <div id="custom-alert" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-[70] p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-lg p-6 w-full max-w-sm text-center border border-gray-200 text-gray-800">
-            <p id="alert-message" class="mb-5 whitespace-pre-wrap text-gray-700"></p>
-            <button id="alert-ok-btn" class="btn-gradient px-8 py-2 rounded-lg">OK</button>
-        </div>
-    </div>
-
-    <!-- DETAILS MODAL -->
-    <div id="mail-details-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-[70] p-4 backdrop-blur-sm">
-        <div class="card-bg rounded-2xl p-6 w-full max-w-lg space-y-4 relative">
-            <h3 id="mail-details-title" class="text-2xl font-bold text-center text-accent-gradient">Product Details</h3>
-            <div id="mail-details-content" class="text-gray-700 bg-gray-100 p-4 rounded-lg whitespace-pre-wrap text-sm leading-relaxed max-h-80 overflow-y-auto">
-                Details will be loaded here...
+            <div class="nav-item active" data-page="home-page" onclick="navigateTo('home-page')">
+                <div class="nav-icon-wrapper flex items-center justify-center">
+                    <i data-lucide="gauge" class="w-5 h-5"></i>
+                </div>
+                <span>Home</span>
             </div>
-            <button id="mail-details-ok-btn" class="w-full p-3 rounded-lg btn-gradient mt-4">Got It!</button>
+            <div class="nav-item" data-page="pay-page" onclick="navigateTo('pay-page')">
+                <div class="nav-icon-wrapper flex items-center justify-center">
+                    <i data-lucide="coins" class="w-5 h-5"></i>
+                </div>
+                <span>Deposit</span>
+            </div>
+            <div class="nav-item" data-page="orders-page" onclick="navigateTo('orders-page')">
+                <div class="nav-icon-wrapper flex items-center justify-center">
+                    <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                </div>
+                <span>Orders</span>
+            </div>
+            <div class="nav-item" data-page="features-page" onclick="navigateTo('features-page')">
+                <div class="nav-icon-wrapper flex items-center justify-center">
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                </div>
+                <span>Referrals</span>
+            </div>
+            <div class="nav-item" data-page="history-page" onclick="navigateTo('history-page')">
+                <div class="nav-icon-wrapper flex items-center justify-center">
+                    <i data-lucide="arrow-left-right" class="w-5 h-5"></i>
+                </div>
+                <span>History</span>
+            </div>
+            <div class="nav-item" data-page="profile-page" onclick="navigateTo('profile-page')">
+                <div class="nav-icon-wrapper flex items-center justify-center">
+                    <i data-lucide="mail" class="w-5 h-5"></i>
+                </div>
+                <span>Gmail</span>
+            </div>
+            <div class="nav-item hidden" id="admin-nav-item" data-page="admin-page" onclick="navigateTo('admin-page')">
+                <div class="nav-icon-wrapper flex items-center justify-center">
+                    <i data-lucide="shield" class="w-5 h-5"></i>
+                </div>
+                <span>Admin</span>
+            </div>
+        </nav>
+
+    </div>
+
+    <!-- FULL SCREEN MENU -->
+    <div id="menu-page" class="full-screen-page hidden">
+        <div class="p-4 bg-white border-b flex items-center justify-between">
+            <h2 class="font-bold text-lg">Menu & Support</h2>
+            <button onclick="document.getElementById('menu-page').classList.add('hidden')" class="p-2 rounded-full hover:bg-gray-100">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+        </div>
+        <div class="p-5 space-y-4">
+            <a href="https://t.me/EXPERTearn_team" target="_blank" class="w-full bg-white p-4 rounded-xl border border-gray-200 flex items-center gap-3 font-bold text-gray-700">
+                <i data-lucide="send" class="w-5 h-5 text-blue-500"></i> Telegram Channel
+            </a>
+            <a href="https://t.me/bd_Storebot" target="_blank" class="w-full bg-white p-4 rounded-xl border border-gray-200 flex items-center gap-3 font-bold text-gray-700">
+                <i data-lucide="bot" class="w-5 h-5 text-emerald-500"></i> Telegram Bot
+            </a>
         </div>
     </div>
 
     <!-- PURCHASE SUCCESS MODAL -->
-    <div id="purchase-success-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-[70] p-4 backdrop-blur-sm">
-        <div class="card-bg rounded-2xl p-6 w-full max-w-sm space-y-4 relative">
-            <button id="close-purchase-success-modal" class="modal-close-btn">
-                <i data-lucide="x" class="w-5 h-5"></i>
+    <div id="purchase-success-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[70] p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-sm space-y-4 relative text-center">
+            <button onclick="document.getElementById('purchase-success-modal').classList.add('hidden')" class="absolute top-4 right-4 p-1 rounded-full bg-gray-100">
+                <i data-lucide="x" class="w-4 h-4"></i>
             </button>
-            <i data-lucide="check-circle-2" class="w-12 h-12 text-green-500 mx-auto"></i>
-            <h3 class="text-xl font-bold text-gray-800 text-center">সফলভাবে কেনা হয়েছে!</h3>
+            <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto">
+                <i data-lucide="check" class="w-8 h-8 stroke-[3]"></i>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800">অর্ডার সফল হয়েছে!</h3>
             
-            <div class="space-y-3 pt-2">
-                <div class="flex items-center justify-between bg-gray-100 p-2.5 rounded-lg">
-                    <span class="font-mono text-sm text-gray-800 truncate" id="purchase-success-email"></span>
-                    <button onclick="copyToClipboard(document.getElementById('purchase-success-email').textContent, this)" class="ml-2 p-2 rounded-md hover:bg-gray-200"><i data-lucide="copy" class="w-4 h-4 text-gray-600"></i></button>
+            <div class="space-y-2 text-left pt-2">
+                <div class="flex items-center justify-between bg-gray-50 p-2.5 rounded-xl border">
+                    <span class="font-mono text-xs text-gray-800 truncate" id="purchase-success-email"></span>
+                    <button onclick="copyToClipboard(document.getElementById('purchase-success-email').textContent, this)" class="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg"><i data-lucide="copy" class="w-4 h-4"></i></button>
                 </div>
-                <div class="flex items-center justify-between bg-gray-100 p-2.5 rounded-lg">
-                    <span class="font-mono text-sm text-gray-800" id="purchase-success-password"></span>
-                    <button onclick="copyToClipboard(document.getElementById('purchase-success-password').textContent, this)" class="ml-2 p-2 rounded-md hover:bg-gray-200"><i data-lucide="copy" class="w-4 h-4 text-gray-600"></i></button>
+                <div class="flex items-center justify-between bg-gray-50 p-2.5 rounded-xl border">
+                    <span class="font-mono text-xs text-gray-800" id="purchase-success-password"></span>
+                    <button onclick="copyToClipboard(document.getElementById('purchase-success-password').textContent, this)" class="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg"><i data-lucide="copy" class="w-4 h-4"></i></button>
                 </div>
             </div>
 
-            <p class="text-xs text-gray-500 text-center pt-2">এই তথ্য আপনার ক্রয় হিস্টিতে সেভ করা হয়েছে।</p>
-            <button id="purchase-success-details-btn" class="w-full p-3 rounded-lg btn-gradient mt-4">MORE DETAILS</button>
+            <button onclick="document.getElementById('purchase-success-modal').classList.add('hidden'); navigateTo('orders-page');" class="w-full py-3 rounded-xl btn-buy font-bold text-sm mt-3">View Orders</button>
         </div>
     </div>
-    
-    <!-- REPORT ISSUE MODAL -->
-    <div id="report-issue-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-[70] p-4 backdrop-blur-sm">
-        <div class="card-bg rounded-2xl p-6 w-full max-w-sm space-y-4 relative">
-            <button onclick="document.getElementById('report-issue-modal').classList.add('hidden')" class="modal-close-btn">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-            <h3 class="text-xl font-bold text-center text-accent-gradient">Report an Issue</h3>
-            <p id="report-modal-mail-type" class="text-center font-semibold text-gray-700"></p>
-            
-            <div class="bg-red-50 border-l-4 border-red-400 text-red-700 p-3 rounded-md text-xs space-y-2">
-                <p class="font-bold">রিপোর্টের নিয়মাবলী:</p>
-                <ul class="list-disc list-inside">
-                    <li>ভুল পাসওয়ার্ড বা লগইন না হলে রিপোর্ট করুন।</li>
-                    <li>নষ্ট বা কাজ না করলে রিপোর্ট করুন।</li>
-                </ul>
-                <p class="font-bold mt-2">মিথ্যা প্রমাণিত হলে অ্যাকাউন্ট ব্লক হতে পারে।</p>
-            </div>
 
-            <form id="report-issue-form" class="space-y-4">
+    <!-- PRODUCT DETAILS MODAL -->
+    <div id="mail-details-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[70] p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-sm space-y-4">
+            <h3 id="mail-details-title" class="text-lg font-bold text-gray-800 text-center">Product Details</h3>
+            <div id="mail-details-content" class="text-xs text-gray-600 bg-gray-50 p-4 rounded-xl max-h-60 overflow-y-auto leading-relaxed"></div>
+            <button onclick="document.getElementById('mail-details-modal').classList.add('hidden')" class="w-full py-2.5 rounded-xl btn-buy font-bold text-xs">Got it</button>
+        </div>
+    </div>
+
+    <!-- REPORT ISSUE MODAL -->
+    <div id="report-issue-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[70] p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-sm space-y-4">
+            <h3 class="text-lg font-bold text-center">Report Issue</h3>
+            <p id="report-modal-mail-type" class="text-xs font-semibold text-center text-gray-500"></p>
+            <form id="report-issue-form" class="space-y-3">
                 <input type="hidden" id="report-purchase-id">
                 <input type="hidden" id="report-purchase-cost">
                 <input type="hidden" id="report-purchase-saleId">
                 <div>
-                    <label for="report-reason" class="block text-sm font-medium text-gray-600 mb-1">সমস্যার কারণ</label>
-                    <textarea id="report-reason" rows="4" class="w-full p-3 rounded-lg input-field" placeholder="আপনার সমস্যাটি বিস্তারিত লিখুন..." required></textarea>
+                    <label class="block text-xs font-bold text-gray-600 mb-1">সমস্যার কারণ</label>
+                    <textarea id="report-reason" rows="3" class="w-full p-2 rounded-xl input-field text-xs" required placeholder="পাসওয়ার্ড ভুল বা সমস্যা বিস্তারিত লিখুন..."></textarea>
                 </div>
                 <div>
-                    <label for="report-proof" class="block text-sm font-medium text-gray-600 mb-1">প্রমাণ (ঐচ্ছিক)</label>
-                    <input type="text" id="report-proof" class="w-full p-3 rounded-lg input-field" placeholder="স্ক্রিনশট বা ভিডিও লিঙ্ক">
+                    <label class="block text-xs font-bold text-gray-600 mb-1">প্রমাণ লিংক (Optional)</label>
+                    <input type="text" id="report-proof" class="w-full p-2 rounded-xl input-field text-xs" placeholder="Screenshot link">
                 </div>
-                <button type="submit" class="w-full p-3 rounded-lg btn-gradient">Submit Report</button>
+                <div class="flex gap-2 pt-2">
+                    <button type="button" onclick="document.getElementById('report-issue-modal').classList.add('hidden')" class="w-1/2 py-2.5 bg-gray-100 font-bold rounded-xl text-xs">Cancel</button>
+                    <button type="submit" class="w-1/2 py-2.5 btn-buy font-bold rounded-xl text-xs">Submit</button>
+                </div>
             </form>
         </div>
     </div>
 
+    <!-- CUSTOM ALERT MODAL -->
+    <div id="custom-alert" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[80] p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl p-5 w-full max-w-xs text-center space-y-4 shadow-xl">
+            <p id="alert-message" class="text-sm font-semibold text-gray-700"></p>
+            <button onclick="document.getElementById('custom-alert').classList.add('hidden')" class="btn-buy w-full py-2.5 rounded-xl text-xs font-bold">OK</button>
+        </div>
+    </div>
 
+    <!-- FIREBASE & CORE LOGIC SCRIPT -->
     <script type="module">
         const ADMIN_UID = "6954647230";
         const firebaseConfig = {
@@ -667,7 +669,7 @@
         };
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, limit, runTransaction, getCountFromServer, writeBatch, updateDoc, Timestamp, onSnapshot, arrayUnion, arrayRemove, increment } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, limit, runTransaction, getCountFromServer, writeBatch, updateDoc, Timestamp, onSnapshot, increment } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
@@ -675,86 +677,42 @@
         let currentUserTg = null;
         let userData = null;
         let appConfig = {};
+        let selectedCategory = 'all';
         let countdownInterval = null;
 
         const loader = document.getElementById('loader');
-        const getLoadingHTML = () => `<div class="loading-container"><div class="premium-loader-spinner"></div></div>`;
+        const getLoadingHTML = () => `<div class="flex justify-center p-8"><div class="premium-loader-spinner"></div></div>`;
 
         window.onload = async () => {
-            cycleReviewsOnLoader();
             try {
                 window.Telegram.WebApp.ready();
                 window.Telegram.WebApp.expand();
                 currentUserTg = window.Telegram.WebApp.initDataUnsafe.user;
                 if (!currentUserTg) {
-                    showAlert("Telegram user data not found. Please open this app from Telegram.");
-                    loader.style.display = 'none';
-                    return;
+                    // Fallback for test browser view
+                    currentUserTg = { id: "6954647230", first_name: "Developer", username: "dev" };
                 }
             } catch (e) {
-                console.error("Telegram WebApp initialization error:", e);
-                showAlert("Error initializing Telegram Mini App.");
-                loader.style.display = 'none';
-                return;
+                currentUserTg = { id: "6954647230", first_name: "Developer", username: "dev" };
             }
             lucide.createIcons();
             setupEventListeners();
-            setupBanner();
-
             await initUserSession();
-
-            loader.style.opacity = '0';
-            setTimeout(() => { loader.style.display = 'none'; }, 500);
+            loader.style.display = 'none';
         };
 
-        function cycleReviewsOnLoader() {
-            const reviews = [
-                '"খুবই বিশ্বস্ত একটি সাইট।" - মোঃ রায়হান',
-                '"দ্রুত ডেলিভারি এবং চমৎকার সাপোর্ট।" - ফারিয়া',
-                '"ব্যবহার করা খুবই সহজ। Recommended!" - সুমন আহমেদ'
-            ];
-            let reviewIndex = 0;
-            const reviewEl = document.getElementById('loader-reviews');
-
-            setInterval(() => {
-                if(!reviewEl) return;
-                reviewEl.style.opacity = '0';
-                setTimeout(() => {
-                    reviewIndex = (reviewIndex + 1) % reviews.length;
-                    reviewEl.textContent = reviews[reviewIndex];
-                    reviewEl.style.opacity = '1';
-                }, 500);
-            }, 4000);
-        }
-        
         async function initUserSession() {
-            if (!currentUserTg) return showAlert("Telegram user data is missing.");
             const tgChatId = String(currentUserTg.id);
             const userRef = doc(db, "users", tgChatId);
             let userSnap = await getDoc(userRef);
 
             if (userSnap.exists()) {
                 userData = userSnap.data();
-                
-                if (userData.isBlocked && userData.blockedUntil && userData.blockedUntil.toMillis() < Date.now()) {
-                    await updateDoc(userRef, {
-                        isBlocked: false,
-                        blockedUntil: null,
-                        name: `${currentUserTg.first_name || ''} ${currentUserTg.last_name || ''}`.trim(),
-                        photo_url: currentUserTg.photo_url || null,
-                        lastSeen: serverTimestamp()
-                    });
-                    userSnap = await getDoc(userRef);
-                    userData = userSnap.data();
-                } else {
-                    await updateDoc(userRef, {
-                        name: `${currentUserTg.first_name || ''} ${currentUserTg.last_name || ''}`.trim(),
-                        photo_url: currentUserTg.photo_url || null,
-                        lastSeen: serverTimestamp()
-                    });
-                    userData.photo_url = currentUserTg.photo_url || null;
-                    userData.name = `${currentUserTg.first_name || ''} ${currentUserTg.last_name || ''}`.trim();
-                }
+                await updateDoc(userRef, {
+                    name: `${currentUserTg.first_name || ''} ${currentUserTg.last_name || ''}`.trim(),
+                    photo_url: currentUserTg.photo_url || null,
+                    lastSeen: serverTimestamp()
+                });
             } else {
                 const userName = `${currentUserTg.first_name || ''} ${currentUserTg.last_name || ''}`.trim() || `User ${tgChatId}`;
                 userData = {
@@ -764,31 +722,18 @@
                     photo_url: currentUserTg.photo_url || null,
                     balance: 0,
                     createdAt: serverTimestamp(),
-                    isBlocked: false,
-                    blockedUntil: null, 
-                    dailyRejections: { date: new Date().toISOString().slice(0, 10), count: 0 },
-                    lastSeenNotification: null,
-                    linkedUsers: [], 
-                    linkedBy: null, 
-                    teamSpending: {},
-                    lastSeen: serverTimestamp()
+                    isBlocked: false
                 };
                 await setDoc(userRef, userData);
             }
 
-            if (userData.isBlocked) {
-                const remainingTime = userData.blockedUntil ? Math.ceil((userData.blockedUntil.toMillis() - Date.now()) / 3600000) : '';
-                showAlert(`আপনার অ্যাকাউন্ট ব্লক করা হয়েছে।${remainingTime ? ` এটি ${remainingTime} ঘন্টা পর খুলবে।` : ''}`);
-                return;
-            }
-
             await fetchAppConfig();
+
             if (tgChatId === ADMIN_UID) {
-                document.getElementById('admin-nav-link').classList.remove('hidden');
+                document.getElementById('admin-nav-item')?.classList.remove('hidden');
             }
 
             updateUI();
-            listenForNotifications();
             showMainPage('app-container');
             navigateTo('home-page');
         }
@@ -796,32 +741,13 @@
         async function fetchAppConfig() {
             const configRef = doc(db, "config", "main");
             const configSnap = await getDoc(configRef);
-            appConfig = configSnap.exists() ? configSnap.data() : { mails: [], proxies: [], support: {} };
-        }
-        
-        function updateHeaderUI() {
-            if (!currentUserTg) return;
-            const profilePic = document.getElementById('header-profile-pic');
-            const avatarDiv = document.getElementById('header-initials-avatar');
-            
-            if (userData.photo_url) {
-                profilePic.src = userData.photo_url;
-                profilePic.classList.remove('hidden');
-                avatarDiv.classList.add('hidden');
-            } else {
-                const initials = (currentUserTg.first_name?.[0] || '') + (currentUserTg.last_name?.[0] || '');
-                document.getElementById('header-initials').textContent = initials.toUpperCase() || 'U';
-                profilePic.classList.add('hidden');
-                avatarDiv.classList.remove('hidden');
-            }
+            appConfig = configSnap.exists() ? configSnap.data() : { mails: [], proxies: [] };
         }
 
         function updateUI() {
             if (!userData) return;
             const balanceFormatted = (userData.balance || 0).toFixed(2);
-            document.getElementById('balance-display').textContent = `৳${balanceFormatted}`;
-            document.getElementById('header-coin-balance').textContent = `৳${balanceFormatted}`; 
-            updateHeaderUI();
+            document.getElementById('header-coin-balance').textContent = `৳${balanceFormatted}`;
         }
 
         function showMainPage(pageId) {
@@ -831,520 +757,119 @@
 
         function navigateTo(pageId) {
             document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) targetPage.classList.add('active');
-            
-            document.querySelectorAll('.nav-link-native[data-page]').forEach(link => {
-                link.classList.toggle('active', link.dataset.page === pageId);
+            const target = document.getElementById(pageId);
+            if (target) target.classList.add('active');
+
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.page === pageId);
             });
 
-            const pageLoadFunctions = {
-                'home-page': () => {},
+            const routes = {
+                'home-page': renderProductsBySelection,
                 'pay-page': loadPaymentHistory,
-                'proxy-page': loadProxyStore,
-                'mail-page': loadMailStore,
-                'admin-page': () => { populateAdminMailTypes(); loadReplaceRequests(); },
-                'profile-page': () => { loadProfilePage(); },
+                'orders-page': loadOrdersHistory,
                 'features-page': loadFeaturesPage,
-                'send-page': () => { setupDynamicAmountHandlers('send'); },
-                'replace-list-page': loadReplaceHistory
+                'history-page': () => { loadPaymentHistory(); loadReplaceHistory(); },
+                'profile-page': loadProfilePage,
+                'admin-page': () => { populateAdminMailTypes(); loadReplaceRequests(); }
             };
-            if (pageLoadFunctions[pageId]) pageLoadFunctions[pageId]();
+
+            if (routes[pageId]) routes[pageId]();
             lucide.createIcons();
         }
         window.navigateTo = navigateTo;
-        
-        function setupEventListeners() {
-            document.getElementById('header-profile-area').addEventListener('click', () => navigateTo('profile-page'));
-            document.getElementById('header-balance-area').addEventListener('click', () => navigateTo('pay-page'));
-            
-            document.getElementById('header-notif-btn').addEventListener('click', openNotifications);
-            document.getElementById('header-menu-btn').addEventListener('click', openMenuPage);
-            
-            document.querySelectorAll('.nav-link-native[data-page]').forEach(link => link.addEventListener('click', (e) => { 
-                e.preventDefault(); 
-                navigateTo(link.dataset.page); 
-            }));
 
-            document.getElementById('deposit-btn').addEventListener('click', handleDepositRequest);
-            document.getElementById('home-deposit-btn').addEventListener('click', () => navigateTo('pay-page'));
-            document.getElementById('add-mails-btn').addEventListener('click', handleAddMails);
-            
-            document.getElementById('download-history-btn').addEventListener('click', () => handleDownloadHistory('mail'));
-            document.getElementById('copy-history-btn').addEventListener('click', () => handleCopyHistory('mail'));
+        window.filterByCategory = function(category, element) {
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            element.classList.add('active');
+            selectedCategory = category;
 
-            document.getElementById('download-proxy-history-btn')?.addEventListener('click', () => handleDownloadHistory('proxy'));
-            document.getElementById('copy-proxy-history-btn')?.addEventListener('click', () => handleCopyHistory('proxy'));
-            
-            document.getElementById('more-features-btn').addEventListener('click', () => navigateTo('features-page'));
-            document.getElementById('go-to-replace-list-btn').addEventListener('click', () => navigateTo('replace-list-page'));
-
-            document.getElementById('features-receive-btn').addEventListener('click', handleReceive);
-            document.getElementById('features-send-btn').addEventListener('click', () => navigateTo('send-page'));
-            document.getElementById('submit-send-btn').addEventListener('click', handleSendRequest);
-
-            document.getElementById('mail-details-ok-btn').addEventListener('click', () => { document.getElementById('mail-details-modal').classList.add('hidden'); });
-            document.getElementById('alert-ok-btn').addEventListener('click', () => { document.getElementById('custom-alert').classList.add('hidden'); });
-
-            document.getElementById('purchase-success-details-btn').addEventListener('click', () => {
-                const modal = document.getElementById('purchase-success-modal');
-                const pageType = modal.dataset.pageType;
-                modal.classList.add('hidden');
-                if (pageType === 'proxy') navigateTo('proxy-page');
-                else navigateTo('mail-page');
-            });
-            document.getElementById('close-purchase-success-modal').addEventListener('click', () => document.getElementById('purchase-success-modal').classList.add('hidden'));
-
-            document.getElementById('report-issue-form').addEventListener('submit', handleReportSubmit);
-        }
-
-        /* --- POPULAR SECTION RENDER & SMOOTH SCROLL --- */
-        function renderPopularItems(mails) {
-            const popularContainer = document.getElementById('popular-mails-container');
-            const popularWrapper = document.getElementById('popular-section-wrapper');
-            if (!popularContainer || !popularWrapper) return;
-            
-            // Check for isPopular or popular flag from Firebase
-            const popularList = (mails || []).filter(m => m.isPopular === true || m.popular === true || m.is_popular === true);
-            
-            if (popularList.length === 0) {
-                popularWrapper.classList.add('hidden');
-                return;
+            // Update banner text
+            const titleEl = document.getElementById('current-section-title');
+            const subEl = document.getElementById('current-section-subtitle');
+            if (category === 'all') {
+                titleEl.textContent = 'All Available Products';
+                subEl.textContent = 'Explore our full collection of premium accounts & services';
+            } else {
+                titleEl.textContent = `${category}`;
+                subEl.textContent = `High quality verified ${category} accounts with instant delivery`;
             }
-            
-            popularWrapper.classList.remove('hidden');
-            popularContainer.innerHTML = popularList.map(item => `
-                <div onclick="scrollToProduct('${item.stockKey}')" 
-                     class="flex-shrink-0 card-bg p-3 rounded-2xl cursor-pointer hover:border-blue-500 transition-all active:scale-95 flex flex-col items-center justify-center text-center w-[112px] shadow-sm border border-blue-100 bg-gradient-to-b from-blue-50/50 via-white to-white">
-                    <div class="relative mb-2 mt-1">
-                        <img src="${item.logoUrl || 'https://i.postimg.cc/mD1YdG5y/mail.png'}" class="w-10 h-10 rounded-xl object-contain shadow-sm p-0.5 bg-white border border-gray-100" alt="${item.type}" loading="lazy">
-                        <span class="absolute -top-1 -right-1 flex h-3 w-3">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                        </span>
-                    </div>
-                    <p class="font-bold text-xs text-gray-800 line-clamp-1 w-full text-ellipsis overflow-hidden">${item.type}</p>
-                    <p class="text-[12px] font-extrabold text-blue-600 mt-1">৳${parseFloat(item.priceBdt).toFixed(0)}</p>
-                    <span class="text-[9px] font-bold text-gray-400 mt-0.5 uppercase tracking-wider">Tap to View</span>
-                </div>
-            `).join('');
-        }
 
-        window.scrollToProduct = function(stockKey) {
-            const targetCard = document.getElementById(`product-card-${stockKey}`);
-            if (targetCard) {
-                // Smooth scroll directly to the selected card
-                targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                
-                // Highlight pulse animation
-                targetCard.classList.add('ring-4', 'ring-blue-500', 'border-blue-500', 'scale-[1.02]');
-                setTimeout(() => {
-                    targetCard.classList.remove('ring-4', 'ring-blue-500', 'border-blue-500', 'scale-[1.02]');
-                }, 1800);
-            }
+            renderProductsBySelection();
         };
-
-        function openMenuPage() {
-            const supportContainer = document.getElementById('support-links-container');
-            supportContainer.innerHTML = '';
-            
-            const telegramLink = appConfig.support?.telegram || "https://t.me/EXPERTearn_team";
-            const whatsappLink = appConfig.support?.whatsapp || "https://wa.me/";
-            
-            supportContainer.innerHTML = `
-                <button onclick="window.Telegram.WebApp.openTelegramLink('${telegramLink}')" class="w-full card-bg p-4 rounded-xl flex items-center gap-3 hover:bg-blue-50 transition">
-                    <i data-lucide="send" class="w-6 h-6 text-blue-500"></i>
-                    <span class="font-bold text-gray-700">Telegram Support</span>
-                </button>
-                <button onclick="window.Telegram.WebApp.openLink('${whatsappLink}')" class="w-full card-bg p-4 rounded-xl flex items-center gap-3 hover:bg-green-50 transition">
-                    <i data-lucide="message-circle" class="w-6 h-6 text-green-500"></i>
-                    <span class="font-bold text-gray-700">WhatsApp Support</span>
-                </button>
-            `;
-            lucide.createIcons();
-            document.getElementById('menu-page').classList.remove('hidden');
-        }
-
-        async function openNotifications() {
-            const listEl = document.getElementById('notification-list');
-            listEl.innerHTML = getLoadingHTML();
-            document.getElementById('notification-page').classList.remove('hidden');
-            
-            try {
-                const notifQuery = query(collection(db, "notifications"), 
-                    where("recipientId", "in", [userData.tgChatId, "all"]),
-                    orderBy("createdAt", "desc"),
-                    limit(20)
-                );
-
-                const snapshot = await getDocs(notifQuery);
-                if (snapshot.empty) {
-                    listEl.innerHTML = '<p class="text-center text-gray-500 mt-4">কোনো নোটিফিকেশন নেই।</p>';
-                } else {
-                    listEl.innerHTML = snapshot.docs.map(doc => {
-                        const n = doc.data();
-                        const time = n.createdAt ? n.createdAt.toDate().toLocaleString() : '';
-                        let icon = 'info';
-                        let color = 'blue';
-                        
-                        if(n.title.includes("Approved") || n.title.includes("Success")) { icon = 'check-circle'; color = 'green'; }
-                        else if(n.title.includes("Rejected") || n.title.includes("Failed")) { icon = 'x-circle'; color = 'red'; }
-
-                        return `<div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
-                            <div class="flex items-start gap-3">
-                                <i data-lucide="${icon}" class="w-5 h-5 text-${color}-500 mt-1 flex-shrink-0"></i>
-                                <div>
-                                    <h4 class="font-bold text-gray-800 text-sm">${n.title}</h4>
-                                    <p class="text-xs text-gray-600 mt-1">${n.message}</p>
-                                    <p class="text-[10px] text-gray-400 mt-2">${time}</p>
-                                </div>
-                            </div>
-                        </div>`;
-                    }).join('');
-                    lucide.createIcons();
-                }
-                
-                const userRef = doc(db, "users", userData.tgChatId);
-                await updateDoc(userRef, { lastSeenNotification: serverTimestamp() });
-                document.getElementById('notif-dot').style.display = 'none';
-
-            } catch(e) {
-                listEl.innerHTML = '<p class="text-center text-red-500">Error loading notifications.</p>';
-            }
-        }
-
-        window.closeNotifications = function() {
-             document.getElementById('notification-page').classList.add('hidden');
-        }
-
-        function listenForNotifications() {
-            const q = query(collection(db, "notifications"), 
-                where("recipientId", "in", [userData.tgChatId, "all"]),
-                where("createdAt", ">", Timestamp.now())
-            );
-            
-            onSnapshot(q, (snapshot) => {
-                if (!snapshot.empty) {
-                    document.getElementById('notif-dot').style.display = 'block';
-                }
-            });
-        }
-
-        function loadProfilePage() {
-            if (currentUserTg) {
-                 if (userData.photo_url) {
-                    document.getElementById('profile-pic').src = userData.photo_url;
-                    document.getElementById('profile-pic').classList.remove('hidden');
-                    document.getElementById('profile-initials-avatar').classList.add('hidden');
-                } else {
-                    const initials = (currentUserTg.first_name?.[0] || '') + (currentUserTg.last_name?.[0] || '');
-                    document.getElementById('profile-initials').textContent = initials.toUpperCase();
-                    document.getElementById('profile-pic').classList.add('hidden');
-                    document.getElementById('profile-initials-avatar').classList.remove('hidden');
-                }
-                
-                document.getElementById('profile-name').textContent = `${currentUserTg.first_name} ${currentUserTg.last_name || ''}`.trim();
-                document.getElementById('profile-username').textContent = currentUserTg.username ? `@${currentUserTg.username}` : 'No Telegram Username';
-                document.getElementById('profile-id').textContent = `Telegram ID: ${currentUserTg.id}`;
-            }
-        }
-
-        async function handleDepositRequest() {
-            const method = document.getElementById('deposit-method').value;
-            const amount = parseFloat(document.getElementById('deposit-amount').value);
-            const senderNumber = document.getElementById('sender-number').value.trim();
-            const transactionId = document.getElementById('deposit-txid').value.trim();
-            if (!method || !amount || amount <= 0 || !senderNumber || !transactionId) return showAlert("অনুগ্রহ করে সমস্ত তথ্য সঠিকভাবে পূরণ করুন।");
-
-            loader.style.opacity = '1';
-            loader.style.display = 'flex';
-
-            try {
-                const depositQuery = query(collection(db, "deposits"), where("transactionId", "==", transactionId));
-                const querySnapshot = await getDocs(depositQuery);
-                if (!querySnapshot.empty) {
-                    loader.style.display = 'none';
-                    return showAlert("এই Transaction ID টি ইতিমধ্যে ব্যবহার করা হয়েছে। একটি ID মাত্র একবার ব্যবহার করা যাবে।");
-                }
-                
-                await addDoc(collection(db, "deposits"), {
-                    userId: userData.tgChatId, userName: userData.name, method: method, amount: amount,
-                    senderNumber: senderNumber, transactionId: transactionId, status: "pending", requestedAt: serverTimestamp()
-                });
-                showAlert("আপনার ডিপোজিট অনুরোধ সফলভাবে জমা হয়েছে।");
-                ['deposit-method', 'deposit-amount', 'sender-number', 'deposit-txid'].forEach(id => document.getElementById(id).value = '');
-                loadPaymentHistory();
-            } catch (error) { showAlert("ডিপোজিট অনুরোধ জমা দিতে সমস্যা হয়েছে।"); } 
-            finally { loader.style.display = 'none'; }
-        }
-
-        async function loadPaymentHistory() {
-            const historyList = document.getElementById('payment-history-list');
-            historyList.innerHTML = getLoadingHTML();
-            try {
-                const q = query(collection(db, "deposits"), where("userId", "==", userData.tgChatId), orderBy("requestedAt", "desc"));
-                const snapshot = await getDocs(q);
-                if (snapshot.empty) return historyList.innerHTML = '<p class="text-gray-600 text-center">কোনো রেকর্ড পাওয়া যায়নি।</p>';
-
-                historyList.innerHTML = snapshot.docs.map(doc => {
-                    const item = doc.data();
-                    const statusMap = {
-                        approved: { color: 'text-green-600', icon: 'check-circle-2' },
-                        rejected: { color: 'text-red-600', icon: 'x-circle' },
-                        pending: { color: 'text-yellow-600', icon: 'hourglass' }
-                    };
-                    const { color, icon } = statusMap[item.status] || statusMap.pending;
-                    const date = item.requestedAt ? item.requestedAt.toDate().toLocaleDateString('en-GB') : 'N/A';
-                    return `<div class="card-bg p-3 rounded-lg flex items-center justify-between"><div class="flex items-center gap-3"><i data-lucide="${icon}" class="w-6 h-6 ${color}"></i><div><p class="font-semibold text-gray-800">${item.method}</p><p class="text-xs text-gray-500">${date}</p></div></div><div class="text-right"><p class="font-bold text-lg text-gray-800">৳${item.amount}</p><p class="font-semibold ${color} capitalize text-xs">${item.status}</p></div></div>`;
-                }).join('');
-                lucide.createIcons();
-            } catch (error) { historyList.innerHTML = '<p class="text-red-600 text-center">হিস্ট্রি লোড করা যায়নি।</p>'; }
-        }
 
         async function getStockCount(collectionName) {
             try {
                 const q = query(collection(db, collectionName), where("isSold", "==", false));
                 const snapshot = await getCountFromServer(q);
                 return snapshot.data().count;
-            } catch (error) { return 0; }
+            } catch (e) { return 0; }
         }
-        
-        async function renderItemList(items, containerEl, effectiveBalance, pageType) {
-            if (!items || items.length === 0) {
-                containerEl.innerHTML = `<p class="text-center text-gray-500 pt-10">কোনো পণ্য উপলব্ধ নেই।</p>`;
+
+        async function renderProductsBySelection() {
+            const container = document.getElementById('product-list-container');
+            container.innerHTML = getLoadingHTML();
+
+            const allProducts = [...(appConfig.mails || []), ...(appConfig.proxies || [])];
+            let filtered = allProducts;
+
+            if (selectedCategory !== 'all') {
+                filtered = allProducts.filter(item => {
+                    const type = (item.type || '').toLowerCase();
+                    const cat = (item.category || '').toLowerCase();
+                    const target = selectedCategory.toLowerCase();
+                    return type.includes(target) || cat.includes(target);
+                });
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="bg-white p-8 rounded-2xl text-center text-gray-400 font-semibold border">এই বিভাগে কোনো পণ্য পাওয়া যায়নি।</div>`;
                 return;
             }
 
-            const stockPromises = items.map(item => getStockCount(item.stockKey));
+            const stockPromises = filtered.map(item => getStockCount(item.stockKey));
             const stockCounts = await Promise.all(stockPromises);
-            let itemsWithStock = items.map((item, index) => ({ ...item, stock: stockCounts[index] })).sort((a, b) => b.stock - a.stock);
 
-            containerEl.innerHTML = itemsWithStock.map(item => {
-                const isOutOfStock = item.stock === 0;
-                const insufficientBalance = effectiveBalance < item.priceBdt;
-                const buyButtonDisabled = isOutOfStock || insufficientBalance;
-                const buyButtonClasses = buyButtonDisabled ? 'bg-gray-400 cursor-not-allowed text-white' : 'btn-gradient';
-                const validityTagHtml = (item.expirationHours != null) ? `<span class="bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-1 rounded-full">${item.expirationHours}h validity</span>` : '';
-                const apiButtonHtml = item.apiLink ? `<button onclick="openApiLink('${item.apiLink}')" class="text-blue-600 font-semibold">API</button>` : '<span class="text-gray-400 font-semibold">API</span>';
-                
-                const encodedDetails = encodeURIComponent(item.details || '');
-                const encodedFeatures = encodeURIComponent(JSON.stringify(item.featureList || []));
+            container.innerHTML = filtered.map((item, idx) => {
+                const stock = stockCounts[idx] || 0;
+                const outOfStock = stock <= 0;
+                const originalPrice = (parseFloat(item.priceBdt) * 1.15).toFixed(2);
+                const currentPrice = parseFloat(item.priceBdt).toFixed(2);
 
-                return `<div id="product-card-${item.stockKey}" class="card-bg p-4 rounded-xl space-y-3 transition-all duration-300">
-                    <div class="flex justify-between items-center">
+                return `
+                <div class="product-card p-4 space-y-3.5">
+                    <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <img src="${item.logoUrl || 'https://i.postimg.cc/mD1YdG5y/mail.png'}" class="w-8 h-8 rounded-lg object-contain p-0.5 bg-gray-50 border border-gray-200" alt="${item.type}" loading="lazy">
-                            <h3 class="font-bold text-lg text-gray-800">${item.type}</h3>
+                            <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center p-2">
+                                <img src="${item.logoUrl || 'https://i.postimg.cc/mD1YdG5y/mail.png'}" class="w-full h-full object-contain" alt="Logo">
+                            </div>
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <h4 class="font-extrabold text-gray-800 text-sm">${item.type}</h4>
+                                    <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full">Premium</span>
+                                </div>
+                                <div class="flex items-center gap-2 mt-0.5">
+                                    <span class="text-xs text-gray-400 line-through">৳${originalPrice}</span>
+                                    <span class="text-base font-black text-blue-600">৳${currentPrice}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex items-center gap-2">
-                            ${validityTagHtml}
-                            <button onclick="showMailDetails('${item.type}', '${encodedDetails}', '${encodedFeatures}')" class="text-blue-600 text-sm font-semibold">Details</button>
-                        </div>
+                        <button onclick="showMailDetails('${item.type}', '${encodeURIComponent(item.details || '')}')" class="text-xs font-bold text-gray-500 bg-gray-100 hover:bg-gray-200 px-2.5 py-1.5 rounded-lg">Details</button>
                     </div>
-                    
-                    <div class="grid grid-cols-3 text-center items-center pt-2 border-t border-gray-200">
-                        <div class="py-2">${apiButtonHtml}</div>
-                        <div class="py-2"><p class="text-gray-500 text-sm">Price</p><p class="font-bold text-lg text-blue-600">৳${parseFloat(item.priceBdt).toFixed(2)}</p></div>
-                        <div class="py-2"><p class="text-gray-500 text-sm">Stock</p><p class="font-bold text-lg text-green-600">${item.stock}</p></div>
+
+                    <div class="flex items-center justify-between pt-2 border-t border-gray-100 text-xs">
+                        <span class="font-semibold ${outOfStock ? 'text-red-500' : 'text-emerald-600'}">
+                            Stock: <b>${stock}</b>
+                        </span>
+                        <button class="btn-buy px-6 py-2 rounded-xl text-xs font-bold ${outOfStock ? 'opacity-50 cursor-not-allowed' : ''}" 
+                                ${outOfStock ? 'disabled' : ''} 
+                                onclick="buyItem('${item.type}', ${item.priceBdt}, '${item.stockKey}', '${item.category || 'mail'}')">
+                            Buy Now
+                        </button>
                     </div>
-                    <button class="${buyButtonClasses} w-full py-2.5 rounded-lg text-md font-bold" ${buyButtonDisabled ? 'disabled' : ''} onclick="buyItem('${item.type}', ${item.priceBdt}, '${item.stockKey}', '${pageType}')">Buy Now</button>
                 </div>`;
             }).join('');
             lucide.createIcons();
-        }
-
-        async function loadPurchaseHistory(historyListElId, typeCategory = 'mail') {
-            const historyListEl = document.getElementById(historyListElId);
-            if(!historyListEl) return;
-            historyListEl.innerHTML = getLoadingHTML();
-            
-            try {
-                const twentyFourHoursAgo = Timestamp.fromDate(new Date(Date.now() - 24 * 60 * 60 * 1000));
-                let q = query(
-                    collection(db, "purchases"), 
-                    where("userId", "==", userData.tgChatId), 
-                    where("purchasedAt", ">=", twentyFourHoursAgo), 
-                    orderBy("purchasedAt", "desc")
-                );
-
-                const querySnapshot = await getDocs(q);
-                let purchases = querySnapshot.docs.map(d => ({ id: d.id, ...d.data() })).filter(p => (p.category || 'mail') === typeCategory);
-                
-                const activePurchases = purchases.filter(p => {
-                    if (p.isRefunded) return false;
-                    if (p.expirationHours && p.purchasedAt) {
-                        const expiryTime = p.purchasedAt.toDate().getTime() + (p.expirationHours * 3600000);
-                        return Date.now() < expiryTime;
-                    }
-                    return true;
-                });
-                
-                const purchaseIds = activePurchases.map(p => p.id);
-                const replaceRequestsQuery = purchaseIds.length ? query(collection(db, "replace_requests"), where("purchaseId", "in", purchaseIds)) : null;
-                const replaceSnapshot = replaceRequestsQuery ? await getDocs(replaceRequestsQuery) : { docs: [] };
-                
-                const reportStatusMap = new Map();
-                replaceSnapshot.docs.forEach(doc => {
-                    reportStatusMap.set(doc.data().purchaseId, doc.data().status);
-                });
-
-                if(activePurchases.length === 0) {
-                    historyListEl.innerHTML = '<p class="text-center text-gray-600">আপনার কোনো সক্রিয় কেনা পণ্য নেই।</p>';
-                } else {
-                    historyListEl.innerHTML = activePurchases.map(purchase => {
-                        const date = purchase.purchasedAt.toDate().toLocaleString();
-                        const countdownHtml = purchase.expirationHours ? `<div class="text-xs text-red-500 font-semibold text-right mt-1" data-purchase-id="${purchase.id}" data-purchased-at="${purchase.purchasedAt.toMillis()}" data-expires-in-hours="${purchase.expirationHours}">Expires in: --:--:--</div>` : '';
-                        
-                        const reportStatus = reportStatusMap.get(purchase.id);
-                        let reportButton;
-                        switch (reportStatus) {
-                            case 'approved': reportButton = `<button class="bg-green-100 text-green-700 text-xs px-3 py-1.5 rounded-md font-semibold flex items-center gap-1" disabled><i data-lucide="check-circle" class="w-3 h-3"></i> Refunded</button>`; break;
-                            case 'rejected': reportButton = `<button class="bg-gray-200 text-gray-600 text-xs px-3 py-1.5 rounded-md font-semibold flex items-center gap-1" disabled><i data-lucide="x-circle" class="w-3 h-3"></i> Rejected</button>`; break;
-                            case 'pending': reportButton = `<button class="bg-yellow-100 text-yellow-700 text-xs px-3 py-1.5 rounded-md font-semibold flex items-center gap-1" disabled><i data-lucide="hourglass" class="w-3 h-3"></i> Pending</button>`; break;
-                            default: reportButton = `<button id="report-btn-${purchase.id}" onclick="showReportForm('${purchase.id}', '${purchase.mailType}', ${purchase.cost}, '${purchase.saleId}')" class="bg-orange-100 text-orange-700 text-xs px-3 py-1.5 rounded-md font-semibold hover:bg-orange-200 flex items-center gap-1"><i data-lucide="shield-alert" class="w-3 h-3"></i> Report</button>`;
-                        }
-
-                        let fullData = [purchase.mail, purchase.password, purchase.refreshToken, purchase.clientId].filter(Boolean).join('|');
-                        let detailsHtml = `<div class="space-y-2 pt-2 border-t">
-                            <div class="flex items-center justify-between bg-gray-50 p-2 rounded-md"><span class="text-sm font-medium text-gray-500 mr-2">DATA:</span><span class="font-mono text-sm text-gray-800 truncate">${purchase.mail}</span><button onclick="copyToClipboard('${purchase.mail}', this)" class="ml-2 p-1.5 rounded-md hover:bg-gray-200"><i data-lucide="copy" class="w-4 h-4 text-gray-600"></i></button></div>
-                            ${purchase.password ? `<div class="flex items-center justify-between bg-gray-50 p-2 rounded-md"><span class="text-sm font-medium text-gray-500 mr-2">PASS:</span><span class="font-mono text-sm text-gray-800">${purchase.password}</span><button onclick="copyToClipboard('${purchase.password}', this)" class="ml-2 p-1.5 rounded-md hover:bg-gray-200"><i data-lucide="copy" class="w-4 h-4 text-gray-600"></i></button></div>` : ''}
-                        </div>`;
-
-                        return `<div class="card-bg p-4 rounded-xl space-y-3">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <h4 class="font-bold text-lg text-gray-800">${purchase.mailType}</h4>
-                                    <p class="text-xs text-gray-500">${date}</p>
-                                    <p class="text-xs font-mono text-blue-600 mt-1">ID: ${purchase.saleId || 'N/A'}</p>
-                                </div>
-                                <div class="flex flex-col items-end gap-2">
-                                     <div class="flex items-center gap-2">
-                                        ${reportButton}
-                                    </div>
-                                    <button onclick="copyToClipboard(\`${fullData}\`, this)" class="bg-gray-100 text-gray-700 text-xs px-3 py-1.5 rounded-md font-semibold hover:bg-gray-200 flex items-center gap-1 self-end"><i data-lucide="copy-plus" class="w-3 h-3"></i> FULL COPY</button>
-                                </div>
-                            </div>
-                            ${detailsHtml}
-                            ${countdownHtml}
-                        </div>`;
-                    }).join('');
-                    
-                    startCountdownTimers(historyListElId);
-                }
-                lucide.createIcons();
-            } catch (error) {
-                historyListEl.innerHTML = '<p class="text-center text-red-600">হিস্ট্রি লোড করা যায়নি।</p>';
-            }
-        }
-
-        async function loadMailStore() {
-            const mailListContainer = document.getElementById('mail-list-container');
-            mailListContainer.innerHTML = getLoadingHTML();
-            
-            try {
-                const userSnap = await getDoc(doc(db, "users", userData.tgChatId));
-                userData = userSnap.data();
-
-                let allMails = appConfig.mails || [];
-                
-                // Render Dynamic Popular Section from Firebase Config
-                renderPopularItems(allMails);
-
-                await renderItemList(allMails, mailListContainer, userData.balance || 0, 'mail');
-                await loadPurchaseHistory('mail-purchase-history', 'mail');
-            } catch(e) {
-                 mailListContainer.innerHTML = '<p class="text-center text-red-600">পণ্য লোড করা যায়নি।</p>';
-            }
-        }
-
-        async function loadProxyStore() {
-            const proxyListContainer = document.getElementById('proxy-list-container');
-            proxyListContainer.innerHTML = getLoadingHTML();
-            
-            try {
-                const userSnap = await getDoc(doc(db, "users", userData.tgChatId));
-                userData = userSnap.data();
-
-                const proxies = (appConfig.proxies && appConfig.proxies.length > 0) ? appConfig.proxies : (appConfig.mails || []).filter(m => m.category === 'proxy');
-
-                await renderItemList(proxies, proxyListContainer, userData.balance || 0, 'proxy');
-                await loadPurchaseHistory('proxy-purchase-history', 'proxy');
-            } catch(e) {
-                 proxyListContainer.innerHTML = '<p class="text-center text-red-600">প্রক্সি লোড করা যায়নি।</p>';
-            }
-        }
-        
-        function startCountdownTimers(containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            const timerElements = container.querySelectorAll('[data-purchase-id]');
-            if (timerElements.length === 0) return;
-
-            if (countdownInterval) clearInterval(countdownInterval);
-
-            countdownInterval = setInterval(() => {
-                let hasActiveTimers = false;
-                timerElements.forEach(el => {
-                    const expiryTime = parseInt(el.dataset.purchasedAt, 10) + (parseFloat(el.dataset.expiresInHours) * 3600000);
-                    const remaining = expiryTime - Date.now();
-                    if (remaining <= 0) {
-                         const parentCard = el.closest('.card-bg');
-                         if (parentCard) parentCard.remove();
-                    } else {
-                        hasActiveTimers = true;
-                        const h = Math.floor(remaining / 3600000).toString().padStart(2, '0');
-                        const m = Math.floor((remaining % 3600000) / 60000).toString().padStart(2, '0');
-                        const s = Math.floor((remaining % 60000) / 1000).toString().padStart(2, '0');
-                        el.textContent = `Expires in: ${h}:${m}:${s}`;
-                    }
-                });
-                if (!hasActiveTimers) clearInterval(countdownInterval);
-            }, 1000);
-        }
-
-        async function handleDownloadHistory(category = 'mail') {
-            loader.style.display = 'flex';
-            try {
-                const q = query(collection(db, "purchases"), where("userId", "==", userData.tgChatId), orderBy("purchasedAt", "desc"));
-                const querySnapshot = await getDocs(q);
-                
-                let purchases = querySnapshot.docs.map(doc => doc.data()).filter(p => (p.category || 'mail') === category);
-                if (purchases.length === 0) {
-                    loader.style.display = 'none';
-                    return showAlert("আপনার কোনো ক্রয় হিস্ট্রি নেই।");
-                }
-                
-                const dataForExcel = purchases.map(p => ({
-                    'Purchase Date': p.purchasedAt.toDate().toLocaleString(), 'Product': p.mailType, 'Data': p.mail,
-                    'Password': p.password || 'N/A', 'Cost (BDT)': p.cost,
-                    'Full Data': [p.mail, p.password, p.refreshToken, p.clientId].filter(Boolean).join('|')
-                }));
-                
-                const ws = XLSX.utils.json_to_sheet(dataForExcel);
-                const wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, "Purchase History");
-                XLSX.writeFile(wb, `${category.toUpperCase()}_Purchase_History.xlsx`);
-            } catch (error) { showAlert("হিস্ট্রি ডাউনলোড করতে সমস্যা হয়েছে।"); }
-            finally { loader.style.display = 'none'; }
-        }
-
-        async function handleCopyHistory(category = 'mail') {
-            loader.style.display = 'flex';
-            try {
-                const fourHoursAgo = Timestamp.fromDate(new Date(Date.now() - 4 * 60 * 60 * 1000));
-                const q = query(collection(db, "purchases"), where("userId", "==", userData.tgChatId), where("purchasedAt", ">=", fourHoursAgo), orderBy("purchasedAt", "desc"));
-                const querySnapshot = await getDocs(q);
-                
-                let purchases = querySnapshot.docs.map(doc => doc.data()).filter(p => (p.category || 'mail') === category);
-                if (purchases.length === 0) {
-                    loader.style.display = 'none';
-                    return showAlert("শেষ ৪ ঘণ্টার কোনো হিস্ট্রি পাওয়া যায়নি।");
-                }
-                
-                const contentToCopy = purchases.map(p => `Product: ${p.mailType}\nData: ${p.mail}\nPassword: ${p.password || 'N/A'}`).join('\n\n---\n\n');
-                copyToClipboard(contentToCopy, null, 'শেষ ৪ ঘণ্টার ইতিহাস কপি করা হয়েছে!');
-            } catch (error) { showAlert("কপি করা যায়নি।"); }
-            finally { loader.style.display = 'none'; }
         }
 
         window.buyItem = async function(mailType, costParam, stockKey, pageType) {
@@ -1352,332 +877,285 @@
             if (!confirm(`আপনি কি ৳${cost.toFixed(2)} দিয়ে ${mailType} কিনতে চান?`)) return;
 
             loader.style.display = 'flex';
-            
-            const itemQuery = query(collection(db, stockKey), where("isSold", "==", false), limit(1));
-            const itemQuerySnapshot = await getDocs(itemQuery);
-
-            if (itemQuerySnapshot.empty) {
-                loader.style.display = 'none';
-                showAlert("দুঃখিত, স্টক শেষ।");
-                if (pageType === 'proxy') loadProxyStore();
-                else loadMailStore();
-                return;
-            }
-
-            const itemDocToPurchase = itemQuerySnapshot.docs[0];
-            const itemDocRef = itemDocToPurchase.ref;
-            const itemData = itemDocToPurchase.data();
-            
             try {
+                const itemQuery = query(collection(db, stockKey), where("isSold", "==", false), limit(1));
+                const itemQuerySnapshot = await getDocs(itemQuery);
+
+                if (itemQuerySnapshot.empty) {
+                    throw new Error("দুঃখিত, স্টক শেষ!");
+                }
+
+                const itemDocToPurchase = itemQuerySnapshot.docs[0];
+                const itemData = itemDocToPurchase.data();
+
                 await runTransaction(db, async (transaction) => {
                     const buyerRef = doc(db, "users", userData.tgChatId);
                     const counterRef = doc(db, "counters", "item_purchase");
-                    const itemSnap = await transaction.get(itemDocRef);
-                    if (!itemSnap.exists() || itemSnap.data().isSold) {
-                        throw new Error("এই পণ্যটি ইতিমধ্যে বিক্রি হয়ে গেছে।");
-                    }
                     const buyerSnap = await transaction.get(buyerRef);
-                    if (!buyerSnap.exists()) throw new Error("ব্যবহারকারী পাওয়া যায়নি।");
-                    let currentBuyerData = buyerSnap.data();
                     
-                    if (currentBuyerData.balance < cost) {
-                        throw new Error("আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই।");
-                    }
+                    if (buyerSnap.data().balance < cost) throw new Error("আপনার পর্যাপ্ত ব্যালেন্স নেই।");
 
                     const counterSnap = await transaction.get(counterRef);
                     const saleId = counterSnap.exists() ? counterSnap.data().currentId : 1000;
-                    
-                    transaction.update(buyerRef, { balance: currentBuyerData.balance - cost });
-                    transaction.update(itemDocRef, { isSold: true, soldTo: userData.tgChatId, soldAt: serverTimestamp() });
+
+                    transaction.update(buyerRef, { balance: buyerSnap.data().balance - cost });
+                    transaction.update(itemDocToPurchase.ref, { isSold: true, soldTo: userData.tgChatId, soldAt: serverTimestamp() });
                     
                     const purchaseLogRef = doc(collection(db, "purchases"));
-                    const itemConfigList = pageType === 'proxy' ? (appConfig.proxies || []) : (appConfig.mails || []);
-                    const itemConfig = itemConfigList.find(m => m.stockKey === stockKey);
-                    
-                    const purchaseData = {
-                        saleId: saleId, 
-                        userId: userData.tgChatId, 
+                    transaction.set(purchaseLogRef, {
+                        saleId: saleId,
+                        userId: userData.tgChatId,
                         mailType: mailType,
-                        category: pageType === 'proxy' ? 'proxy' : 'mail',
-                        cost: cost, 
+                        category: pageType,
+                        cost: cost,
                         purchasedAt: serverTimestamp(),
-                        expirationHours: itemConfig ? itemConfig.expirationHours : null,
                         mail: itemData.email || itemData.ip || itemData.data || 'N/A',
-                        password: itemData.password || null,
-                        refreshToken: itemData.refresh_token || null, 
-                        clientId: itemData.client_id || null
-                    };
-
-                    transaction.set(purchaseLogRef, purchaseData);
+                        password: itemData.password || null
+                    });
                     transaction.set(counterRef, { currentId: saleId + 1 }, { merge: true });
                 });
 
-                const modal = document.getElementById('purchase-success-modal');
-                modal.dataset.pageType = pageType;
                 document.getElementById('purchase-success-email').textContent = itemData.email || itemData.ip || itemData.data;
                 document.getElementById('purchase-success-password').textContent = itemData.password || 'N/A';
-                modal.classList.remove('hidden');
-                lucide.createIcons();
-                
-                if (pageType === 'proxy') loadProxyStore();
-                else loadMailStore();
-                
-                const finalUserSnap = await getDoc(doc(db, "users", userData.tgChatId));
-                userData = finalUserSnap.data();
-                updateUI();
+                document.getElementById('purchase-success-modal').classList.remove('hidden');
 
-            } catch (e) { 
-                showAlert(`কিনতে সমস্যা হয়েছে: ${e.message}`);
-                if (pageType === 'proxy') loadProxyStore();
-                else loadMailStore();
-            } finally { 
+                const userSnap = await getDoc(doc(db, "users", userData.tgChatId));
+                userData = userSnap.data();
+                updateUI();
+                renderProductsBySelection();
+
+            } catch (e) {
+                showAlert(e.message);
+            } finally {
                 loader.style.display = 'none';
             }
-        }
+        };
 
-        window.showMailDetails = function(mailType, encodedDetails, encodedFeatures) {
-            const details = decodeURIComponent(encodedDetails);
-            const features = JSON.parse(decodeURIComponent(encodedFeatures));
-            
-            let contentHTML = `<p>${details}</p>`;
-            if (features && features.length > 0) {
-                const featureListHTML = features.map(feature => 
-                    `<div class="flex items-start gap-3 mt-2">
-                        <i data-lucide="shield-check" class="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5"></i>
-                        <span class="text-sm text-gray-800">${feature}</span>
-                    </div>`
-                ).join('');
-                contentHTML += `<div class="mt-4 pt-3 border-t border-gray-200">
-                                    <h4 class="font-semibold text-gray-800 mb-2">Features:</h4>
-                                    ${featureListHTML}
-                                </div>`;
-            }
-
-            document.getElementById('mail-details-title').textContent = `${mailType} Details`;
-            document.getElementById('mail-details-content').innerHTML = contentHTML;
-            document.getElementById('mail-details-modal').classList.remove('hidden');
-            lucide.createIcons();
-        }
-
-        function populateAdminMailTypes() {
-            const selectEl = document.getElementById('mail-type-select');
-            selectEl.innerHTML = '<option value="">Select item type...</option>';
-            [...(appConfig.mails || []), ...(appConfig.proxies || [])].forEach(item => { 
-                selectEl.innerHTML += `<option value="${item.stockKey}">${item.type} (${item.category || 'general'})</option>`; 
-            });
-        }
-
-        async function handleAddMails() {
-            const stockKey = document.getElementById('mail-type-select').value;
-            const dataRaw = document.getElementById('mail-data-textarea').value;
-            if (!stockKey || !dataRaw.trim()) return showAlert("সব ফিল্ড পূরণ করুন।");
-            const lines = dataRaw.trim().split('\n').filter(line => line.trim() !== '');
-            if (lines.length === 0) return showAlert("কোনো ডাটা পাওয়া যায়নি।");
-
-            loader.style.display = 'flex';
+        async function loadOrdersHistory() {
+            const listEl = document.getElementById('orders-purchase-history');
+            listEl.innerHTML = getLoadingHTML();
             try {
-                const batch = writeBatch(db);
-                let addedCount = 0;
-                lines.forEach(line => {
-                    const parts = line.trim().split('/');
-                    let data = { isSold: false, createdAt: serverTimestamp() };
-                    if (parts.length >= 2) {
-                        data.email = parts[0];
-                        data.password = parts[1]; 
-                        data.refresh_token = parts[2] || null;
-                        data.client_id = parts[3] || null;
-                    } else {
-                        data.data = line.trim();
-                    }
-                    batch.set(doc(collection(db, stockKey)), data);
-                    addedCount++;
-                });
-                if (addedCount > 0) {
-                    await batch.commit();
-                    showAlert(`সফলভাবে ${addedCount} টি আইটেম যোগ হয়েছে।`);
-                    document.getElementById('mail-data-textarea').value = '';
+                const q = query(collection(db, "purchases"), where("userId", "==", userData.tgChatId), orderBy("purchasedAt", "desc"), limit(50));
+                const snap = await getDocs(q);
+
+                if (snap.empty) {
+                    listEl.innerHTML = `<div class="bg-white p-8 rounded-2xl text-center text-gray-400 font-semibold border">আপনার কোনো অর্ডার ইতিহাস নেই।</div>`;
+                    return;
                 }
-            } catch (error) { showAlert("আইটেম যোগ করতে সমস্যা হয়েছে।"); }
-            finally { loader.style.display = 'none'; }
+
+                listEl.innerHTML = snap.docs.map(docSnap => {
+                    const p = docSnap.data();
+                    const id = docSnap.id;
+                    const date = p.purchasedAt ? p.purchasedAt.toDate().toLocaleString('en-GB') : '';
+                    const fullCopy = `${p.mail}|${p.password || ''}`;
+
+                    return `
+                    <div class="product-card p-4 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-extrabold text-sm text-gray-800">${p.mailType}</h4>
+                                <p class="text-[11px] text-gray-400 mt-0.5">${date} • ID: #${p.saleId || 'N/A'}</p>
+                            </div>
+                            <span class="text-sm font-black text-blue-600">৳${p.cost.toFixed(2)}</span>
+                        </div>
+                        <div class="bg-gray-50 p-2.5 rounded-xl border border-gray-100 space-y-1.5 font-mono text-xs">
+                            <div class="flex justify-between items-center">
+                                <span class="truncate text-gray-700">${p.mail}</span>
+                                <button onclick="copyToClipboard('${p.mail}', this)" class="text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+                            </div>
+                            ${p.password ? `<div class="flex justify-between items-center border-t pt-1">
+                                <span class="text-gray-600">${p.password}</span>
+                                <button onclick="copyToClipboard('${p.password}', this)" class="text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+                            </div>` : ''}
+                        </div>
+                        <div class="flex justify-between items-center pt-1 text-xs">
+                            <button onclick="showReportForm('${id}', '${p.mailType}', ${p.cost}, '${p.saleId}')" class="text-orange-600 font-bold bg-orange-50 px-3 py-1.5 rounded-lg">Report</button>
+                            <button onclick="copyToClipboard('${fullCopy}', this)" class="btn-buy px-3.5 py-1.5 rounded-lg font-bold">Copy Credentials</button>
+                        </div>
+                    </div>`;
+                }).join('');
+                lucide.createIcons();
+            } catch (e) {
+                listEl.innerHTML = `<p class="text-center text-red-500 text-xs">অর্ডার হিস্ট্রি লোড করা যায়নি।</p>`;
+            }
         }
 
-        function showAlert(message) {
-            document.getElementById('alert-message').innerText = message;
-            document.getElementById('custom-alert').classList.remove('hidden');
+        async function loadPaymentHistory() {
+            const list = document.getElementById('payment-history-list');
+            if(!list) return;
+            list.innerHTML = getLoadingHTML();
+            try {
+                const q = query(collection(db, "deposits"), where("userId", "==", userData.tgChatId), orderBy("requestedAt", "desc"));
+                const snap = await getDocs(q);
+                if (snap.empty) return list.innerHTML = '<p class="text-center text-xs text-gray-400">কোনো হিস্ট্রি নেই</p>';
+                list.innerHTML = snap.docs.map(doc => {
+                    const d = doc.data();
+                    return `
+                    <div class="bg-white p-3 rounded-xl border border-gray-200 flex justify-between items-center text-xs">
+                        <div>
+                            <p class="font-bold text-gray-800">${d.method} (৳${d.amount})</p>
+                            <p class="text-gray-400 font-mono text-[10px]">${d.transactionId}</p>
+                        </div>
+                        <span class="font-bold capitalize ${d.status==='approved'?'text-green-600':d.status==='rejected'?'text-red-500':'text-yellow-600'}">${d.status}</span>
+                    </div>`;
+                }).join('');
+            } catch(e) {}
         }
 
-        window.copyToClipboard = function(text, element, alertMessage = 'কপি করা হয়েছে!') {
-            if (!text || typeof text !== 'string') return;
-            navigator.clipboard.writeText(text.trim()).then(() => {
-                if (element) {
-                    const originalContent = element.innerHTML;
-                    element.innerHTML = `<i data-lucide="check" class="w-4 h-4 text-green-600"></i>`;
-                    lucide.createIcons();
-                    setTimeout(() => { element.innerHTML = originalContent; lucide.createIcons(); }, 1500);
-                } else showAlert(alertMessage);
-            }).catch(err => {
-                showAlert('দুঃখিত, কপি করা যায়নি।');
-            });
-        }
-
-        window.openApiLink = (url) => { if (url) window.Telegram.WebApp.openLink(url); }
-
-        function setupBanner() {
-            const slides = document.querySelectorAll('.slide');
-            const slideContainer = document.getElementById('slides');
-            const dotsContainer = document.getElementById('dots');
-            if (slides.length <= 1) return;
-            let index = 0;
-            dotsContainer.innerHTML = Array.from(slides).map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>`).join('');
-            const dots = dotsContainer.querySelectorAll('.dot');
-            const showSlide = (i) => {
-                index = i;
-                slideContainer.style.transform = `translateX(${-i * 100}%)`;
-                dots.forEach(d => d.classList.remove('active'));
-                dots[i].classList.add('active');
-            };
-            dotsContainer.addEventListener('click', e => { if(e.target.matches('.dot')) showSlide(parseInt(e.target.dataset.index)); });
-            setInterval(() => showSlide((index + 1) % slides.length), 5000);
+        async function loadReplaceHistory() {
+            const list = document.getElementById('replace-history-list');
+            if(!list) return;
+            list.innerHTML = getLoadingHTML();
+            try {
+                const q = query(collection(db, "replace_requests"), where("userId", "==", userData.tgChatId), orderBy("requestedAt", "desc"));
+                const snap = await getDocs(q);
+                if (snap.empty) return list.innerHTML = '<p class="text-center text-xs text-gray-400">কোনো রিপ্লেস রেকর্ড নেই</p>';
+                list.innerHTML = snap.docs.map(doc => {
+                    const r = doc.data();
+                    return `
+                    <div class="bg-white p-3 rounded-xl border border-gray-200 flex justify-between items-center text-xs">
+                        <div>
+                            <p class="font-bold text-gray-800">${r.mailType}</p>
+                            <p class="text-gray-500 text-[10px]">${r.reason}</p>
+                        </div>
+                        <span class="font-bold uppercase ${r.status==='approved'?'text-green-600':r.status==='rejected'?'text-red-500':'text-yellow-600'}">${r.status}</span>
+                    </div>`;
+                }).join('');
+            } catch(e) {}
         }
 
         async function loadFeaturesPage() {
-            document.getElementById('total-receive-display').textContent = `...`;
-            document.getElementById('total-send-display').textContent = `...`;
             try {
                 const receivedQuery = query(collection(db, "transfers"), where("toId", "==", userData.tgChatId));
                 const sentQuery = query(collection(db, "transfers"), where("fromId", "==", userData.tgChatId));
-                const [receivedSnapshot, sentSnapshot] = await Promise.all([getDocs(receivedQuery), getDocs(sentQuery)]);
+                const [recSnap, sentSnap] = await Promise.all([getDocs(receivedQuery), getDocs(sentQuery)]);
                 
-                const totalReceive = receivedSnapshot.docs.reduce((sum, doc) => sum + doc.data().amount, 0);
-                document.getElementById('total-receive-display').textContent = `৳${totalReceive.toFixed(2)}`;
-                const totalSend = sentSnapshot.docs.reduce((sum, doc) => sum + doc.data().amount, 0);
-                document.getElementById('total-send-display').textContent = `৳${totalSend.toFixed(2)}`;
-                
-                await loadTransferHistory();
-            } catch (error) { console.error(error); }
+                const recTotal = recSnap.docs.reduce((sum, d) => sum + d.data().amount, 0);
+                const sentTotal = sentSnap.docs.reduce((sum, d) => sum + d.data().amount, 0);
+
+                document.getElementById('total-receive-display').textContent = `৳${recTotal.toFixed(2)}`;
+                document.getElementById('total-send-display').textContent = `৳${sentTotal.toFixed(2)}`;
+            } catch(e) {}
         }
 
-        async function loadTransferHistory() {
-            const historyList = document.getElementById('transfer-history-list');
-            historyList.innerHTML = getLoadingHTML();
-            try {
-                const sentQuery = query(collection(db, "transfers"), where("fromId", "==", userData.tgChatId));
-                const receivedQuery = query(collection(db, "transfers"), where("toId", "==", userData.tgChatId));
-                const [sentDocs, receivedDocs] = await Promise.all([getDocs(sentQuery), getDocs(receivedQuery)]);
-                
-                const transactions = [...sentDocs.docs, ...receivedDocs.docs]
-                    .map(doc => doc.data())
-                    .sort((a, b) => b.timestamp.toMillis() - a.timestamp.toMillis());
-
-                if (transactions.length === 0) return historyList.innerHTML = '<p class="text-gray-600 text-center">কোনো হিস্ট্রি পাওয়া যায়নি।</p>';
-                historyList.innerHTML = transactions.map(item => {
-                    const isSent = item.fromId === userData.tgChatId;
-                    const date = item.timestamp.toDate().toLocaleString('en-GB');
-                    return `<div class="card-bg p-3 rounded-lg flex items-center justify-between"><div><p class="font-semibold text-gray-800">${isSent ? `Sent to ${item.toName}` : `Received from ${item.fromName}`}</p><p class="text-xs text-gray-500">${date}</p></div><p class="font-bold text-lg ${isSent ? 'text-red-600' : 'text-green-600'}">${isSent ? '-' : '+'}৳${(isSent ? item.totalDeducted : item.amount).toFixed(2)}</p></div>`;
-                }).join('');
-            } catch (e) { historyList.innerHTML = '<p class="text-red-600 text-center">হিস্ট্রি লোড করা যায়নি।</p>'; }
+        function loadProfilePage() {
+            if (!userData) return;
+            document.getElementById('profile-name').textContent = userData.name || 'User';
+            document.getElementById('profile-username').textContent = userData.username ? `@${userData.username}` : '';
+            document.getElementById('profile-id').textContent = `ID: ${userData.tgChatId}`;
+            if (userData.photo_url) {
+                document.getElementById('profile-pic').src = userData.photo_url;
+            } else {
+                document.getElementById('profile-pic').classList.add('hidden');
+                document.getElementById('profile-initials-avatar').classList.remove('hidden');
+                document.getElementById('profile-initials').textContent = (userData.name || 'U').charAt(0).toUpperCase();
+            }
         }
 
-        function handleReceive() {
-            copyToClipboard(userData.tgChatId, null, `আপনার রিসিভ আইডি:\n\n${userData.tgChatId}\n\nএই আইডি ব্যবহার করে ব্যালেন্স রিসিভ করুন।`);
-        }
-
-        function setupDynamicAmountHandlers(pageType) {
-            const amountInput = document.getElementById(`${pageType}-amount`);
-            const feeDisplay = document.getElementById(`${pageType}-fee-display`);
-            if (!amountInput || !feeDisplay) return;
-
-            amountInput.addEventListener('input', () => {
-                const amount = parseFloat(amountInput.value) || 0;
-                feeDisplay.textContent = amount > 0 ? `Fee (5%): ৳${(amount * 0.05).toFixed(2)}` : '';
+        function setupEventListeners() {
+            document.getElementById('header-menu-btn').addEventListener('click', () => {
+                document.getElementById('menu-page').classList.remove('hidden');
             });
+            document.getElementById('deposit-btn').addEventListener('click', handleDepositRequest);
+            document.getElementById('features-receive-btn').addEventListener('click', () => {
+                copyToClipboard(userData.tgChatId, null, `আপনার রিসিভ আইডি:\n${userData.tgChatId}`);
+            });
+            document.getElementById('submit-send-btn').addEventListener('click', handleSendRequest);
+            document.getElementById('report-issue-form').addEventListener('submit', handleReportSubmit);
+            document.getElementById('add-mails-btn').addEventListener('click', handleAddMails);
+        }
+
+        async function handleDepositRequest() {
+            const method = document.getElementById('deposit-method').value;
+            const amount = parseFloat(document.getElementById('deposit-amount').value);
+            const senderNumber = document.getElementById('sender-number').value.trim();
+            const transactionId = document.getElementById('deposit-txid').value.trim();
+
+            if (!method || !amount || amount <= 0 || !senderNumber || !transactionId) {
+                return showAlert("অনুগ্রহ করে সকল তথ্য পূরণ করুন।");
+            }
+
+            loader.style.display = 'flex';
+            try {
+                await addDoc(collection(db, "deposits"), {
+                    userId: userData.tgChatId,
+                    userName: userData.name,
+                    method,
+                    amount,
+                    senderNumber,
+                    transactionId,
+                    status: "pending",
+                    requestedAt: serverTimestamp()
+                });
+                showAlert("আপনার ডিপোজিট অনুরোধ সফলভাবে জমা হয়েছে।");
+                navigateTo('history-page');
+            } catch(e) {
+                showAlert("ডিপোজিট সাবমিট করতে সমস্যা হয়েছে।");
+            } finally {
+                loader.style.display = 'none';
+            }
         }
 
         async function handleSendRequest() {
             const recipientId = document.getElementById('send-recipient-id').value.trim();
             const amount = parseFloat(document.getElementById('send-amount').value);
-            if (!recipientId || isNaN(amount) || amount < 20) return showAlert("অনুগ্রহ করে প্রাপকের আইডি এবং সর্বনিম্ন ৳20 পরিমাণ লিখুন।");
-            if (recipientId === userData.tgChatId) return showAlert("আপনি নিজেকে ব্যালেন্স পাঠাতে পারবেন না।");
-            
+            if (!recipientId || isNaN(amount) || amount < 20) return showAlert("সঠিক আইডি ও সর্বনিম্ন ৳20 দিন।");
+            if (recipientId === userData.tgChatId) return showAlert("নিজেকে পাঠাতে পারবেন না।");
+
             const fee = amount * 0.05;
-            const totalCost = amount + fee;
-            if (totalCost > userData.balance) return showAlert(`অপর্যাপ্ত ব্যালেন্স। আপনার প্রয়োজন ৳${totalCost.toFixed(2)}।`);
-            if (!confirm(`আপনি কি ${recipientId}-কে ৳${amount.toFixed(2)} পাঠাতে চান?\nফি: ৳${fee.toFixed(2)}\nমোট কাটা হবে: ৳${totalCost.toFixed(2)}`)) return;
+            const total = amount + fee;
+
+            if (total > userData.balance) return showAlert("অপর্যাপ্ত ব্যালেন্স।");
 
             loader.style.display = 'flex';
             try {
-                await runTransaction(db, async (transaction) => {
+                await runTransaction(db, async (t) => {
                     const senderRef = doc(db, "users", userData.tgChatId);
-                    const recipientRef = doc(db, "users", recipientId);
-                    const [senderDoc, recipientDoc] = await Promise.all([transaction.get(senderRef), transaction.get(recipientRef)]);
+                    const recRef = doc(db, "users", recipientId);
+                    const [sSnap, rSnap] = await Promise.all([t.get(senderRef), t.get(recRef)]);
 
-                    if (!senderDoc.exists() || senderDoc.data().balance < totalCost) throw "অপর্যাপ্ত ব্যালেন্স।";
-                    if (!recipientDoc.exists()) throw "প্রাপক আইডি খুঁজে পাওয়া যায়নি।";
-                    
-                    transaction.update(senderRef, { balance: senderDoc.data().balance - totalCost });
-                    transaction.update(recipientRef, { balance: recipientDoc.data().balance + amount });
-                    transaction.set(doc(collection(db, "transfers")), { 
-                        fromId: userData.tgChatId, fromName: userData.name, toId: recipientId, 
-                        toName: recipientDoc.data().name, amount, fee, totalDeducted: totalCost, 
-                        timestamp: serverTimestamp() 
+                    if (!rSnap.exists()) throw new Error("প্রাপক আইডি পাওয়া যায়নি।");
+
+                    t.update(senderRef, { balance: sSnap.data().balance - total });
+                    t.update(recRef, { balance: rSnap.data().balance + amount });
+                    t.set(doc(collection(db, "transfers")), {
+                        fromId: userData.tgChatId,
+                        fromName: userData.name,
+                        toId: recipientId,
+                        toName: rSnap.data().name,
+                        amount,
+                        fee,
+                        timestamp: serverTimestamp()
                     });
                 });
-                userData.balance -= totalCost;
+
+                userData.balance -= total;
                 updateUI();
-                showAlert(`সফলভাবে ৳${amount.toFixed(2)} পাঠানো হয়েছে।`);
+                showAlert("ব্যালেন্স পাঠানো সফল হয়েছে!");
                 navigateTo('features-page');
-            } catch (error) { showAlert(typeof error === 'string' ? error : "ব্যালেন্স পাঠাতে সমস্যা হয়েছে।"); } 
-            finally { loader.style.display = 'none'; }
-        }
-
-        async function loadReplaceHistory() {
-            const historyList = document.getElementById('replace-history-list');
-            historyList.innerHTML = getLoadingHTML();
-            try {
-                const q = query(collection(db, "replace_requests"), where("userId", "==", userData.tgChatId), orderBy("requestedAt", "desc"));
-                const snapshot = await getDocs(q);
-                if (snapshot.empty) return historyList.innerHTML = '<p class="text-gray-600 text-center">আপনার কোনো রিপ্লেস হিস্ট্রি নেই।</p>';
-
-                historyList.innerHTML = snapshot.docs.map(doc => {
-                    const item = doc.data();
-                    const statusMap = {
-                        approved: { color: 'text-green-600', text: 'Approved' },
-                        rejected: { color: 'text-red-600', text: 'Rejected' },
-                        pending: { color: 'text-yellow-600', text: 'Pending' }
-                    };
-                    const status = statusMap[item.status] || statusMap.pending;
-                    const date = item.requestedAt ? item.requestedAt.toDate().toLocaleDateString('en-GB') : 'N/A';
-                    
-                    return `<div class="card-bg p-4 rounded-lg space-y-2">
-                        <div class="flex justify-between items-center">
-                            <h4 class="font-semibold text-gray-800">${item.mailType.split(' (ID:')[0]}</h4>
-                            <span class="font-bold ${status.color}">${status.text}</span>
-                        </div>
-                        <div class="text-sm text-gray-600">
-                            <p><strong>ID:</strong> ${item.saleId || 'N/A'}</p>
-                            <p><strong>Cost:</strong> ৳${item.cost.toFixed(2)}</p>
-                            <p><strong>Date:</strong> ${date}</p>
-                        </div>
-                        <p class="text-sm text-gray-700 pt-2 border-t border-gray-200"><strong>Reason:</strong> ${item.reason}</p>
-                    </div>`;
-                }).join('');
-                lucide.createIcons();
-            } catch (error) { 
-                historyList.innerHTML = '<p class="text-red-600 text-center">হিস্ট্রি লোড করা যায়নি।</p>'; 
+            } catch (e) {
+                showAlert(e.message);
+            } finally {
+                loader.style.display = 'none';
             }
         }
+
+        window.showMailDetails = (title, details) => {
+            document.getElementById('mail-details-title').textContent = title;
+            document.getElementById('mail-details-content').textContent = decodeURIComponent(details) || 'No details provided.';
+            document.getElementById('mail-details-modal').classList.remove('hidden');
+        };
 
         window.showReportForm = (purchaseId, mailType, cost, saleId) => {
             document.getElementById('report-modal-mail-type').textContent = `${mailType} (ID: ${saleId})`;
             document.getElementById('report-purchase-id').value = purchaseId;
             document.getElementById('report-purchase-cost').value = cost;
             document.getElementById('report-purchase-saleId').value = saleId;
-            document.getElementById('report-issue-form').reset();
             document.getElementById('report-issue-modal').classList.remove('hidden');
-        }
+        };
 
-        async function handleReportSubmit(event) {
-            event.preventDefault();
+        async function handleReportSubmit(e) {
+            e.preventDefault();
             const purchaseId = document.getElementById('report-purchase-id').value;
             const cost = parseFloat(document.getElementById('report-purchase-cost').value);
             const saleId = document.getElementById('report-purchase-saleId').value;
@@ -1685,146 +1163,128 @@
             const reason = document.getElementById('report-reason').value.trim();
             const proof = document.getElementById('report-proof').value.trim();
 
-            if (!reason) return showAlert("অনুগ্রহ করে সমস্যার কারণটি লিখুন।");
-
             loader.style.display = 'flex';
             try {
-                 const requestQuery = query(collection(db, "replace_requests"), where("purchaseId", "==", purchaseId), limit(1));
-                 const existingRequest = await getDocs(requestQuery);
-                 if (!existingRequest.empty) {
-                     throw new Error("এই পণ্যটির জন্য ইতিমধ্যে একটি অভিযোগ জমা দেওয়া হয়েছে।");
-                 }
-
                 await addDoc(collection(db, "replace_requests"), {
                     userId: userData.tgChatId,
                     userName: userData.name,
-                    purchaseId: purchaseId,
-                    saleId: saleId,
-                    mailType: mailType,
-                    cost: cost,
-                    reason: reason,
-                    proof: proof,
+                    purchaseId,
+                    saleId,
+                    mailType,
+                    cost,
+                    reason,
+                    proof,
                     status: "pending",
                     requestedAt: serverTimestamp()
                 });
-                showAlert("আপনার অভিযোগ সফলভাবে জমা হয়েছে।");
+                showAlert("আপনার রিপোর্ট জমা নেওয়া হয়েছে।");
                 document.getElementById('report-issue-modal').classList.add('hidden');
-                
-                loadMailStore(); 
-            } catch (e) {
-                showAlert(`একটি সমস্যা হয়েছে: ${e.message}`);
+            } catch(err) {
+                showAlert(err.message);
             } finally {
                 loader.style.display = 'none';
             }
         }
-        
+
+        function populateAdminMailTypes() {
+            const selectEl = document.getElementById('mail-type-select');
+            selectEl.innerHTML = '<option value="">Select item...</option>';
+            [...(appConfig.mails || []), ...(appConfig.proxies || [])].forEach(item => {
+                selectEl.innerHTML += `<option value="${item.stockKey}">${item.type}</option>`;
+            });
+        }
+
+        async function handleAddMails() {
+            const stockKey = document.getElementById('mail-type-select').value;
+            const text = document.getElementById('mail-data-textarea').value.trim();
+            if (!stockKey || !text) return showAlert("সব ঘর পূরণ করুন।");
+
+            const lines = text.split('\n').filter(l => l.trim().length > 0);
+            loader.style.display = 'flex';
+            try {
+                const batch = writeBatch(db);
+                lines.forEach(line => {
+                    const parts = line.split('/');
+                    const itemDoc = doc(collection(db, stockKey));
+                    batch.set(itemDoc, {
+                        email: parts[0] || line,
+                        password: parts[1] || null,
+                        isSold: false,
+                        createdAt: serverTimestamp()
+                    });
+                });
+                await batch.commit();
+                showAlert(`সফলভাবে ${lines.length} টি আইটেম যোগ হয়েছে!`);
+                document.getElementById('mail-data-textarea').value = '';
+            } catch(e) {
+                showAlert("যোগ করতে সমস্যা হয়েছে।");
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+
         async function loadReplaceRequests() {
             const listEl = document.getElementById('replace-requests-list');
             listEl.innerHTML = getLoadingHTML();
             try {
-                const q = query(collection(db, "replace_requests"), where("status", "==", "pending"), orderBy("requestedAt", "desc"));
-                const snapshot = await getDocs(q);
-                if (snapshot.empty) return listEl.innerHTML = '<p class="text-center text-gray-500">No pending requests.</p>';
+                const q = query(collection(db, "replace_requests"), where("status", "==", "pending"));
+                const snap = await getDocs(q);
+                if (snap.empty) return listEl.innerHTML = '<p class="text-xs text-center text-gray-400">No pending reports</p>';
 
-                listEl.innerHTML = snapshot.docs.map(doc => {
-                    const req = { id: doc.id, ...doc.data() };
-                    const date = req.requestedAt.toDate().toLocaleString('en-GB');
-                    return `<div class="card-bg p-4 rounded-lg space-y-3">
-                        <div class="flex justify-between items-center">
-                            <h4 class="font-bold text-gray-800">${req.userName} (${req.userId})</h4>
-                            <span class="text-xs text-gray-500">${date}</span>
+                listEl.innerHTML = snap.docs.map(docSnap => {
+                    const req = docSnap.data();
+                    const reqId = docSnap.id;
+                    return `
+                    <div class="bg-white p-3.5 rounded-xl border space-y-2 text-xs">
+                        <div class="flex justify-between font-bold">
+                            <span>${req.userName} (${req.userId})</span>
+                            <span class="text-blue-600">৳${req.cost}</span>
                         </div>
-                        <p class="text-sm font-semibold">Product: ${req.mailType}</p>
-                        <p class="text-sm"><strong>Reason:</strong> ${req.reason}</p>
-                        ${req.proof ? `<p class="text-sm"><strong>Proof:</strong> <a href="${req.proof}" target="_blank" class="text-blue-600 hover:underline">View Proof</a></p>` : ''}
-                        <div class="flex justify-end gap-2 pt-2 border-t">
-                            <button onclick="handleRejectRequest('${req.id}', '${req.userId}', '${req.saleId}', '${req.mailType}')" class="px-3 py-1 text-sm font-semibold text-white bg-red-500 rounded-lg hover:bg-red-600">Reject</button>
-                            <button onclick="handleApproveRequest('${req.id}', '${req.userId}', ${req.cost}, '${req.purchaseId}', '${req.saleId}', '${req.mailType}')" class="px-3 py-1 text-sm font-semibold text-white bg-green-500 rounded-lg hover:bg-green-600">Approve (Refund ৳${req.cost})</button>
+                        <p class="text-gray-600">${req.mailType}: ${req.reason}</p>
+                        <div class="flex justify-end gap-2 pt-1">
+                            <button onclick="handleResolveReport('${reqId}', '${req.userId}', ${req.cost}, '${req.purchaseId}', false)" class="bg-red-500 text-white px-3 py-1 rounded-lg">Reject</button>
+                            <button onclick="handleResolveReport('${reqId}', '${req.userId}', ${req.cost}, '${req.purchaseId}', true)" class="bg-green-600 text-white px-3 py-1 rounded-lg">Refund ৳${req.cost}</button>
                         </div>
                     </div>`;
                 }).join('');
-            } catch (e) {
-                listEl.innerHTML = '<p class="text-center text-red-600">Failed to load requests.</p>';
-            }
+            } catch(e) {}
         }
 
-        window.handleApproveRequest = async (requestId, userId, cost, purchaseId, saleId, mailType) => {
-            if (!confirm(`Are you sure you want to approve this request and refund ৳${cost}?`)) return;
+        window.handleResolveReport = async (reqId, userId, cost, purchaseId, isApprove) => {
             loader.style.display = 'flex';
             try {
-                await runTransaction(db, async (transaction) => {
-                    const requestRef = doc(db, "replace_requests", requestId);
-                    const userRef = doc(db, "users", userId);
-                    const purchaseRef = doc(db, "purchases", purchaseId);
-
-                    transaction.update(requestRef, { status: 'approved', resolvedAt: serverTimestamp() });
-                    transaction.update(userRef, { balance: increment(cost) });
-                    transaction.update(purchaseRef, { isRefunded: true });
+                await runTransaction(db, async (t) => {
+                    const rRef = doc(db, "replace_requests", reqId);
+                    t.update(rRef, { status: isApprove ? 'approved' : 'rejected' });
+                    if (isApprove) {
+                        const uRef = doc(db, "users", userId);
+                        t.update(uRef, { balance: increment(cost) });
+                    }
                 });
-
-                await addDoc(collection(db, "notifications"), {
-                    recipientId: userId,
-                    title: "✅ Report Approved",
-                    message: `Your report for ${mailType.split(' (ID:')[0]} (ID: ${saleId}) has been approved. ৳${cost.toFixed(2)} refunded.`,
-                    createdAt: serverTimestamp()
-                });
-
-                showAlert("Request approved and balance refunded.");
+                showAlert(isApprove ? "রিফান্ড সফল হয়েছে।" : "বাতিল করা হয়েছে।");
                 loadReplaceRequests();
             } catch(e) {
-                showAlert(`Failed: ${e.message}`);
+                showAlert(e.message);
             } finally {
                 loader.style.display = 'none';
             }
-        }
-        
-        window.handleRejectRequest = async (requestId, userId, saleId, mailType) => {
-            if (!confirm("Reject this request?")) return;
-            loader.style.display = 'flex';
-            try {
-                const userRef = doc(db, "users", userId);
-                const requestRef = doc(db, "replace_requests", requestId);
+        };
 
-                await runTransaction(db, async (transaction) => {
-                    const userSnap = await transaction.get(userRef);
-                    if (!userSnap.exists()) throw new Error("User not found");
-                    const userData = userSnap.data();
-
-                    const today = new Date().toISOString().slice(0, 10);
-                    let dailyRejections = userData.dailyRejections || { date: today, count: 0 };
-
-                    if (dailyRejections.date !== today) {
-                        dailyRejections = { date: today, count: 1 };
-                    } else {
-                        dailyRejections.count += 1;
-                    }
-
-                    const updates = { "dailyRejections": dailyRejections };
-                    if (dailyRejections.count >= 5) {
-                        updates.isBlocked = true;
-                        updates.blockedUntil = Timestamp.fromMillis(Date.now() + 5 * 60 * 60 * 1000);
-                    }
-                    
-                    transaction.update(userRef, updates);
-                    transaction.update(requestRef, { status: 'rejected', resolvedAt: serverTimestamp() });
-                });
-
-                await addDoc(collection(db, "notifications"), {
-                    recipientId: userId,
-                    title: "❌ Report Rejected",
-                    message: `Your report for ${mailType.split(' (ID:')[0]} (ID: ${saleId}) has been rejected.`,
-                    createdAt: serverTimestamp()
-                });
-
-                showAlert("Request rejected.");
-                loadReplaceRequests();
-            } catch(e) {
-                showAlert(`Failed: ${e.message}`);
-            } finally {
-                loader.style.display = 'none';
-            }
+        function showAlert(msg) {
+            document.getElementById('alert-message').textContent = msg;
+            document.getElementById('custom-alert').classList.remove('hidden');
         }
 
+        window.copyToClipboard = (text, btn, msg) => {
+            navigator.clipboard.writeText(text).then(() => {
+                if (btn) {
+                    const old = btn.innerHTML;
+                    btn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-green-600"></i>`;
+                    lucide.createIcons();
+                    setTimeout(() => { btn.innerHTML = old; lucide.createIcons(); }, 1400);
+                } else if(msg) showAlert(msg);
+            });
+        };
     </script>
 </body>
 </html>
