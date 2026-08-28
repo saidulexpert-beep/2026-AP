@@ -790,6 +790,37 @@
         const loader = document.getElementById('loader');
         const getLoadingHTML = () => `<div class="flex justify-center p-8"><div class="premium-loader-spinner"></div></div>`;
 
+        // ================== SMART CORS PROXY FETCH SYSTEM ==================
+        async function fetchWithCorsFallback(url, options) {
+            // 1. First attempt: Direct fetch
+            try {
+                const response = await fetch(url, options);
+                if (response.ok || response.status < 500) {
+                    return await response.json();
+                }
+            } catch (err) {
+                console.warn("Direct API call blocked by CORS or Network. Switching to CORS proxy...", err);
+            }
+
+            // 2. Second attempt: Auto-Proxy (corsproxy.io)
+            try {
+                const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+                const response = await fetch(proxyUrl, options);
+                return await response.json();
+            } catch (err2) {
+                console.warn("Proxy 1 failed, trying fallback proxy...", err2);
+            }
+
+            // 3. Third attempt: Alternative Proxy (allorigins)
+            try {
+                const proxyUrl2 = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+                const response = await fetch(proxyUrl2, options);
+                return await response.json();
+            } catch (err3) {
+                throw new Error("গেটওয়ে সার্ভারের সাথে সংযোগ স্থাপন করা সম্ভব হয়নি। অনুগ্রহ করে ইন্টারনেট চেক করুন।");
+            }
+        }
+
         window.onload = async () => {
             try {
                 window.Telegram.WebApp.ready();
@@ -805,7 +836,7 @@
             setupEventListeners();
             await initUserSession();
             
-            // Check if user is returning from a payment attempt
+            // Check return payment
             await checkReturnPaymentStatus();
 
             setTimeout(() => {
@@ -841,7 +872,6 @@
                 await setDoc(userRef, userData);
             }
 
-            // Real-time listener for user balance
             onSnapshot(doc(db, "users", tgChatId), (docSnap) => {
                 if (docSnap.exists()) {
                     userData = docSnap.data();
@@ -849,9 +879,7 @@
                 }
             });
 
-            // Listen for notifications
             listenForNotifications(tgChatId);
-
             await fetchAppConfig();
 
             if (tgChatId === ADMIN_UID) {
@@ -923,7 +951,7 @@
         }
         window.navigateTo = navigateTo;
 
-        /* ================== AUTOMATED PAYMENT GATEWAY INTEGRATION ================== */
+        /* ================== FIXED AUTOMATED PAYMENT GATEWAY ================== */
 
         window.initiatePayment = async function() {
             if (!userData) return showAlert('প্রথমে ইউজার সেশন লোড হতে দিন।');
@@ -946,13 +974,13 @@
                 success_url: returnUrl + "?status=success",
                 cancel_url: returnUrl + "?status=cancel",
                 metadata: {
-                    uid: userData.tgChatId,
+                    uid: String(userData.tgChatId),
                     name: userData.name || userData.username || 'User'
                 }
             };
 
             try {
-                const res = await fetch(`${BASE_API_URL}/create`, {
+                const data = await fetchWithCorsFallback(`${BASE_API_URL}/create`, {
                     method: 'POST',
                     headers: {
                         'API-KEY': API_KEY,
@@ -961,19 +989,20 @@
                     body: JSON.stringify(payload)
                 });
 
-                const data = await res.json();
-                let payUrl = data.payment_url || data.url || (data.data && data.data.payment_url) || (data.data && data.data.url);
+                let payUrl = data.payment_url || data.url || (data.data && (data.data.payment_url || data.data.url));
 
                 if (payUrl) {
-                    window.location.href = payUrl;
+                    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openLink) {
+                        window.Telegram.WebApp.openLink(payUrl);
+                    } else {
+                        window.location.href = payUrl;
+                    }
                 } else {
                     showAlert(data.message || 'পেমেন্ট গেটওয়ে সংযোগে ত্রুটি দেখা দিয়েছে।');
-                    btn.disabled = false;
-                    btn.innerHTML = `<i data-lucide="lock" class="w-4 h-4 text-yellow-300"></i> Continue to Payment`;
-                    lucide.createIcons();
                 }
             } catch (err) {
-                showAlert('পেমেন্ট গেটওয়ে নেটওয়ার্ক ত্রুটি। আবার চেষ্টা করুন।');
+                showAlert(err.message || 'পেমেন্ট গেটওয়েতে সমস্যা হচ্ছে। পরে চেষ্টা করুন।');
+            } finally {
                 btn.disabled = false;
                 btn.innerHTML = `<i data-lucide="lock" class="w-4 h-4 text-yellow-300"></i> Continue to Payment`;
                 lucide.createIcons();
@@ -989,7 +1018,7 @@
                 showAlert('পেমেন্ট যাচাই করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...');
 
                 try {
-                    const res = await fetch(`${BASE_API_URL}/verify`, {
+                    const data = await fetchWithCorsFallback(`${BASE_API_URL}/verify`, {
                         method: 'POST',
                         headers: {
                             'API-KEY': API_KEY,
@@ -998,7 +1027,6 @@
                         body: JSON.stringify({ transaction_id: transactionId })
                     });
 
-                    const data = await res.json();
                     const apiStatus = data.status ? String(data.status).toUpperCase() : "";
 
                     if (apiStatus === "SUCCESS" || apiStatus === "COMPLETED" || data.payment_status === "COMPLETED" || data.success === true) {
@@ -1045,7 +1073,6 @@
                         });
                         t.update(userRef, { balance: increment(depositAmount) });
                         
-                        // Push notification
                         const notifRef = doc(collection(db, "users", uid, "notifications"));
                         t.set(notifRef, {
                             message: `অভিনন্দন! আপনার একাউন্টে ৳${depositAmount} সফলভাবে যোগ হয়েছে। (TXID: ${txid})`,
@@ -1059,7 +1086,7 @@
             }
         }
 
-        /* ================== NOTIFICATIONS SYSTEM ================== */
+        /* ================== NOTIFICATIONS ================== */
 
         function listenForNotifications(uid) {
             const q = query(collection(db, "users", uid, "notifications"), where("read", "==", false));
