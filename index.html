@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝐌𝐀𝐈𝐋 𝐒𝐓𝐎𝐑𝐄</title>
+    <title>ALL TYPE SERVICE</title>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -68,9 +68,6 @@
             border-color: #93c5fd;
             transform: translateY(-1px);
         }
-        .category-btn:active {
-            transform: scale(0.97);
-        }
         .category-btn.active {
             background: #1b64da;
             color: #ffffff;
@@ -100,12 +97,6 @@
         }
         .btn-buy:active {
             transform: scale(0.97);
-        }
-        .btn-gradient {
-            background: linear-gradient(135deg, #1b64da 0%, #0d47a1 100%);
-            color: #ffffff;
-            font-weight: 700;
-            box-shadow: 0 4px 14px rgba(27, 100, 218, 0.25);
         }
         .bottom-nav {
             background: #ffffff;
@@ -146,25 +137,58 @@
             border-radius: 20px;
             padding: 2px 12px;
         }
+        
+        /* PREMIUM TELEGRAM FLOATING BUTTON */
         .fab-support {
             position: fixed;
-            bottom: 78px;
-            right: 18px;
+            bottom: 76px;
+            right: 16px;
             width: 52px;
             height: 52px;
-            background: #1b64da;
+            background: linear-gradient(135deg, #0088cc 0%, #00a2f5 100%);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 6px 18px rgba(27, 100, 218, 0.4);
+            box-shadow: 0 8px 22px rgba(0, 136, 204, 0.45);
             z-index: 45;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+        }
+        .fab-support:hover {
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 136, 204, 0.55);
         }
         .fab-support:active {
             transform: scale(0.92);
         }
+        .fab-support::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: rgba(0, 162, 245, 0.35);
+            animation: pulse-ring 2s infinite;
+            z-index: -1;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+
+        /* ACTIVE PAYMENT CARD STYLING */
+        .payment-card {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .payment-card.selected-method {
+            border-color: #1b64da !important;
+            background-color: #eff6ff !important;
+            box-shadow: 0 0 0 2px #1b64da;
+            transform: translateY(-2px);
+        }
+
         .main-page { display: none; }
         .main-page.active { display: flex; animation: fadeIn 0.3s ease-in-out; }
         .sub-page { display: none; }
@@ -199,37 +223,114 @@
             outline: none;
         }
 
+        /* ADVANCED ANIMATED LOADER SCREEN */
+        #loader {
+            background: radial-gradient(circle at center, #0f172a 0%, #030712 100%);
+            overflow: hidden;
+        }
+        .float-item {
+            position: absolute;
+            animation: floating 4s ease-in-out infinite alternate;
+            opacity: 0.35;
+        }
+        .float-1 { top: 12%; left: 15%; animation-delay: 0s; color: #38bdf8; }
+        .float-2 { top: 18%; right: 15%; animation-delay: 1.2s; color: #10b981; }
+        .float-3 { bottom: 22%; left: 18%; animation-delay: 2.1s; color: #fbbf24; }
+        .float-4 { bottom: 18%; right: 18%; animation-delay: 0.8s; color: #a855f7; }
+        .float-5 { top: 48%; left: 8%; animation-delay: 1.7s; color: #f43f5e; }
+        .float-6 { top: 52%; right: 8%; animation-delay: 2.5s; color: #6366f1; }
+
+        @keyframes floating {
+            0% { transform: translateY(0px) rotate(0deg) scale(0.9); }
+            100% { transform: translateY(-22px) rotate(12deg) scale(1.1); }
+        }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, #60a5fa 0%, #ffffff 50%, #60a5fa 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            animation: textShimmer 2.5s linear infinite;
+        }
+        @keyframes textShimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .loader-ring {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid rgba(59, 130, 246, 0.15);
+            border-top-color: #38bdf8;
+            border-right-color: #818cf8;
+            animation: spin 1s infinite cubic-bezier(0.55, 0.15, 0.45, 0.85);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .service-badge {
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.9; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.02); filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.6)); }
+        }
+        
         .premium-loader-spinner {
-            width: 48px;
-            height: 48px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             background: conic-gradient(#0000 10%, #1b64da);
-            -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 7px), #000 0);
-            animation: spin 1s infinite linear;
+            -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 5px), #000 0);
+            animation: spin 0.9s infinite linear;
         }
-        @keyframes spin { to { transform: rotate(1turn); } }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="max-w-md mx-auto relative bg-[#f1f4f9] min-h-screen text-[#1e293b]">
 
-    <!-- APP LOADER -->
-    <div id="loader" class="fixed inset-0 bg-white flex flex-col items-center justify-center z-[100] gap-4">
-        <div class="premium-loader-spinner"></div>
-        <h2 class="font-extrabold text-xl text-[#1b64da] tracking-wide">𝐌𝐀𝐈𝐋 𝐒𝐓𝐎𝐑𝐄</h2>
+    <!-- ADVANCED ANIMATED INTRO LOADER -->
+    <div id="loader" class="fixed inset-0 flex flex-col items-center justify-center z-[100] p-6 select-none text-white">
+        <!-- Floating Animated Background Icons (Email, VPN, Proxy, Taka/Money) -->
+        <div class="float-item float-1"><i data-lucide="mail" class="w-8 h-8"></i></div>
+        <div class="float-item float-2"><i data-lucide="shield-check" class="w-9 h-9"></i></div>
+        <div class="float-item float-3"><i data-lucide="banknote" class="w-9 h-9"></i></div>
+        <div class="float-item float-4"><i data-lucide="globe" class="w-8 h-8"></i></div>
+        <div class="float-item float-5"><i data-lucide="coins" class="w-7 h-7"></i></div>
+        <div class="float-item float-6"><i data-lucide="server" class="w-7 h-7"></i></div>
+
+        <!-- Center Interactive Loader Element -->
+        <div class="relative flex items-center justify-center mb-6">
+            <div class="loader-ring"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <i data-lucide="zap" class="w-6 h-6 text-sky-400 fill-sky-400 animate-pulse"></i>
+            </div>
+        </div>
+
+        <!-- Title and Tagline -->
+        <div class="text-center space-y-2 z-10">
+            <h1 class="font-extrabold text-2xl tracking-wider shimmer-text">ALL TYPE SERVICE</h1>
+            <div class="service-badge inline-flex items-center gap-1.5 px-3.5 py-1 bg-white/10 border border-white/20 rounded-full backdrop-blur-md">
+                <span class="text-xs font-bold tracking-widest text-sky-300">EMAIL</span>
+                <span class="text-xs text-white/40">|</span>
+                <span class="text-xs font-bold tracking-widest text-emerald-300">VPN</span>
+                <span class="text-xs text-white/40">|</span>
+                <span class="text-xs font-bold tracking-widest text-amber-300">PROXY</span>
+            </div>
+            <p class="text-[11px] text-gray-400 font-medium tracking-wide mt-2">Fast, Secure & Automated System</p>
+        </div>
     </div>
 
     <!-- MAIN APP WRAPPER -->
     <div id="app-container" class="min-h-screen flex-col main-page">
 
-        <!-- HEADER (Exact Match with Image) -->
+        <!-- HEADER -->
         <header class="main-header flex items-center justify-between">
             <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('home-page')">
                 <div class="bg-white/20 p-2 rounded-xl flex items-center justify-center">
-                    <i data-lucide="mail" class="w-6 h-6 text-white stroke-[2.5]"></i>
+                    <i data-lucide="layers" class="w-6 h-6 text-white stroke-[2.5]"></i>
                 </div>
-                <span class="text-2xl font-black tracking-tight text-white">H143</span>
+                <span class="text-xl font-black tracking-tight text-white">ALL SERVICE</span>
             </div>
 
             <div class="flex items-center gap-3">
@@ -243,9 +344,11 @@
             </div>
         </header>
 
-        <!-- FLOATING TELEGRAM SUPPORT BUTTON -->
-        <a href="https://t.me/EXPERTearn_team" target="_blank" class="fab-support" title="Telegram Support">
-            <i data-lucide="send" class="w-6 h-6 -ml-0.5 mt-0.5 fill-white text-transparent"></i>
+        <!-- DYNAMIC FLOATING TELEGRAM SUPPORT BUTTON -->
+        <a id="telegram-support-fab" href="https://t.me/EXPERTearn_team" target="_blank" class="fab-support" title="Telegram Support">
+            <svg class="w-6 h-6 fill-white" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+            </svg>
         </a>
 
         <!-- MAIN CONTENT AREA -->
@@ -254,14 +357,14 @@
             <!-- HOME PAGE (Product Catalog with Categories Grid) -->
             <div id="home-page" class="p-4 space-y-5 sub-page">
 
-                <!-- CATEGORIES / VIBHAG SECTION (Exact UI from Image) -->
+                <!-- CATEGORIES SECTION -->
                 <div class="grid grid-cols-2 gap-2.5" id="category-filter-grid">
                     <button class="category-btn active" data-category="all" onclick="filterByCategory('all', this)">
-                        <i data-lucide="layout-grid" class="w-4 h-4 text-blue-300"></i>
+                        <i data-lucide="layout-grid" class="w-4 h-4 text-blue-500"></i>
                         <span>All Items</span>
                     </button>
                     <button class="category-btn" data-category="Hotmail" onclick="filterByCategory('Hotmail', this)">
-                        <i data-lucide="layout-grid" class="w-4 h-4 text-blue-600"></i>
+                        <i data-lucide="mail" class="w-4 h-4 text-blue-600"></i>
                         <span>Hotmail</span>
                     </button>
                     <button class="category-btn" data-category="Gmail" onclick="filterByCategory('Gmail', this)">
@@ -285,29 +388,28 @@
                         <span>Gmail Edu 8-90 Day</span>
                     </button>
                     <button class="category-btn" data-category="Proxy" onclick="filterByCategory('Proxy', this)">
-                        <i data-lucide="tag" class="w-4 h-4 text-slate-500"></i>
+                        <i data-lucide="globe" class="w-4 h-4 text-indigo-500"></i>
                         <span>Proxy</span>
                     </button>
                     <button class="category-btn" data-category="Vpn Item" onclick="filterByCategory('Vpn Item', this)">
-                        <i data-lucide="tag" class="w-4 h-4 text-slate-500"></i>
+                        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-500"></i>
                         <span>Vpn Item</span>
                     </button>
                     <button class="category-btn" data-category="Special Gmail" onclick="filterByCategory('Special Gmail', this)">
-                        <i data-lucide="tag" class="w-4 h-4 text-slate-500"></i>
-                        <span>Gmail</span>
+                        <i data-lucide="star" class="w-4 h-4 text-amber-500"></i>
+                        <span>Special Gmail</span>
                     </button>
                 </div>
 
-                <!-- DYNAMIC PRODUCT LISTING WITH BLUE THEMED BANNER -->
+                <!-- PRODUCT LISTING BANNER -->
                 <div class="mt-4 space-y-4">
-                    <!-- SECTION BANNER (Matched with Image) -->
                     <div class="bg-gradient-to-r from-[#1b64da] to-[#0f4bb5] text-white p-4 rounded-2xl flex items-start gap-3 shadow-md">
                         <div class="bg-white/20 p-2.5 rounded-xl">
-                            <i data-lucide="layout-grid" class="w-6 h-6 text-white"></i>
+                            <i data-lucide="sparkles" class="w-6 h-6 text-white"></i>
                         </div>
                         <div>
-                            <h2 id="current-section-title" class="font-bold text-lg leading-tight">Hotmail & Outlook</h2>
-                            <p id="current-section-subtitle" class="text-xs text-blue-100 mt-0.5">Microsoft email accounts with premium features</p>
+                            <h2 id="current-section-title" class="font-bold text-lg leading-tight">All Available Services</h2>
+                            <p id="current-section-subtitle" class="text-xs text-blue-100 mt-0.5">Explore our full collection of verified accounts & proxies</p>
                         </div>
                     </div>
 
@@ -317,93 +419,92 @@
 
             </div>
 
-            <!-- DEPOSIT / PAY PAGE -->
+            <!-- DEPOSIT / PAY PAGE (Upgraded Auto-Select Flow) -->
             <div id="pay-page" class="p-4 space-y-5 sub-page">
                 <div class="text-center">
                     <h2 class="text-xl font-black text-gray-800">Deposit Center</h2>
-                    <p class="text-xs text-gray-500">আপনার পছন্দমতো মাধ্যমে টাকা পাঠিয়ে ফর্মটি পূরণ করুন</p>
+                    <p class="text-xs text-gray-500">যেকোনো একটি নাম্বার কপি করুন, মেথড অটোমেটিক সিলেক্ট হয়ে যাবে</p>
                 </div>
 
+                <!-- PAYMENT METHODS CARDS (Values auto-filled from Firebase) -->
                 <div class="grid grid-cols-2 gap-3">
-                    <div class="bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm">
+                    <div id="card-nagad" onclick="selectAndCopyMethod('Nagad', 'deposit-number-nagad', this)" class="payment-card bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm relative">
                         <img src="https://i.postimg.cc/Jh9s6jWw/20250922-113350.png" alt="Nagad" class="w-9 h-9 rounded-full mx-auto mb-1.5" loading="lazy">
-                        <p class="font-bold text-sm text-gray-800">নগদ</p>
-                        <p class="text-gray-600 font-mono text-xs my-1 font-semibold">01864260513</p>
-                        <button onclick="copyToClipboard('01864260513', this)" class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
-                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy</span>
+                        <p class="font-bold text-sm text-gray-800">নগদ (Personal)</p>
+                        <p id="deposit-number-nagad" class="text-gray-600 font-mono text-xs my-1 font-semibold">01864260513</p>
+                        <button class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
+                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy & Select</span>
                         </button>
                     </div>
-                    <div class="bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm">
+
+                    <div id="card-bkash" onclick="selectAndCopyMethod('bKash', 'deposit-number-bkash', this)" class="payment-card bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm relative">
                         <img src="https://i.postimg.cc/tCwGVkdH/20250922-113514.png" alt="bKash" class="w-9 h-9 rounded-full mx-auto mb-1.5" loading="lazy">
-                        <p class="font-bold text-sm text-gray-800">বিকাশ</p>
-                        <p class="text-gray-600 font-mono text-xs my-1 font-semibold">01827750260</p>
-                        <button onclick="copyToClipboard('01827750260', this)" class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
-                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy</span>
+                        <p class="font-bold text-sm text-gray-800">বিকাশ (Personal)</p>
+                        <p id="deposit-number-bkash" class="text-gray-600 font-mono text-xs my-1 font-semibold">01827750260</p>
+                        <button class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
+                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy & Select</span>
                         </button>
                     </div>
-                    <div class="bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm">
+
+                    <div id="card-rocket" onclick="selectAndCopyMethod('Rocket', 'deposit-number-rocket', this)" class="payment-card bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm relative">
                         <img src="https://i.postimg.cc/htsw10Tj/20250922-113924.png" alt="Rocket" class="w-9 h-9 rounded-full mx-auto mb-1.5" loading="lazy">
-                        <p class="font-bold text-sm text-gray-800">রকেট</p>
-                        <p class="text-gray-600 font-mono text-xs my-1 font-semibold">018277502604</p>
-                        <button onclick="copyToClipboard('018277502604', this)" class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
-                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy</span>
+                        <p class="font-bold text-sm text-gray-800">রকেট (Personal)</p>
+                        <p id="deposit-number-rocket" class="text-gray-600 font-mono text-xs my-1 font-semibold">018277502604</p>
+                        <button class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
+                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy & Select</span>
                         </button>
                     </div>
-                    <div class="bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm">
+
+                    <div id="card-binance" onclick="selectAndCopyMethod('Binance', 'deposit-number-binance', this)" class="payment-card bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm relative">
                         <img src="https://i.postimg.cc/L6LFLfxY/20250922-113752.png" alt="Binance" class="w-9 h-9 rounded-full mx-auto mb-1.5" loading="lazy">
-                        <p class="font-bold text-sm text-gray-800">Binance</p>
-                        <p class="text-gray-600 font-mono text-xs my-1 font-semibold">1105989483</p>
-                        <button onclick="copyToClipboard('1105989483', this)" class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
-                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy ID</span>
+                        <p class="font-bold text-sm text-gray-800">Binance Pay ID</p>
+                        <p id="deposit-number-binance" class="text-gray-600 font-mono text-xs my-1 font-semibold">1105989483</p>
+                        <button class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
+                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy & Select</span>
                         </button>
                     </div>
                 </div>
 
+                <!-- DEPOSIT SUBMISSION FORM -->
                 <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-4">
-                    <h3 class="font-bold text-gray-800 text-sm border-b pb-2">ডিপোজিট বিবরণী</h3>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-600 mb-1">পেমেন্ট মাধ্যম</label>
-                        <select id="deposit-method" class="w-full p-2.5 rounded-xl input-field text-sm">
-                            <option value="">নির্বাচন করুন</option>
-                            <option value="Nagad">নগদ</option>
-                            <option value="bKash">বিকাশ</option>
-                            <option value="Rocket">রকেট</option>
-                            <option value="Binance">Binance</option>
-                        </select>
+                    <div class="flex items-center justify-between border-b pb-2">
+                        <h3 class="font-bold text-gray-800 text-sm">ডিপোজিট সাবমিট ফর্ম</h3>
+                        <span id="selected-method-badge" class="text-xs bg-blue-100 text-blue-700 font-bold px-2.5 py-0.5 rounded-full">মেথড সিলেক্ট করুন</span>
                     </div>
+
                     <div>
                         <label class="block text-xs font-bold text-gray-600 mb-1">টাকার পরিমাণ (BDT)</label>
-                        <input id="deposit-amount" type="number" placeholder="e.g., 100" class="w-full p-2.5 rounded-xl input-field text-sm">
+                        <input id="deposit-amount" type="number" placeholder="কত টাকা পাঠিয়েছেন লিখুন" class="w-full p-2.5 rounded-xl input-field text-sm font-semibold">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-600 mb-1">আপনার প্রেরক নম্বর</label>
-                        <input id="sender-number" type="text" placeholder="যে নম্বর থেকে পাঠিয়েছেন" class="w-full p-2.5 rounded-xl input-field text-sm">
+                        <label class="block text-xs font-bold text-gray-600 mb-1">আপনার প্রেরক নম্বর (Sender Number)</label>
+                        <input id="sender-number" type="text" placeholder="যে নম্বর থেকে টাকা পাঠিয়েছেন" class="w-full p-2.5 rounded-xl input-field text-sm">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-600 mb-1">Transaction ID (TrxID)</label>
-                        <input id="deposit-txid" type="text" placeholder="TrxID দিন" class="w-full p-2.5 rounded-xl input-field text-sm">
+                        <input id="deposit-txid" type="text" placeholder="TrxID এখানে দিন" class="w-full p-2.5 rounded-xl input-field text-sm uppercase">
                     </div>
-                    <button id="deposit-btn" class="w-full py-3 rounded-xl btn-buy font-bold text-sm">Submit Deposit</button>
+                    <button id="deposit-btn" class="w-full py-3 rounded-xl btn-buy font-bold text-sm shadow-md">Confirm & Submit Deposit</button>
                 </div>
             </div>
 
-            <!-- ORDERS / PURCHASE HISTORY PAGE (Dedicated Tab) -->
+            <!-- ORDERS / PURCHASE HISTORY PAGE -->
             <div id="orders-page" class="p-4 space-y-4 sub-page">
                 <div class="flex items-center justify-between border-b pb-3">
                     <div>
                         <h2 class="text-xl font-extrabold text-gray-800">Your Orders</h2>
-                        <p class="text-xs text-gray-500">আপনার ক্রয়কৃত সকল মেইল ও পণ্য হিস্ট্রি</p>
+                        <p class="text-xs text-gray-500">আপনার ক্রয়কৃত সকল আইটেমের তালিকা</p>
                     </div>
                     <div class="flex gap-2">
-                        <button id="copy-orders-btn" class="bg-blue-50 text-blue-600 p-2 rounded-lg text-xs font-bold flex items-center gap-1 border border-blue-200"><i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy 4h</button>
-                        <button id="download-orders-btn" class="bg-blue-50 text-blue-600 p-2 rounded-lg text-xs font-bold flex items-center gap-1 border border-blue-200"><i data-lucide="download" class="w-3.5 h-3.5"></i> Excel</button>
+                        <button id="copy-orders-btn" class="bg-blue-50 text-blue-600 p-2 rounded-lg text-xs font-bold flex items-center gap-1 border border-blue-200 hover:bg-blue-100 transition"><i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy 4h</button>
+                        <button id="download-orders-btn" class="bg-emerald-50 text-emerald-600 p-2 rounded-lg text-xs font-bold flex items-center gap-1 border border-emerald-200 hover:bg-emerald-100 transition"><i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i> Excel</button>
                     </div>
                 </div>
 
                 <div id="orders-purchase-history" class="space-y-3 min-h-[200px]"></div>
             </div>
 
-            <!-- FEATURES / REFERRALS PAGE -->
+            <!-- FEATURES / WALLET TRANSFERS PAGE -->
             <div id="features-page" class="p-4 space-y-6 sub-page">
                 <h2 class="text-xl font-bold text-gray-800 text-center">Wallet & Transfers</h2>
                 <div class="grid grid-cols-2 gap-3 text-center">
@@ -425,14 +526,9 @@
                         <i data-lucide="send" class="w-4 h-4"></i> Send Money
                     </button>
                 </div>
-
-                <div>
-                    <h3 class="text-sm font-bold text-gray-700 mb-3">Balance Transfer History</h3>
-                    <div id="transfer-history-list" class="space-y-2.5"></div>
-                </div>
             </div>
 
-            <!-- HISTORY / STATS PAGE (Payment & Replace History) -->
+            <!-- HISTORY / STATS PAGE -->
             <div id="history-page" class="p-4 space-y-6 sub-page">
                 <div>
                     <h3 class="text-md font-bold text-gray-800 mb-3 flex items-center gap-2">
@@ -445,7 +541,7 @@
                 <div class="pt-4 border-t border-gray-200">
                     <h3 class="text-md font-bold text-gray-800 mb-3 flex items-center gap-2">
                         <i data-lucide="history" class="w-5 h-5 text-orange-600"></i>
-                        <span>Replace History</span>
+                        <span>Replace / Report History</span>
                     </h3>
                     <div id="replace-history-list" class="space-y-2.5"></div>
                 </div>
@@ -458,9 +554,9 @@
                     <div id="profile-initials-avatar" class="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center border-2 border-blue-600 hidden mb-3">
                         <span id="profile-initials" class="text-2xl font-bold text-blue-700"></span>
                     </div>
-                    <h3 id="profile-name" class="text-xl font-bold text-gray-800">User Name</h3>
+                    <h3 id="profile-name" class="text-xl font-bold text-gray-800">User</h3>
                     <p id="profile-username" class="text-xs text-gray-500">@username</p>
-                    <span id="profile-id" class="mt-2 text-xs font-mono bg-gray-100 px-3 py-1 rounded-full text-gray-700">ID: 123456</span>
+                    <span id="profile-id" class="mt-2 text-xs font-mono bg-gray-100 px-3 py-1 rounded-full text-gray-700">ID: 000000</span>
                 </div>
 
                 <div class="space-y-2.5">
@@ -484,7 +580,7 @@
                     <h2 class="text-lg font-bold">Send Balance</h2>
                 </div>
                 <div class="bg-white p-5 rounded-2xl border border-gray-200 space-y-4">
-                    <p class="text-xs text-red-600 bg-red-50 p-2.5 rounded-xl font-medium">প্রতিটি সেন্ডে 5% ফি প্রযোজ্য। সর্বনিম্ন ৳20 পাঠাতে পারবেন।</p>
+                    <p class="text-xs text-red-600 bg-red-50 p-2.5 rounded-xl font-medium">প্রতিটি ট্রান্সফারে ৫% সার্ভিস চার্জ প্রযোজ্য। সর্বনিম্ন ৳২০ পাঠাতে পারবেন।</p>
                     <div>
                         <label class="block text-xs font-bold text-gray-600 mb-1">প্রাপকের Telegram ID</label>
                         <input id="send-recipient-id" type="text" placeholder="Recipient's Telegram ID" class="w-full p-2.5 rounded-xl input-field text-sm">
@@ -492,7 +588,6 @@
                     <div>
                         <label class="block text-xs font-bold text-gray-600 mb-1">টাকার পরিমাণ (BDT)</label>
                         <input id="send-amount" type="number" placeholder="Amount" class="w-full p-2.5 rounded-xl input-field text-sm">
-                        <p id="send-fee-display" class="text-xs text-emerald-600 font-bold mt-1 h-4"></p>
                     </div>
                     <button id="submit-send-btn" class="w-full py-3 rounded-xl btn-buy font-bold text-sm">Submit Send</button>
                 </div>
@@ -521,11 +616,11 @@
 
         </main>
 
-        <!-- BOTTOM NAVIGATION BAR (Exact Tabs Match from Image) -->
+        <!-- BOTTOM NAVIGATION BAR -->
         <nav class="bottom-nav">
             <div class="nav-item active" data-page="home-page" onclick="navigateTo('home-page')">
                 <div class="nav-icon-wrapper flex items-center justify-center">
-                    <i data-lucide="gauge" class="w-5 h-5"></i>
+                    <i data-lucide="layout-grid" class="w-5 h-5"></i>
                 </div>
                 <span>Home</span>
             </div>
@@ -545,19 +640,19 @@
                 <div class="nav-icon-wrapper flex items-center justify-center">
                     <i data-lucide="users" class="w-5 h-5"></i>
                 </div>
-                <span>Referrals</span>
+                <span>Transfer</span>
             </div>
             <div class="nav-item" data-page="history-page" onclick="navigateTo('history-page')">
                 <div class="nav-icon-wrapper flex items-center justify-center">
-                    <i data-lucide="arrow-left-right" class="w-5 h-5"></i>
+                    <i data-lucide="history" class="w-5 h-5"></i>
                 </div>
                 <span>History</span>
             </div>
             <div class="nav-item" data-page="profile-page" onclick="navigateTo('profile-page')">
                 <div class="nav-icon-wrapper flex items-center justify-center">
-                    <i data-lucide="mail" class="w-5 h-5"></i>
+                    <i data-lucide="user" class="w-5 h-5"></i>
                 </div>
-                <span>Gmail</span>
+                <span>Profile</span>
             </div>
             <div class="nav-item hidden" id="admin-nav-item" data-page="admin-page" onclick="navigateTo('admin-page')">
                 <div class="nav-icon-wrapper flex items-center justify-center">
@@ -578,10 +673,10 @@
             </button>
         </div>
         <div class="p-5 space-y-4">
-            <a href="https://t.me/EXPERTearn_team" target="_blank" class="w-full bg-white p-4 rounded-xl border border-gray-200 flex items-center gap-3 font-bold text-gray-700">
+            <a id="menu-telegram-channel" href="https://t.me/EXPERTearn_team" target="_blank" class="w-full bg-white p-4 rounded-xl border border-gray-200 flex items-center gap-3 font-bold text-gray-700">
                 <i data-lucide="send" class="w-5 h-5 text-blue-500"></i> Telegram Channel
             </a>
-            <a href="https://t.me/bd_Storebot" target="_blank" class="w-full bg-white p-4 rounded-xl border border-gray-200 flex items-center gap-3 font-bold text-gray-700">
+            <a id="menu-telegram-bot" href="https://t.me/bd_Storebot" target="_blank" class="w-full bg-white p-4 rounded-xl border border-gray-200 flex items-center gap-3 font-bold text-gray-700">
                 <i data-lucide="bot" class="w-5 h-5 text-emerald-500"></i> Telegram Bot
             </a>
         </div>
@@ -655,7 +750,7 @@
         </div>
     </div>
 
-    <!-- FIREBASE & CORE LOGIC SCRIPT -->
+    <!-- FIREBASE & CORE ENGINE -->
     <script type="module">
         const ADMIN_UID = "6954647230";
         const firebaseConfig = {
@@ -678,7 +773,8 @@
         let userData = null;
         let appConfig = {};
         let selectedCategory = 'all';
-        let countdownInterval = null;
+        let currentSelectedDepositMethod = '';
+        let userPurchasesCache = [];
 
         const loader = document.getElementById('loader');
         const getLoadingHTML = () => `<div class="flex justify-center p-8"><div class="premium-loader-spinner"></div></div>`;
@@ -689,16 +785,21 @@
                 window.Telegram.WebApp.expand();
                 currentUserTg = window.Telegram.WebApp.initDataUnsafe.user;
                 if (!currentUserTg) {
-                    // Fallback for test browser view
-                    currentUserTg = { id: "6954647230", first_name: "Developer", username: "dev" };
+                    currentUserTg = { id: "6954647230", first_name: "User", username: "account" };
                 }
             } catch (e) {
-                currentUserTg = { id: "6954647230", first_name: "Developer", username: "dev" };
+                currentUserTg = { id: "6954647230", first_name: "User", username: "account" };
             }
             lucide.createIcons();
             setupEventListeners();
             await initUserSession();
-            loader.style.display = 'none';
+            
+            // Smoothly remove intro loader
+            setTimeout(() => {
+                loader.style.transition = 'opacity 0.4s ease';
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 400);
+            }, 800);
         };
 
         async function initUserSession() {
@@ -738,11 +839,56 @@
             navigateTo('home-page');
         }
 
+        // Fetch dynamic config: Telegram links, numbers, products
         async function fetchAppConfig() {
-            const configRef = doc(db, "config", "main");
-            const configSnap = await getDoc(configRef);
-            appConfig = configSnap.exists() ? configSnap.data() : { mails: [], proxies: [] };
+            try {
+                const configRef = doc(db, "config", "main");
+                const configSnap = await getDoc(configRef);
+                appConfig = configSnap.exists() ? configSnap.data() : {};
+
+                // Dynamic Telegram Links
+                if (appConfig.telegramSupportUrl) {
+                    const fab = document.getElementById('telegram-support-fab');
+                    if (fab) fab.href = appConfig.telegramSupportUrl;
+                }
+                if (appConfig.telegramChannelUrl) {
+                    const ch = document.getElementById('menu-telegram-channel');
+                    if (ch) ch.href = appConfig.telegramChannelUrl;
+                }
+                if (appConfig.telegramBotUrl) {
+                    const bot = document.getElementById('menu-telegram-bot');
+                    if (bot) bot.href = appConfig.telegramBotUrl;
+                }
+
+                // Dynamic Payment Numbers from Firebase (if present in config/main)
+                if (appConfig.paymentNumbers) {
+                    if (appConfig.paymentNumbers.nagad) document.getElementById('deposit-number-nagad').textContent = appConfig.paymentNumbers.nagad;
+                    if (appConfig.paymentNumbers.bkash) document.getElementById('deposit-number-bkash').textContent = appConfig.paymentNumbers.bkash;
+                    if (appConfig.paymentNumbers.rocket) document.getElementById('deposit-number-rocket').textContent = appConfig.paymentNumbers.rocket;
+                    if (appConfig.paymentNumbers.binance) document.getElementById('deposit-number-binance').textContent = appConfig.paymentNumbers.binance;
+                }
+            } catch (e) {
+                console.error("Config fetch error:", e);
+            }
         }
+
+        // Auto-select method when clicking card / copying number
+        window.selectAndCopyMethod = function(methodName, numberElementId, cardElement) {
+            currentSelectedDepositMethod = methodName;
+            
+            // Visual card selection feedback
+            document.querySelectorAll('.payment-card').forEach(c => c.classList.remove('selected-method'));
+            if(cardElement) cardElement.classList.add('selected-method');
+
+            const badge = document.getElementById('selected-method-badge');
+            if(badge) {
+                badge.textContent = `সিলেক্টেড: ${methodName}`;
+                badge.className = 'text-xs bg-emerald-100 text-emerald-700 font-bold px-2.5 py-0.5 rounded-full';
+            }
+
+            const numText = document.getElementById(numberElementId).textContent.trim();
+            copyToClipboard(numText, null, `${methodName} নম্বর (${numText}) কপি হয়েছে এবং মেথড সিলেক্ট করা হয়েছে!`);
+        };
 
         function updateUI() {
             if (!userData) return;
@@ -784,15 +930,14 @@
             element.classList.add('active');
             selectedCategory = category;
 
-            // Update banner text
             const titleEl = document.getElementById('current-section-title');
             const subEl = document.getElementById('current-section-subtitle');
             if (category === 'all') {
-                titleEl.textContent = 'All Available Products';
-                subEl.textContent = 'Explore our full collection of premium accounts & services';
+                titleEl.textContent = 'All Available Services';
+                subEl.textContent = 'Explore our full collection of verified accounts & proxies';
             } else {
                 titleEl.textContent = `${category}`;
-                subEl.textContent = `High quality verified ${category} accounts with instant delivery`;
+                subEl.textContent = `High quality verified ${category} with instant delivery`;
             }
 
             renderProductsBySelection();
@@ -823,7 +968,7 @@
             }
 
             if (filtered.length === 0) {
-                container.innerHTML = `<div class="bg-white p-8 rounded-2xl text-center text-gray-400 font-semibold border">এই বিভাগে কোনো পণ্য পাওয়া যায়নি।</div>`;
+                container.innerHTML = `<div class="bg-white p-8 rounded-2xl text-center text-gray-400 font-semibold border">এই বিভাগে কোনো আইটেম পাওয়া যায়নি।</div>`;
                 return;
             }
 
@@ -846,7 +991,7 @@
                             <div>
                                 <div class="flex items-center gap-2">
                                     <h4 class="font-extrabold text-gray-800 text-sm">${item.type}</h4>
-                                    <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full">Premium</span>
+                                    <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full">Instant</span>
                                 </div>
                                 <div class="flex items-center gap-2 mt-0.5">
                                     <span class="text-xs text-gray-400 line-through">৳${originalPrice}</span>
@@ -863,7 +1008,7 @@
                         </span>
                         <button class="btn-buy px-6 py-2 rounded-xl text-xs font-bold ${outOfStock ? 'opacity-50 cursor-not-allowed' : ''}" 
                                 ${outOfStock ? 'disabled' : ''} 
-                                onclick="buyItem('${item.type}', ${item.priceBdt}, '${item.stockKey}', '${item.category || 'mail'}')">
+                                onclick="buyItem('${item.type}', ${item.priceBdt}, '${item.stockKey}', '${item.category || 'service'}')">
                             Buy Now
                         </button>
                     </div>
@@ -877,6 +1022,7 @@
             if (!confirm(`আপনি কি ৳${cost.toFixed(2)} দিয়ে ${mailType} কিনতে চান?`)) return;
 
             loader.style.display = 'flex';
+            loader.style.opacity = '1';
             try {
                 const itemQuery = query(collection(db, stockKey), where("isSold", "==", false), limit(1));
                 const itemQuerySnapshot = await getDocs(itemQuery);
@@ -893,7 +1039,7 @@
                     const counterRef = doc(db, "counters", "item_purchase");
                     const buyerSnap = await transaction.get(buyerRef);
                     
-                    if (buyerSnap.data().balance < cost) throw new Error("আপনার পর্যাপ্ত ব্যালেন্স নেই।");
+                    if (buyerSnap.data().balance < cost) throw new Error("আপনার পর্যাপ্ত ব্যালেন্স নেই। ডিপোজিট করুন।");
 
                     const counterSnap = await transaction.get(counterRef);
                     const saleId = counterSnap.exists() ? counterSnap.data().currentId : 1000;
@@ -935,17 +1081,18 @@
             const listEl = document.getElementById('orders-purchase-history');
             listEl.innerHTML = getLoadingHTML();
             try {
-                const q = query(collection(db, "purchases"), where("userId", "==", userData.tgChatId), orderBy("purchasedAt", "desc"), limit(50));
+                const q = query(collection(db, "purchases"), where("userId", "==", userData.tgChatId), orderBy("purchasedAt", "desc"), limit(100));
                 const snap = await getDocs(q);
 
                 if (snap.empty) {
+                    userPurchasesCache = [];
                     listEl.innerHTML = `<div class="bg-white p-8 rounded-2xl text-center text-gray-400 font-semibold border">আপনার কোনো অর্ডার ইতিহাস নেই।</div>`;
                     return;
                 }
 
-                listEl.innerHTML = snap.docs.map(docSnap => {
-                    const p = docSnap.data();
-                    const id = docSnap.id;
+                userPurchasesCache = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                listEl.innerHTML = userPurchasesCache.map(p => {
                     const date = p.purchasedAt ? p.purchasedAt.toDate().toLocaleString('en-GB') : '';
                     const fullCopy = `${p.mail}|${p.password || ''}`;
 
@@ -969,8 +1116,8 @@
                             </div>` : ''}
                         </div>
                         <div class="flex justify-between items-center pt-1 text-xs">
-                            <button onclick="showReportForm('${id}', '${p.mailType}', ${p.cost}, '${p.saleId}')" class="text-orange-600 font-bold bg-orange-50 px-3 py-1.5 rounded-lg">Report</button>
-                            <button onclick="copyToClipboard('${fullCopy}', this)" class="btn-buy px-3.5 py-1.5 rounded-lg font-bold">Copy Credentials</button>
+                            <button onclick="showReportForm('${p.id}', '${p.mailType}', ${p.cost}, '${p.saleId}')" class="text-orange-600 font-bold bg-orange-50 px-3 py-1.5 rounded-lg">Report</button>
+                            <button onclick="copyToClipboard('${fullCopy}', this)" class="btn-buy px-3.5 py-1.5 rounded-lg font-bold">Copy Full</button>
                         </div>
                     </div>`;
                 }).join('');
@@ -978,6 +1125,42 @@
             } catch (e) {
                 listEl.innerHTML = `<p class="text-center text-red-500 text-xs">অর্ডার হিস্ট্রি লোড করা যায়নি।</p>`;
             }
+        }
+
+        // Export Orders to Excel Function
+        function exportOrdersToExcel() {
+            if (!userPurchasesCache || userPurchasesCache.length === 0) {
+                return showAlert("ডাউনলোড করার মতো কোনো অর্ডার হিস্ট্রি নেই।");
+            }
+            const dataToExport = userPurchasesCache.map(p => ({
+                "Sale ID": p.saleId || '',
+                "Service": p.mailType || '',
+                "Credentials / Email": p.mail || '',
+                "Password / Key": p.password || '',
+                "Cost (BDT)": p.cost || 0,
+                "Date": p.purchasedAt ? p.purchasedAt.toDate().toLocaleString('en-GB') : ''
+            }));
+
+            const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Orders");
+            XLSX.writeFile(workbook, `Orders_${userData.tgChatId}.xlsx`);
+        }
+
+        // Copy orders placed in the last 4 hours
+        function copyLast4HoursOrders() {
+            if (!userPurchasesCache || userPurchasesCache.length === 0) {
+                return showAlert("কপি করার মতো কোনো অর্ডার হিস্ট্রি নেই।");
+            }
+            const fourHoursAgo = new Date(Date.now() - 4 * 60 * 60 * 1000);
+            const recent = userPurchasesCache.filter(p => p.purchasedAt && p.purchasedAt.toDate() >= fourHoursAgo);
+
+            if (recent.length === 0) {
+                return showAlert("গত ৪ ঘণ্টার মধ্যে কোনো অর্ডার পাওয়া যায়নি।");
+            }
+
+            const textList = recent.map(p => `${p.mail}${p.password ? '|' + p.password : ''}`).join('\n');
+            copyToClipboard(textList, null, `গত ৪ ঘণ্টার মোট ${recent.length} টি আইটেম কপি করা হয়েছে!`);
         }
 
         async function loadPaymentHistory() {
@@ -1009,7 +1192,7 @@
             try {
                 const q = query(collection(db, "replace_requests"), where("userId", "==", userData.tgChatId), orderBy("requestedAt", "desc"));
                 const snap = await getDocs(q);
-                if (snap.empty) return list.innerHTML = '<p class="text-center text-xs text-gray-400">কোনো রিপ্লেস রেকর্ড নেই</p>';
+                if (snap.empty) return list.innerHTML = '<p class="text-center text-xs text-gray-400">কোনো রেকর্ড নেই</p>';
                 list.innerHTML = snap.docs.map(doc => {
                     const r = doc.data();
                     return `
@@ -1057,6 +1240,8 @@
                 document.getElementById('menu-page').classList.remove('hidden');
             });
             document.getElementById('deposit-btn').addEventListener('click', handleDepositRequest);
+            document.getElementById('download-orders-btn').addEventListener('click', exportOrdersToExcel);
+            document.getElementById('copy-orders-btn').addEventListener('click', copyLast4HoursOrders);
             document.getElementById('features-receive-btn').addEventListener('click', () => {
                 copyToClipboard(userData.tgChatId, null, `আপনার রিসিভ আইডি:\n${userData.tgChatId}`);
             });
@@ -1066,28 +1251,34 @@
         }
 
         async function handleDepositRequest() {
-            const method = document.getElementById('deposit-method').value;
+            if (!currentSelectedDepositMethod) {
+                return showAlert("অনুগ্রহ করে উপরের বিকাশ/নগদ/রকেট বা বাইন্যান্স নম্বরে ক্লিক করে কপি করুন!");
+            }
             const amount = parseFloat(document.getElementById('deposit-amount').value);
             const senderNumber = document.getElementById('sender-number').value.trim();
             const transactionId = document.getElementById('deposit-txid').value.trim();
 
-            if (!method || !amount || amount <= 0 || !senderNumber || !transactionId) {
+            if (!amount || amount <= 0 || !senderNumber || !transactionId) {
                 return showAlert("অনুগ্রহ করে সকল তথ্য পূরণ করুন।");
             }
 
             loader.style.display = 'flex';
+            loader.style.opacity = '1';
             try {
                 await addDoc(collection(db, "deposits"), {
                     userId: userData.tgChatId,
                     userName: userData.name,
-                    method,
+                    method: currentSelectedDepositMethod,
                     amount,
                     senderNumber,
                     transactionId,
                     status: "pending",
                     requestedAt: serverTimestamp()
                 });
-                showAlert("আপনার ডিপোজিট অনুরোধ সফলভাবে জমা হয়েছে।");
+                showAlert("আপনার ডিপোজিট অনুরোধ সফলভাবে জমা হয়েছে। অতি শীঘ্রই ব্যালেন্স যুক্ত হবে।");
+                document.getElementById('deposit-amount').value = '';
+                document.getElementById('sender-number').value = '';
+                document.getElementById('deposit-txid').value = '';
                 navigateTo('history-page');
             } catch(e) {
                 showAlert("ডিপোজিট সাবমিট করতে সমস্যা হয়েছে।");
@@ -1099,8 +1290,8 @@
         async function handleSendRequest() {
             const recipientId = document.getElementById('send-recipient-id').value.trim();
             const amount = parseFloat(document.getElementById('send-amount').value);
-            if (!recipientId || isNaN(amount) || amount < 20) return showAlert("সঠিক আইডি ও সর্বনিম্ন ৳20 দিন।");
-            if (recipientId === userData.tgChatId) return showAlert("নিজেকে পাঠাতে পারবেন না।");
+            if (!recipientId || isNaN(amount) || amount < 20) return showAlert("সঠিক আইডি ও সর্বনিম্ন ৳২০ দিন।");
+            if (recipientId === userData.tgChatId) return showAlert("নিজেকে ব্যালেন্স পাঠাতে পারবেন না।");
 
             const fee = amount * 0.05;
             const total = amount + fee;
@@ -1108,6 +1299,7 @@
             if (total > userData.balance) return showAlert("অপর্যাপ্ত ব্যালেন্স।");
 
             loader.style.display = 'flex';
+            loader.style.opacity = '1';
             try {
                 await runTransaction(db, async (t) => {
                     const senderRef = doc(db, "users", userData.tgChatId);
@@ -1147,7 +1339,7 @@
         };
 
         window.showReportForm = (purchaseId, mailType, cost, saleId) => {
-            document.getElementById('report-modal-mail-type').textContent = `${mailType} (ID: ${saleId})`;
+            document.getElementById('report-modal-mail-type').textContent = `${mailType} (ID: #${saleId})`;
             document.getElementById('report-purchase-id').value = purchaseId;
             document.getElementById('report-purchase-cost').value = cost;
             document.getElementById('report-purchase-saleId').value = saleId;
@@ -1164,6 +1356,7 @@
             const proof = document.getElementById('report-proof').value.trim();
 
             loader.style.display = 'flex';
+            loader.style.opacity = '1';
             try {
                 await addDoc(collection(db, "replace_requests"), {
                     userId: userData.tgChatId,
@@ -1177,7 +1370,7 @@
                     status: "pending",
                     requestedAt: serverTimestamp()
                 });
-                showAlert("আপনার রিপোর্ট জমা নেওয়া হয়েছে।");
+                showAlert("আপনার রিপোর্ট জমা নেওয়া হয়েছে। অ্যাডমিন পর্যালোচনা করবেন।");
                 document.getElementById('report-issue-modal').classList.add('hidden');
             } catch(err) {
                 showAlert(err.message);
@@ -1188,7 +1381,7 @@
 
         function populateAdminMailTypes() {
             const selectEl = document.getElementById('mail-type-select');
-            selectEl.innerHTML = '<option value="">Select item...</option>';
+            selectEl.innerHTML = '<option value="">Select service to add stock...</option>';
             [...(appConfig.mails || []), ...(appConfig.proxies || [])].forEach(item => {
                 selectEl.innerHTML += `<option value="${item.stockKey}">${item.type}</option>`;
             });
@@ -1201,6 +1394,7 @@
 
             const lines = text.split('\n').filter(l => l.trim().length > 0);
             loader.style.display = 'flex';
+            loader.style.opacity = '1';
             try {
                 const batch = writeBatch(db);
                 lines.forEach(line => {
@@ -1252,6 +1446,7 @@
 
         window.handleResolveReport = async (reqId, userId, cost, purchaseId, isApprove) => {
             loader.style.display = 'flex';
+            loader.style.opacity = '1';
             try {
                 await runTransaction(db, async (t) => {
                     const rRef = doc(db, "replace_requests", reqId);
