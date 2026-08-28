@@ -2,17 +2,17 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ALL TYPE SERVICE - Automated Payment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALL TYPE SERVICE</title>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         body {
-            font-family: 'Plus Jakarta Sans', 'Hind Siliguri', 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
             background-color: #f1f4f9;
             color: #1e293b;
             -webkit-user-select: none;
@@ -43,6 +43,10 @@
             padding: 4px 12px;
             transition: all 0.2s ease;
         }
+        .wallet-pill:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.28);
+        }
         .category-btn {
             background: #ffffff;
             color: #475569;
@@ -60,7 +64,10 @@
             cursor: pointer;
             text-align: center;
         }
-        .category-btn:hover { border-color: #93c5fd; transform: translateY(-1px); }
+        .category-btn:hover {
+            border-color: #93c5fd;
+            transform: translateY(-1px);
+        }
         .category-btn.active {
             background: #1b64da;
             color: #ffffff;
@@ -74,6 +81,10 @@
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
             transition: all 0.25s ease;
         }
+        .product-card:hover {
+            box-shadow: 0 8px 22px rgba(27, 100, 218, 0.08);
+            border-color: #bfdbfe;
+        }
         .btn-buy {
             background: #1b64da;
             color: white;
@@ -81,22 +92,12 @@
             border-radius: 10px;
             transition: all 0.2s ease;
         }
-        .btn-continue-gradient {
-            background: linear-gradient(135deg, #1b64da 0%, #4f46e5 100%);
-            color: #ffffff;
-            border: none;
-            border-radius: 14px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 8px 20px rgba(27, 100, 218, 0.35);
-            transition: 0.2s transform;
+        .btn-buy:hover {
+            background: #1551b3;
         }
-        .btn-continue-gradient:active { transform: scale(0.98); }
+        .btn-buy:active {
+            transform: scale(0.97);
+        }
         .bottom-nav {
             background: #ffffff;
             border-top: 1px solid #e2e8f0;
@@ -127,13 +128,17 @@
             border-radius: 12px;
             flex: 1;
         }
-        .nav-item.active { color: #1b64da; }
+        .nav-item.active {
+            color: #1b64da;
+        }
         .nav-item.active .nav-icon-wrapper {
             background: #ebf3ff;
             color: #1b64da;
             border-radius: 20px;
             padding: 2px 12px;
         }
+        
+        /* PREMIUM TELEGRAM FLOATING BUTTON */
         .fab-support {
             position: fixed;
             bottom: 76px;
@@ -151,6 +156,39 @@
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             border: 2px solid rgba(255, 255, 255, 0.4);
         }
+        .fab-support:hover {
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 136, 204, 0.55);
+        }
+        .fab-support:active {
+            transform: scale(0.92);
+        }
+        .fab-support::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: rgba(0, 162, 245, 0.35);
+            animation: pulse-ring 2s infinite;
+            z-index: -1;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            100% { transform: scale(1.4); opacity: 0; }
+        }
+
+        /* ACTIVE PAYMENT CARD STYLING */
+        .payment-card {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .payment-card.selected-method {
+            border-color: #1b64da !important;
+            background-color: #eff6ff !important;
+            box-shadow: 0 0 0 2px #1b64da;
+            transform: translateY(-2px);
+        }
+
         .main-page { display: none; }
         .main-page.active { display: flex; animation: fadeIn 0.3s ease-in-out; }
         .sub-page { display: none; }
@@ -160,84 +198,126 @@
 
         .full-screen-page {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #f1f4f9; z-index: 100;
-            display: flex; flex-direction: column; overflow-y: auto;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f1f4f9;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            animation: slideIn 0.25s ease-out;
         }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
         .input-field {
-            background-color: #f8fafc; border: 1.5px solid #cbd5e1; color: #1e293b;
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            color: #1e293b;
         }
         .input-field:focus {
-            border-color: #1b64da; background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(27, 100, 218, 0.2); outline: none;
+            border-color: #1b64da;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(27, 100, 218, 0.2);
+            outline: none;
         }
+
+        /* ADVANCED ANIMATED LOADER SCREEN */
         #loader {
             background: radial-gradient(circle at center, #0f172a 0%, #030712 100%);
             overflow: hidden;
         }
+        .float-item {
+            position: absolute;
+            animation: floating 4s ease-in-out infinite alternate;
+            opacity: 0.35;
+        }
+        .float-1 { top: 12%; left: 15%; animation-delay: 0s; color: #38bdf8; }
+        .float-2 { top: 18%; right: 15%; animation-delay: 1.2s; color: #10b981; }
+        .float-3 { bottom: 22%; left: 18%; animation-delay: 2.1s; color: #fbbf24; }
+        .float-4 { bottom: 18%; right: 18%; animation-delay: 0.8s; color: #a855f7; }
+        .float-5 { top: 48%; left: 8%; animation-delay: 1.7s; color: #f43f5e; }
+        .float-6 { top: 52%; right: 8%; animation-delay: 2.5s; color: #6366f1; }
+
+        @keyframes floating {
+            0% { transform: translateY(0px) rotate(0deg) scale(0.9); }
+            100% { transform: translateY(-22px) rotate(12deg) scale(1.1); }
+        }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, #60a5fa 0%, #ffffff 50%, #60a5fa 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            animation: textShimmer 2.5s linear infinite;
+        }
+        @keyframes textShimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
         .loader-ring {
-            width: 60px; height: 60px; border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
             border: 3px solid rgba(59, 130, 246, 0.15);
-            border-top-color: #38bdf8; border-right-color: #818cf8;
+            border-top-color: #38bdf8;
+            border-right-color: #818cf8;
             animation: spin 1s infinite cubic-bezier(0.55, 0.15, 0.45, 0.85);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+
+        .service-badge {
+            animation: pulse-glow 2s infinite ease-in-out;
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.9; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.02); filter: drop-shadow(0 0 8px rgba(96, 165, 250, 0.6)); }
+        }
+        
         .premium-loader-spinner {
-            width: 38px; height: 38px; border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
             background: conic-gradient(#0000 10%, #1b64da);
             -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 5px), #000 0);
             animation: spin 0.9s infinite linear;
-        }
-        .notif-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); z-index: 120; display: none;
-            flex-direction: column; justify-content: flex-end; backdrop-filter: blur(2px);
-        }
-        .notif-overlay.show { display: flex; }
-        .notif-modal-content {
-            background: #ffffff; width: 100%; max-width: 448px;
-            margin: 0 auto; height: 75%; border-radius: 24px 24px 0 0;
-            display: flex; flex-direction: column;
-        }
-        .notif-item {
-            padding: 12px 14px; border-radius: 12px;
-            background: #f8fafc; border-left: 4px solid #64748b;
-            font-size: 13px; color: #334155; line-height: 1.4;
-        }
-        .notif-item.unread {
-            background: #f0fdf4; border-left-color: #10b981; font-weight: 600;
         }
     </style>
 </head>
 <body class="max-w-md mx-auto relative bg-[#f1f4f9] min-h-screen text-[#1e293b]">
 
-    <!-- INTRO LOADER -->
+    <!-- ADVANCED ANIMATED INTRO LOADER -->
     <div id="loader" class="fixed inset-0 flex flex-col items-center justify-center z-[100] p-6 select-none text-white">
+        <!-- Floating Animated Background Icons (Email, VPN, Proxy, Taka/Money) -->
+        <div class="float-item float-1"><i data-lucide="mail" class="w-8 h-8"></i></div>
+        <div class="float-item float-2"><i data-lucide="shield-check" class="w-9 h-9"></i></div>
+        <div class="float-item float-3"><i data-lucide="banknote" class="w-9 h-9"></i></div>
+        <div class="float-item float-4"><i data-lucide="globe" class="w-8 h-8"></i></div>
+        <div class="float-item float-5"><i data-lucide="coins" class="w-7 h-7"></i></div>
+        <div class="float-item float-6"><i data-lucide="server" class="w-7 h-7"></i></div>
+
+        <!-- Center Interactive Loader Element -->
         <div class="relative flex items-center justify-center mb-6">
             <div class="loader-ring"></div>
             <div class="absolute inset-0 flex items-center justify-center">
                 <i data-lucide="zap" class="w-6 h-6 text-sky-400 fill-sky-400 animate-pulse"></i>
             </div>
         </div>
-        <div class="text-center space-y-2 z-10">
-            <h1 class="font-extrabold text-2xl tracking-wider text-white">ALL TYPE SERVICE</h1>
-            <p class="text-[11px] text-gray-400 font-medium tracking-wide">Automated Gateway & Instant Delivery</p>
-        </div>
-    </div>
 
-    <!-- NOTIFICATION MODAL -->
-    <div id="notifModal" class="notif-overlay">
-        <div class="notif-modal-content">
-            <div class="flex justify-between items-center p-4 border-b border-gray-100">
-                <div class="flex items-center gap-2">
-                    <i data-lucide="bell" class="w-5 h-5 text-blue-600"></i>
-                    <h3 class="font-bold text-gray-800 text-base">Notifications</h3>
-                </div>
-                <button onclick="closeNotifModal()" class="p-1 rounded-full hover:bg-gray-100 text-gray-500">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
+        <!-- Title and Tagline -->
+        <div class="text-center space-y-2 z-10">
+            <h1 class="font-extrabold text-2xl tracking-wider shimmer-text">ALL TYPE SERVICE</h1>
+            <div class="service-badge inline-flex items-center gap-1.5 px-3.5 py-1 bg-white/10 border border-white/20 rounded-full backdrop-blur-md">
+                <span class="text-xs font-bold tracking-widest text-sky-300">EMAIL</span>
+                <span class="text-xs text-white/40">|</span>
+                <span class="text-xs font-bold tracking-widest text-emerald-300">VPN</span>
+                <span class="text-xs text-white/40">|</span>
+                <span class="text-xs font-bold tracking-widest text-amber-300">PROXY</span>
             </div>
-            <div id="notifList" class="p-4 overflow-y-auto flex flex-col gap-2.5 flex-1"></div>
+            <p class="text-[11px] text-gray-400 font-medium tracking-wide mt-2">Fast, Secure & Automated System</p>
         </div>
     </div>
 
@@ -253,24 +333,18 @@
                 <span class="text-xl font-black tracking-tight text-white">ALL SERVICE</span>
             </div>
 
-            <div class="flex items-center gap-2.5">
-                <div id="header-balance-area" class="wallet-pill flex items-center gap-1.5 cursor-pointer" onclick="navigateTo('pay-page')" title="Deposit">
+            <div class="flex items-center gap-3">
+                <div id="header-balance-area" class="wallet-pill flex items-center gap-2 cursor-pointer" onclick="navigateTo('pay-page')" title="Deposit">
                     <i data-lucide="wallet" class="w-4 h-4 text-white"></i>
                     <span id="header-coin-balance" class="font-bold text-sm text-white">৳0.00</span>
                 </div>
-                
-                <button onclick="openNotifModal()" class="relative bg-white/20 p-2 rounded-xl text-white hover:bg-white/30 transition" title="Notifications">
-                    <i data-lucide="bell" class="w-5 h-5"></i>
-                    <span id="notif-badge-dot" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-blue-600 hidden"></span>
-                </button>
-
                 <button id="header-menu-btn" class="bg-white/20 p-2 rounded-xl text-white hover:bg-white/30 transition">
-                    <i data-lucide="menu" class="w-5 h-5"></i>
+                    <i data-lucide="menu" class="w-6 h-6"></i>
                 </button>
             </div>
         </header>
 
-        <!-- FLOATING SUPPORT BUTTON -->
+        <!-- DYNAMIC FLOATING TELEGRAM SUPPORT BUTTON -->
         <a id="telegram-support-fab" href="https://t.me/EXPERTearn_team" target="_blank" class="fab-support" title="Telegram Support">
             <svg class="w-6 h-6 fill-white" viewBox="0 0 24 24">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
@@ -280,8 +354,10 @@
         <!-- MAIN CONTENT AREA -->
         <main class="flex-grow pb-24">
 
-            <!-- HOME PAGE -->
+            <!-- HOME PAGE (Product Catalog with Categories Grid) -->
             <div id="home-page" class="p-4 space-y-5 sub-page">
+
+                <!-- CATEGORIES SECTION -->
                 <div class="grid grid-cols-2 gap-2.5" id="category-filter-grid">
                     <button class="category-btn active" data-category="all" onclick="filterByCategory('all', this)">
                         <i data-lucide="layout-grid" class="w-4 h-4 text-blue-500"></i>
@@ -325,6 +401,7 @@
                     </button>
                 </div>
 
+                <!-- PRODUCT LISTING BANNER -->
                 <div class="mt-4 space-y-4">
                     <div class="bg-gradient-to-r from-[#1b64da] to-[#0f4bb5] text-white p-4 rounded-2xl flex items-start gap-3 shadow-md">
                         <div class="bg-white/20 p-2.5 rounded-xl">
@@ -335,82 +412,80 @@
                             <p id="current-section-subtitle" class="text-xs text-blue-100 mt-0.5">Explore our full collection of verified accounts & proxies</p>
                         </div>
                     </div>
+
+                    <!-- PRODUCTS CONTAINER -->
                     <div id="product-list-container" class="space-y-3.5 min-h-[220px]"></div>
                 </div>
+
             </div>
 
-            <!-- AUTOMATED DEPOSIT / PAY GATEWAY PAGE -->
-            <div id="pay-page" class="p-4 space-y-4 sub-page">
-                
-                <div id="deposit-input-view" class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm flex flex-col items-center text-center space-y-4">
-                    <div class="w-20 h-20 rounded-2xl bg-blue-50 border-2 border-blue-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
-                        <i data-lucide="shield-check" class="w-10 h-10 text-blue-600"></i>
+            <!-- DEPOSIT / PAY PAGE (Upgraded Auto-Select Flow) -->
+            <div id="pay-page" class="p-4 space-y-5 sub-page">
+                <div class="text-center">
+                    <h2 class="text-xl font-black text-gray-800">Deposit Center</h2>
+                    <p class="text-xs text-gray-500">যেকোনো একটি নাম্বার কপি করুন, মেথড অটোমেটিক সিলেক্ট হয়ে যাবে</p>
+                </div>
+
+                <!-- PAYMENT METHODS CARDS (Values auto-filled from Firebase) -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div id="card-nagad" onclick="selectAndCopyMethod('Nagad', 'deposit-number-nagad', this)" class="payment-card bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm relative">
+                        <img src="https://i.postimg.cc/Jh9s6jWw/20250922-113350.png" alt="Nagad" class="w-9 h-9 rounded-full mx-auto mb-1.5" loading="lazy">
+                        <p class="font-bold text-sm text-gray-800">নগদ (Personal)</p>
+                        <p id="deposit-number-nagad" class="text-gray-600 font-mono text-xs my-1 font-semibold">01864260513</p>
+                        <button class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
+                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy & Select</span>
+                        </button>
+                    </div>
+
+                    <div id="card-bkash" onclick="selectAndCopyMethod('bKash', 'deposit-number-bkash', this)" class="payment-card bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm relative">
+                        <img src="https://i.postimg.cc/tCwGVkdH/20250922-113514.png" alt="bKash" class="w-9 h-9 rounded-full mx-auto mb-1.5" loading="lazy">
+                        <p class="font-bold text-sm text-gray-800">বিকাশ (Personal)</p>
+                        <p id="deposit-number-bkash" class="text-gray-600 font-mono text-xs my-1 font-semibold">01827750260</p>
+                        <button class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
+                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy & Select</span>
+                        </button>
+                    </div>
+
+                    <div id="card-rocket" onclick="selectAndCopyMethod('Rocket', 'deposit-number-rocket', this)" class="payment-card bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm relative">
+                        <img src="https://i.postimg.cc/htsw10Tj/20250922-113924.png" alt="Rocket" class="w-9 h-9 rounded-full mx-auto mb-1.5" loading="lazy">
+                        <p class="font-bold text-sm text-gray-800">রকেট (Personal)</p>
+                        <p id="deposit-number-rocket" class="text-gray-600 font-mono text-xs my-1 font-semibold">018277502604</p>
+                        <button class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
+                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy & Select</span>
+                        </button>
+                    </div>
+
+                    <div id="card-binance" onclick="selectAndCopyMethod('Binance', 'deposit-number-binance', this)" class="payment-card bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm relative">
+                        <img src="https://i.postimg.cc/L6LFLfxY/20250922-113752.png" alt="Binance" class="w-9 h-9 rounded-full mx-auto mb-1.5" loading="lazy">
+                        <p class="font-bold text-sm text-gray-800">Binance Pay ID</p>
+                        <p id="deposit-number-binance" class="text-gray-600 font-mono text-xs my-1 font-semibold">1105989483</p>
+                        <button class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
+                            <i data-lucide="copy" class="w-3 h-3"></i><span>Copy & Select</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- DEPOSIT SUBMISSION FORM -->
+                <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between border-b pb-2">
+                        <h3 class="font-bold text-gray-800 text-sm">ডিপোজিট সাবমিট ফর্ম</h3>
+                        <span id="selected-method-badge" class="text-xs bg-blue-100 text-blue-700 font-bold px-2.5 py-0.5 rounded-full">মেথড সিলেক্ট করুন</span>
                     </div>
 
                     <div>
-                        <h2 class="text-xl font-extrabold text-gray-800">Instant Deposit Gateway</h2>
-                        <div class="inline-block text-xs text-blue-700 font-bold bg-blue-50 px-3 py-1 rounded-full mt-1.5" id="depositUserTag">Telegram User</div>
-                    </div>
-
-                    <!-- Payment Note -->
-                    <div class="w-full bg-[#fffdf0] border-l-4 border-amber-500 rounded-r-xl p-3 text-left">
-                        <h5 class="text-xs font-bold text-amber-900 mb-0.5 flex items-center gap-1.5">
-                            <i data-lucide="info" class="w-3.5 h-3.5 text-amber-600"></i> পেমেন্ট নির্দেশিকা
-                        </h5>
-                        <p class="text-[11.5px] text-amber-800 leading-relaxed">
-                            টাকার পরিমাণ লিখে নিচের বাটনে চাপুন। <b>বিকাশ, নগদ, রকেট</b> এর মাধ্যমে পেমেন্ট সম্পন্ন করলেই আপনার একাউন্টে <b>স্বয়ংক্রিয়ভাবে ও তাৎক্ষণিক ব্যালেন্স যোগ হয়ে যাবে।</b>
-                        </p>
-                    </div>
-
-                    <!-- Amount Box -->
-                    <div class="w-full text-left space-y-1.5 pt-1">
-                        <label class="block text-xs font-bold text-gray-700">আপনি কত টাকা ডিপোজিট করতে চান লিখুন (BDT)</label>
-                        <div class="relative flex items-center">
-                            <span class="absolute left-4 font-bold text-gray-400 text-base">৳</span>
-                            <input type="number" id="amountInput" class="w-full py-3.5 pl-8 pr-4 text-center text-xl font-extrabold text-gray-800 border-2 border-blue-400 rounded-2xl outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100 transition" value="100" placeholder="100" min="10">
-                        </div>
-                    </div>
-
-                    <!-- Payment Methods logos -->
-                    <div class="flex items-center justify-center gap-3 pt-1">
-                        <img src="https://i.postimg.cc/tCwGVkdH/20250922-113514.png" alt="bKash" class="w-7 h-7 rounded-full shadow-sm">
-                        <img src="https://i.postimg.cc/Jh9s6jWw/20250922-113350.png" alt="Nagad" class="w-7 h-7 rounded-full shadow-sm">
-                        <img src="https://i.postimg.cc/htsw10Tj/20250922-113924.png" alt="Rocket" class="w-7 h-7 rounded-full shadow-sm">
-                    </div>
-
-                    <!-- Action Button -->
-                    <button id="btnPayGateway" onclick="initiatePayment()" class="btn-continue-gradient w-full py-4 rounded-2xl shadow-lg mt-2">
-                        <i data-lucide="lock" class="w-4 h-4 text-yellow-300"></i> Continue to Payment
-                    </button>
-                </div>
-
-                <!-- Payment Success Screen -->
-                <div id="payment-gateway-success" class="hidden bg-white p-6 rounded-3xl border border-gray-200 shadow-sm flex flex-col items-center text-center space-y-4">
-                    <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center">
-                        <i data-lucide="check-circle" class="w-10 h-10 stroke-[2.5]"></i>
+                        <label class="block text-xs font-bold text-gray-600 mb-1">টাকার পরিমাণ (BDT)</label>
+                        <input id="deposit-amount" type="number" placeholder="কত টাকা পাঠিয়েছেন লিখুন" class="w-full p-2.5 rounded-xl input-field text-sm font-semibold">
                     </div>
                     <div>
-                        <h3 class="text-sm font-bold text-emerald-600">পেমেন্ট সফলভাবে রিসিভ হয়েছে!</h3>
-                        <h2 class="text-xl font-black text-gray-800 mt-0.5">Payment Successful!</h2>
-                        <p class="text-xs text-gray-500 mt-1">Transaction verified automatically and balance updated.</p>
+                        <label class="block text-xs font-bold text-gray-600 mb-1">আপনার প্রেরক নম্বর (Sender Number)</label>
+                        <input id="sender-number" type="text" placeholder="যে নম্বর থেকে টাকা পাঠিয়েছেন" class="w-full p-2.5 rounded-xl input-field text-sm">
                     </div>
-
-                    <div class="w-full bg-gray-50 p-3.5 rounded-2xl border border-dashed border-gray-300 text-left space-y-1 text-xs">
-                        <div class="flex justify-between">
-                            <span class="text-gray-500">Transaction ID:</span>
-                            <span id="gateway-display-txid" class="font-mono font-bold text-blue-600"></span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-500">Amount Added:</span>
-                            <span id="gateway-display-amount" class="font-bold text-gray-800"></span>
-                        </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 mb-1">Transaction ID (TrxID)</label>
+                        <input id="deposit-txid" type="text" placeholder="TrxID এখানে দিন" class="w-full p-2.5 rounded-xl input-field text-sm uppercase">
                     </div>
-
-                    <button onclick="document.getElementById('payment-gateway-success').classList.add('hidden'); document.getElementById('deposit-input-view').classList.remove('hidden'); navigateTo('home-page');" class="btn-continue-gradient w-full py-3.5 rounded-xl">
-                        Return to Shop
-                    </button>
+                    <button id="deposit-btn" class="w-full py-3 rounded-xl btn-buy font-bold text-sm shadow-md">Confirm & Submit Deposit</button>
                 </div>
-
             </div>
 
             <!-- ORDERS / PURCHASE HISTORY PAGE -->
@@ -425,6 +500,7 @@
                         <button id="download-orders-btn" class="bg-emerald-50 text-emerald-600 p-2 rounded-lg text-xs font-bold flex items-center gap-1 border border-emerald-200 hover:bg-emerald-100 transition"><i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i> Excel</button>
                     </div>
                 </div>
+
                 <div id="orders-purchase-history" class="space-y-3 min-h-[200px]"></div>
             </div>
 
@@ -543,31 +619,45 @@
         <!-- BOTTOM NAVIGATION BAR -->
         <nav class="bottom-nav">
             <div class="nav-item active" data-page="home-page" onclick="navigateTo('home-page')">
-                <div class="nav-icon-wrapper flex items-center justify-center"><i data-lucide="layout-grid" class="w-5 h-5"></i></div>
+                <div class="nav-icon-wrapper flex items-center justify-center">
+                    <i data-lucide="layout-grid" class="w-5 h-5"></i>
+                </div>
                 <span>Home</span>
             </div>
             <div class="nav-item" data-page="pay-page" onclick="navigateTo('pay-page')">
-                <div class="nav-icon-wrapper flex items-center justify-center"><i data-lucide="coins" class="w-5 h-5"></i></div>
+                <div class="nav-icon-wrapper flex items-center justify-center">
+                    <i data-lucide="coins" class="w-5 h-5"></i>
+                </div>
                 <span>Deposit</span>
             </div>
             <div class="nav-item" data-page="orders-page" onclick="navigateTo('orders-page')">
-                <div class="nav-icon-wrapper flex items-center justify-center"><i data-lucide="shopping-cart" class="w-5 h-5"></i></div>
+                <div class="nav-icon-wrapper flex items-center justify-center">
+                    <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                </div>
                 <span>Orders</span>
             </div>
             <div class="nav-item" data-page="features-page" onclick="navigateTo('features-page')">
-                <div class="nav-icon-wrapper flex items-center justify-center"><i data-lucide="users" class="w-5 h-5"></i></div>
+                <div class="nav-icon-wrapper flex items-center justify-center">
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                </div>
                 <span>Transfer</span>
             </div>
             <div class="nav-item" data-page="history-page" onclick="navigateTo('history-page')">
-                <div class="nav-icon-wrapper flex items-center justify-center"><i data-lucide="history" class="w-5 h-5"></i></div>
+                <div class="nav-icon-wrapper flex items-center justify-center">
+                    <i data-lucide="history" class="w-5 h-5"></i>
+                </div>
                 <span>History</span>
             </div>
             <div class="nav-item" data-page="profile-page" onclick="navigateTo('profile-page')">
-                <div class="nav-icon-wrapper flex items-center justify-center"><i data-lucide="user" class="w-5 h-5"></i></div>
+                <div class="nav-icon-wrapper flex items-center justify-center">
+                    <i data-lucide="user" class="w-5 h-5"></i>
+                </div>
                 <span>Profile</span>
             </div>
             <div class="nav-item hidden" id="admin-nav-item" data-page="admin-page" onclick="navigateTo('admin-page')">
-                <div class="nav-icon-wrapper flex items-center justify-center"><i data-lucide="shield" class="w-5 h-5"></i></div>
+                <div class="nav-icon-wrapper flex items-center justify-center">
+                    <i data-lucide="shield" class="w-5 h-5"></i>
+                </div>
                 <span>Admin</span>
             </div>
         </nav>
@@ -660,11 +750,8 @@
         </div>
     </div>
 
-    <!-- CORE JAVASCRIPT & FIREBASE ENGINE -->
+    <!-- FIREBASE & CORE ENGINE -->
     <script type="module">
-        const API_KEY = 'K2fcHX0LFHjCdVHzPAleKMBWYAdOsh9l4LdIyGp8CDmfqZZKzP';
-        const BASE_API_URL = 'https://client-pg.daweblab.com/api/payment';
-
         const ADMIN_UID = "6954647230";
         const firebaseConfig = {
             apiKey: "AIzaSyAEV4zkuTcRYIFP2AMmKJTyDUTzSYLnbbM",
@@ -677,7 +764,7 @@
         };
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, limit, runTransaction, getCountFromServer, writeBatch, updateDoc, onSnapshot, increment } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, limit, runTransaction, getCountFromServer, writeBatch, updateDoc, Timestamp, onSnapshot, increment } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
@@ -686,6 +773,7 @@
         let userData = null;
         let appConfig = {};
         let selectedCategory = 'all';
+        let currentSelectedDepositMethod = '';
         let userPurchasesCache = [];
 
         const loader = document.getElementById('loader');
@@ -705,8 +793,8 @@
             lucide.createIcons();
             setupEventListeners();
             await initUserSession();
-            await checkReturnPaymentStatus();
-
+            
+            // Smoothly remove intro loader
             setTimeout(() => {
                 loader.style.transition = 'opacity 0.4s ease';
                 loader.style.opacity = '0';
@@ -740,33 +828,25 @@
                 await setDoc(userRef, userData);
             }
 
-            onSnapshot(doc(db, "users", tgChatId), (docSnap) => {
-                if (docSnap.exists()) {
-                    userData = docSnap.data();
-                    updateUI();
-                }
-            });
-
-            listenForNotifications(tgChatId);
             await fetchAppConfig();
 
             if (tgChatId === ADMIN_UID) {
                 document.getElementById('admin-nav-item')?.classList.remove('hidden');
             }
 
-            document.getElementById('depositUserTag').textContent = userData.name || `@${userData.username || tgChatId}`;
-
             updateUI();
             showMainPage('app-container');
             navigateTo('home-page');
         }
 
+        // Fetch dynamic config: Telegram links, numbers, products
         async function fetchAppConfig() {
             try {
                 const configRef = doc(db, "config", "main");
                 const configSnap = await getDoc(configRef);
                 appConfig = configSnap.exists() ? configSnap.data() : {};
 
+                // Dynamic Telegram Links
                 if (appConfig.telegramSupportUrl) {
                     const fab = document.getElementById('telegram-support-fab');
                     if (fab) fab.href = appConfig.telegramSupportUrl;
@@ -779,10 +859,36 @@
                     const bot = document.getElementById('menu-telegram-bot');
                     if (bot) bot.href = appConfig.telegramBotUrl;
                 }
+
+                // Dynamic Payment Numbers from Firebase (if present in config/main)
+                if (appConfig.paymentNumbers) {
+                    if (appConfig.paymentNumbers.nagad) document.getElementById('deposit-number-nagad').textContent = appConfig.paymentNumbers.nagad;
+                    if (appConfig.paymentNumbers.bkash) document.getElementById('deposit-number-bkash').textContent = appConfig.paymentNumbers.bkash;
+                    if (appConfig.paymentNumbers.rocket) document.getElementById('deposit-number-rocket').textContent = appConfig.paymentNumbers.rocket;
+                    if (appConfig.paymentNumbers.binance) document.getElementById('deposit-number-binance').textContent = appConfig.paymentNumbers.binance;
+                }
             } catch (e) {
                 console.error("Config fetch error:", e);
             }
         }
+
+        // Auto-select method when clicking card / copying number
+        window.selectAndCopyMethod = function(methodName, numberElementId, cardElement) {
+            currentSelectedDepositMethod = methodName;
+            
+            // Visual card selection feedback
+            document.querySelectorAll('.payment-card').forEach(c => c.classList.remove('selected-method'));
+            if(cardElement) cardElement.classList.add('selected-method');
+
+            const badge = document.getElementById('selected-method-badge');
+            if(badge) {
+                badge.textContent = `সিলেক্টেড: ${methodName}`;
+                badge.className = 'text-xs bg-emerald-100 text-emerald-700 font-bold px-2.5 py-0.5 rounded-full';
+            }
+
+            const numText = document.getElementById(numberElementId).textContent.trim();
+            copyToClipboard(numText, null, `${methodName} নম্বর (${numText}) কপি হয়েছে এবং মেথড সিলেক্ট করা হয়েছে!`);
+        };
 
         function updateUI() {
             if (!userData) return;
@@ -819,212 +925,6 @@
         }
         window.navigateTo = navigateTo;
 
-        /* ================== TELEGRAM NATIVE SECURE PAYMENT ENGINE ================== */
-
-        window.initiatePayment = async function() {
-            if (!userData) return showAlert('প্রথমে ইউজার সেশন লোড হতে দিন।');
-            const amountInput = document.getElementById('amountInput');
-            const amount = amountInput.value.trim();
-
-            if (!amount || parseFloat(amount) < 10) {
-                return showAlert('অনুগ্রহ করে সর্বনিম্ন ৳১০ বা তার বেশি ডিপোজিট অ্যামাউন্ট লিখুন।');
-            }
-
-            const btn = document.getElementById('btnPayGateway');
-            btn.disabled = true;
-            btn.innerHTML = `<i data-lucide="loader" class="w-4 h-4 animate-spin"></i> Processing...`;
-            lucide.createIcons();
-
-            const returnUrl = window.location.href.split('?')[0];
-
-            const payload = {
-                amount: String(amount),
-                success_url: returnUrl + "?status=success",
-                cancel_url: returnUrl + "?status=cancel",
-                metadata: {
-                    uid: String(userData.tgChatId),
-                    name: userData.name || userData.username || 'User'
-                }
-            };
-
-            try {
-                // Multi-Proxy Bridge specifically designed for Telegram WebApp
-                let resData = null;
-                const endpoints = [
-                    `${BASE_API_URL}/create`,
-                    `https://api.allorigins.win/raw?url=${encodeURIComponent(`${BASE_API_URL}/create`)}`
-                ];
-
-                for (let url of endpoints) {
-                    try {
-                        const res = await fetch(url, {
-                            method: 'POST',
-                            headers: {
-                                'API-KEY': API_KEY,
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(payload)
-                        });
-                        if (res.ok) {
-                            resData = await res.json();
-                            if (resData && (resData.payment_url || resData.url || (resData.data && (resData.data.payment_url || resData.data.url)))) break;
-                        }
-                    } catch (e) {}
-                }
-
-                let payUrl = resData ? (resData.payment_url || resData.url || (resData.data && (resData.data.payment_url || resData.data.url))) : null;
-
-                if (payUrl) {
-                    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openLink) {
-                        window.Telegram.WebApp.openLink(payUrl);
-                    } else {
-                        window.location.href = payUrl;
-                    }
-                } else {
-                    showAlert('পেমেন্ট গেটওয়েতে সংযোগ সম্ভব হচ্ছে না। অনুগ্রহ করে আবার চেষ্টা করুন।');
-                }
-            } catch (err) {
-                showAlert('পেমেন্ট তৈরি করতে সমস্যা হয়েছে।');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<i data-lucide="lock" class="w-4 h-4 text-yellow-300"></i> Continue to Payment`;
-                lucide.createIcons();
-            }
-        };
-
-        async function checkReturnPaymentStatus() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const transactionId = urlParams.get('transactionId') || urlParams.get('transaction_id') || urlParams.get('txid');
-            const urlStatus = urlParams.get('status');
-
-            if (transactionId || urlStatus === 'success') {
-                showAlert('পেমেন্ট যাচাই করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...');
-
-                try {
-                    let data = null;
-                    const res = await fetch(`${BASE_API_URL}/verify`, {
-                        method: 'POST',
-                        headers: {
-                            'API-KEY': API_KEY,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ transaction_id: transactionId })
-                    });
-                    data = await res.json();
-
-                    const apiStatus = data && data.status ? String(data.status).toUpperCase() : "";
-
-                    if (apiStatus === "SUCCESS" || apiStatus === "COMPLETED" || (data && (data.payment_status === "COMPLETED" || data.success === true))) {
-                        let depositAmount = parseFloat(data.amount || urlParams.get('paymentAmount') || 0);
-
-                        if (depositAmount > 0 && transactionId) {
-                            await savePaymentAndUpdateBalance(depositAmount, transactionId, data);
-                            document.getElementById('gateway-display-txid').textContent = transactionId;
-                            document.getElementById('gateway-display-amount').textContent = `৳${depositAmount.toFixed(2)}`;
-                            document.getElementById('deposit-input-view').classList.add('hidden');
-                            document.getElementById('payment-gateway-success').classList.remove('hidden');
-                            navigateTo('pay-page');
-                        }
-                    } else {
-                        showAlert('পেমেন্ট ভেরিফিকেশন সম্পন্ন হয়নি বা বাতিল হয়েছে।');
-                    }
-                } catch (e) {
-                    showAlert('পেমেন্ট ভেরিফিকেশন করতে সমস্যা হয়েছে।');
-                } finally {
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                }
-            }
-        }
-
-        async function savePaymentAndUpdateBalance(depositAmount, txid, fullData) {
-            if (!userData) return;
-            const uid = String(userData.tgChatId);
-            const depositDocRef = doc(db, "deposits", txid);
-
-            try {
-                await runTransaction(db, async (t) => {
-                    const dSnap = await t.get(depositDocRef);
-                    if (!dSnap.exists()) {
-                        const userRef = doc(db, "users", uid);
-                        t.set(depositDocRef, {
-                            transactionId: txid,
-                            userId: uid,
-                            userName: userData.name,
-                            amount: depositAmount,
-                            method: "Automated Gateway",
-                            status: "approved",
-                            details: fullData || {},
-                            requestedAt: serverTimestamp()
-                        });
-                        t.update(userRef, { balance: increment(depositAmount) });
-                        
-                        const notifRef = doc(collection(db, "users", uid, "notifications"));
-                        t.set(notifRef, {
-                            message: `অভিনন্দন! আপনার একাউন্টে ৳${depositAmount} সফলভাবে যোগ হয়েছে। (TXID: ${txid})`,
-                            timestamp: serverTimestamp(),
-                            read: false
-                        });
-                    }
-                });
-            } catch (e) {
-                console.error("Save deposit error:", e);
-            }
-        }
-
-        /* ================== NOTIFICATIONS ================== */
-
-        function listenForNotifications(uid) {
-            const q = query(collection(db, "users", uid, "notifications"), where("read", "==", false));
-            onSnapshot(q, (snapshot) => {
-                const badge = document.getElementById('notif-badge-dot');
-                if (badge) {
-                    if (!snapshot.empty) badge.classList.remove('hidden');
-                    else badge.classList.add('hidden');
-                }
-            });
-        }
-
-        window.openNotifModal = async function() {
-            document.getElementById('notifModal').classList.add('show');
-            const listDiv = document.getElementById('notifList');
-            listDiv.innerHTML = getLoadingHTML();
-
-            try {
-                const q = query(collection(db, "users", userData.tgChatId, "notifications"), orderBy("timestamp", "desc"), limit(20));
-                const snap = await getDocs(q);
-
-                if (snap.empty) {
-                    listDiv.innerHTML = `<div class="text-center text-gray-400 text-xs py-8">কোনো নোটিফিকেশন নেই</div>`;
-                    return;
-                }
-
-                const batch = writeBatch(db);
-                listDiv.innerHTML = snap.docs.map(d => {
-                    const data = d.data();
-                    if (!data.read) {
-                        batch.update(d.ref, { read: true });
-                    }
-                    const timeStr = data.timestamp ? data.timestamp.toDate().toLocaleString('en-GB') : '';
-                    return `
-                    <div class="notif-item ${!data.read ? 'unread' : ''}">
-                        <p>${data.message}</p>
-                        <span class="text-[10px] text-gray-400 block mt-1">${timeStr}</span>
-                    </div>`;
-                }).join('');
-
-                await batch.commit();
-                document.getElementById('notif-badge-dot')?.classList.add('hidden');
-            } catch (e) {
-                listDiv.innerHTML = `<div class="text-center text-red-500 text-xs py-4">নোটিফিকেশন লোড করা যায়নি</div>`;
-            }
-        };
-
-        window.closeNotifModal = function() {
-            document.getElementById('notifModal').classList.remove('show');
-        };
-
-        /* ================== STORE PRODUCTS & ORDERS ================== */
-
         window.filterByCategory = function(category, element) {
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
             element.classList.add('active');
@@ -1039,6 +939,7 @@
                 titleEl.textContent = `${category}`;
                 subEl.textContent = `High quality verified ${category} with instant delivery`;
             }
+
             renderProductsBySelection();
         };
 
@@ -1226,6 +1127,7 @@
             }
         }
 
+        // Export Orders to Excel Function
         function exportOrdersToExcel() {
             if (!userPurchasesCache || userPurchasesCache.length === 0) {
                 return showAlert("ডাউনলোড করার মতো কোনো অর্ডার হিস্ট্রি নেই।");
@@ -1245,6 +1147,7 @@
             XLSX.writeFile(workbook, `Orders_${userData.tgChatId}.xlsx`);
         }
 
+        // Copy orders placed in the last 4 hours
         function copyLast4HoursOrders() {
             if (!userPurchasesCache || userPurchasesCache.length === 0) {
                 return showAlert("কপি করার মতো কোনো অর্ডার হিস্ট্রি নেই।");
@@ -1265,7 +1168,7 @@
             if(!list) return;
             list.innerHTML = getLoadingHTML();
             try {
-                const q = query(collection(db, "deposits"), where("userId", "==", userData.tgChatId), orderBy("requestedAt", "desc"), limit(20));
+                const q = query(collection(db, "deposits"), where("userId", "==", userData.tgChatId), orderBy("requestedAt", "desc"));
                 const snap = await getDocs(q);
                 if (snap.empty) return list.innerHTML = '<p class="text-center text-xs text-gray-400">কোনো হিস্ট্রি নেই</p>';
                 list.innerHTML = snap.docs.map(doc => {
@@ -1336,6 +1239,7 @@
             document.getElementById('header-menu-btn').addEventListener('click', () => {
                 document.getElementById('menu-page').classList.remove('hidden');
             });
+            document.getElementById('deposit-btn').addEventListener('click', handleDepositRequest);
             document.getElementById('download-orders-btn').addEventListener('click', exportOrdersToExcel);
             document.getElementById('copy-orders-btn').addEventListener('click', copyLast4HoursOrders);
             document.getElementById('features-receive-btn').addEventListener('click', () => {
@@ -1344,6 +1248,43 @@
             document.getElementById('submit-send-btn').addEventListener('click', handleSendRequest);
             document.getElementById('report-issue-form').addEventListener('submit', handleReportSubmit);
             document.getElementById('add-mails-btn').addEventListener('click', handleAddMails);
+        }
+
+        async function handleDepositRequest() {
+            if (!currentSelectedDepositMethod) {
+                return showAlert("অনুগ্রহ করে উপরের বিকাশ/নগদ/রকেট বা বাইন্যান্স নম্বরে ক্লিক করে কপি করুন!");
+            }
+            const amount = parseFloat(document.getElementById('deposit-amount').value);
+            const senderNumber = document.getElementById('sender-number').value.trim();
+            const transactionId = document.getElementById('deposit-txid').value.trim();
+
+            if (!amount || amount <= 0 || !senderNumber || !transactionId) {
+                return showAlert("অনুগ্রহ করে সকল তথ্য পূরণ করুন।");
+            }
+
+            loader.style.display = 'flex';
+            loader.style.opacity = '1';
+            try {
+                await addDoc(collection(db, "deposits"), {
+                    userId: userData.tgChatId,
+                    userName: userData.name,
+                    method: currentSelectedDepositMethod,
+                    amount,
+                    senderNumber,
+                    transactionId,
+                    status: "pending",
+                    requestedAt: serverTimestamp()
+                });
+                showAlert("আপনার ডিপোজিট অনুরোধ সফলভাবে জমা হয়েছে। অতি শীঘ্রই ব্যালেন্স যুক্ত হবে।");
+                document.getElementById('deposit-amount').value = '';
+                document.getElementById('sender-number').value = '';
+                document.getElementById('deposit-txid').value = '';
+                navigateTo('history-page');
+            } catch(e) {
+                showAlert("ডিপোজিট সাবমিট করতে সমস্যা হয়েছে।");
+            } finally {
+                loader.style.display = 'none';
+            }
         }
 
         async function handleSendRequest() {
