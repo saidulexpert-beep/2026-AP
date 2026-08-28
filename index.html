@@ -43,10 +43,6 @@
             padding: 4px 12px;
             transition: all 0.2s ease;
         }
-        .wallet-pill:active {
-            transform: scale(0.96);
-            background: rgba(255, 255, 255, 0.28);
-        }
         .category-btn {
             background: #ffffff;
             color: #475569;
@@ -64,10 +60,7 @@
             cursor: pointer;
             text-align: center;
         }
-        .category-btn:hover {
-            border-color: #93c5fd;
-            transform: translateY(-1px);
-        }
+        .category-btn:hover { border-color: #93c5fd; transform: translateY(-1px); }
         .category-btn.active {
             background: #1b64da;
             color: #ffffff;
@@ -81,10 +74,6 @@
             box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
             transition: all 0.25s ease;
         }
-        .product-card:hover {
-            box-shadow: 0 8px 22px rgba(27, 100, 218, 0.08);
-            border-color: #bfdbfe;
-        }
         .btn-buy {
             background: #1b64da;
             color: white;
@@ -92,9 +81,6 @@
             border-radius: 10px;
             transition: all 0.2s ease;
         }
-        .btn-buy:hover { background: #1551b3; }
-        .btn-buy:active { transform: scale(0.97); }
-
         .btn-continue-gradient {
             background: linear-gradient(135deg, #1b64da 0%, #4f46e5 100%);
             color: #ffffff;
@@ -111,7 +97,6 @@
             transition: 0.2s transform;
         }
         .btn-continue-gradient:active { transform: scale(0.98); }
-
         .bottom-nav {
             background: #ffffff;
             border-top: 1px solid #e2e8f0;
@@ -149,7 +134,6 @@
             border-radius: 20px;
             padding: 2px 12px;
         }
-        
         .fab-support {
             position: fixed;
             bottom: 76px;
@@ -167,8 +151,6 @@
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
             border: 2px solid rgba(255, 255, 255, 0.4);
         }
-        .fab-support:hover { transform: scale(1.08) translateY(-2px); }
-
         .main-page { display: none; }
         .main-page.active { display: flex; animation: fadeIn 0.3s ease-in-out; }
         .sub-page { display: none; }
@@ -178,123 +160,52 @@
 
         .full-screen-page {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #f1f4f9;
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-            animation: slideIn 0.25s ease-out;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #f1f4f9; z-index: 100;
+            display: flex; flex-direction: column; overflow-y: auto;
         }
-        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-
         .input-field {
-            background-color: #f8fafc;
-            border: 1.5px solid #cbd5e1;
-            color: #1e293b;
+            background-color: #f8fafc; border: 1.5px solid #cbd5e1; color: #1e293b;
         }
         .input-field:focus {
-            border-color: #1b64da;
-            background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(27, 100, 218, 0.2);
-            outline: none;
+            border-color: #1b64da; background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(27, 100, 218, 0.2); outline: none;
         }
-
         #loader {
             background: radial-gradient(circle at center, #0f172a 0%, #030712 100%);
             overflow: hidden;
         }
-        .float-item {
-            position: absolute;
-            animation: floating 4s ease-in-out infinite alternate;
-            opacity: 0.35;
-        }
-        .float-1 { top: 12%; left: 15%; animation-delay: 0s; color: #38bdf8; }
-        .float-2 { top: 18%; right: 15%; animation-delay: 1.2s; color: #10b981; }
-        .float-3 { bottom: 22%; left: 18%; animation-delay: 2.1s; color: #fbbf24; }
-        .float-4 { bottom: 18%; right: 18%; animation-delay: 0.8s; color: #a855f7; }
-
-        @keyframes floating {
-            0% { transform: translateY(0px) rotate(0deg) scale(0.9); }
-            100% { transform: translateY(-22px) rotate(12deg) scale(1.1); }
-        }
-
-        .shimmer-text {
-            background: linear-gradient(90deg, #60a5fa 0%, #ffffff 50%, #60a5fa 100%);
-            background-size: 200% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            animation: textShimmer 2.5s linear infinite;
-        }
-        @keyframes textShimmer {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
-
         .loader-ring {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+            width: 60px; height: 60px; border-radius: 50%;
             border: 3px solid rgba(59, 130, 246, 0.15);
-            border-top-color: #38bdf8;
-            border-right-color: #818cf8;
+            border-top-color: #38bdf8; border-right-color: #818cf8;
             animation: spin 1s infinite cubic-bezier(0.55, 0.15, 0.45, 0.85);
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-
         .premium-loader-spinner {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
+            width: 38px; height: 38px; border-radius: 50%;
             background: conic-gradient(#0000 10%, #1b64da);
             -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 5px), #000 0);
             animation: spin 0.9s infinite linear;
         }
-
-        /* Notifications Bottom Sheet Overlay */
         .notif-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 120;
-            display: none;
-            flex-direction: column;
-            justify-content: flex-end;
-            backdrop-filter: blur(2px);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 120; display: none;
+            flex-direction: column; justify-content: flex-end; backdrop-filter: blur(2px);
         }
         .notif-overlay.show { display: flex; }
         .notif-modal-content {
-            background: #ffffff;
-            width: 100%;
-            max-width: 448px;
-            margin: 0 auto;
-            height: 75%;
-            border-radius: 24px 24px 0 0;
-            display: flex;
-            flex-direction: column;
-            animation: slideUp 0.3s ease-out;
+            background: #ffffff; width: 100%; max-width: 448px;
+            margin: 0 auto; height: 75%; border-radius: 24px 24px 0 0;
+            display: flex; flex-direction: column;
         }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
         .notif-item {
-            padding: 12px 14px;
-            border-radius: 12px;
-            background: #f8fafc;
-            border-left: 4px solid #64748b;
-            font-size: 13px;
-            color: #334155;
-            line-height: 1.4;
+            padding: 12px 14px; border-radius: 12px;
+            background: #f8fafc; border-left: 4px solid #64748b;
+            font-size: 13px; color: #334155; line-height: 1.4;
         }
         .notif-item.unread {
-            background: #f0fdf4;
-            border-left-color: #10b981;
-            font-weight: 600;
+            background: #f0fdf4; border-left-color: #10b981; font-weight: 600;
         }
     </style>
 </head>
@@ -302,20 +213,14 @@
 
     <!-- INTRO LOADER -->
     <div id="loader" class="fixed inset-0 flex flex-col items-center justify-center z-[100] p-6 select-none text-white">
-        <div class="float-item float-1"><i data-lucide="mail" class="w-8 h-8"></i></div>
-        <div class="float-item float-2"><i data-lucide="shield-check" class="w-9 h-9"></i></div>
-        <div class="float-item float-3"><i data-lucide="banknote" class="w-9 h-9"></i></div>
-        <div class="float-item float-4"><i data-lucide="globe" class="w-8 h-8"></i></div>
-
         <div class="relative flex items-center justify-center mb-6">
             <div class="loader-ring"></div>
             <div class="absolute inset-0 flex items-center justify-center">
                 <i data-lucide="zap" class="w-6 h-6 text-sky-400 fill-sky-400 animate-pulse"></i>
             </div>
         </div>
-
         <div class="text-center space-y-2 z-10">
-            <h1 class="font-extrabold text-2xl tracking-wider shimmer-text">ALL TYPE SERVICE</h1>
+            <h1 class="font-extrabold text-2xl tracking-wider text-white">ALL TYPE SERVICE</h1>
             <p class="text-[11px] text-gray-400 font-medium tracking-wide">Automated Gateway & Instant Delivery</p>
         </div>
     </div>
@@ -354,7 +259,6 @@
                     <span id="header-coin-balance" class="font-bold text-sm text-white">৳0.00</span>
                 </div>
                 
-                <!-- Notification Bell Button -->
                 <button onclick="openNotifModal()" class="relative bg-white/20 p-2 rounded-xl text-white hover:bg-white/30 transition" title="Notifications">
                     <i data-lucide="bell" class="w-5 h-5"></i>
                     <span id="notif-badge-dot" class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-blue-600 hidden"></span>
@@ -438,9 +342,7 @@
             <!-- AUTOMATED DEPOSIT / PAY GATEWAY PAGE -->
             <div id="pay-page" class="p-4 space-y-4 sub-page">
                 
-                <!-- Deposit Form Card -->
                 <div id="deposit-input-view" class="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm flex flex-col items-center text-center space-y-4">
-                    
                     <div class="w-20 h-20 rounded-2xl bg-blue-50 border-2 border-blue-500 flex items-center justify-center shadow-lg shadow-blue-500/20">
                         <i data-lucide="shield-check" class="w-10 h-10 text-blue-600"></i>
                     </div>
@@ -760,7 +662,6 @@
 
     <!-- CORE JAVASCRIPT & FIREBASE ENGINE -->
     <script type="module">
-        // PAYMENT GATEWAY CONFIGURATION
         const API_KEY = 'K2fcHX0LFHjCdVHzPAleKMBWYAdOsh9l4LdIyGp8CDmfqZZKzP';
         const BASE_API_URL = 'https://client-pg.daweblab.com/api/payment';
 
@@ -790,37 +691,6 @@
         const loader = document.getElementById('loader');
         const getLoadingHTML = () => `<div class="flex justify-center p-8"><div class="premium-loader-spinner"></div></div>`;
 
-        // ================== SMART CORS PROXY FETCH SYSTEM ==================
-        async function fetchWithCorsFallback(url, options) {
-            // 1. First attempt: Direct fetch
-            try {
-                const response = await fetch(url, options);
-                if (response.ok || response.status < 500) {
-                    return await response.json();
-                }
-            } catch (err) {
-                console.warn("Direct API call blocked by CORS or Network. Switching to CORS proxy...", err);
-            }
-
-            // 2. Second attempt: Auto-Proxy (corsproxy.io)
-            try {
-                const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
-                const response = await fetch(proxyUrl, options);
-                return await response.json();
-            } catch (err2) {
-                console.warn("Proxy 1 failed, trying fallback proxy...", err2);
-            }
-
-            // 3. Third attempt: Alternative Proxy (allorigins)
-            try {
-                const proxyUrl2 = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-                const response = await fetch(proxyUrl2, options);
-                return await response.json();
-            } catch (err3) {
-                throw new Error("গেটওয়ে সার্ভারের সাথে সংযোগ স্থাপন করা সম্ভব হয়নি। অনুগ্রহ করে ইন্টারনেট চেক করুন।");
-            }
-        }
-
         window.onload = async () => {
             try {
                 window.Telegram.WebApp.ready();
@@ -835,8 +705,6 @@
             lucide.createIcons();
             setupEventListeners();
             await initUserSession();
-            
-            // Check return payment
             await checkReturnPaymentStatus();
 
             setTimeout(() => {
@@ -951,7 +819,7 @@
         }
         window.navigateTo = navigateTo;
 
-        /* ================== FIXED AUTOMATED PAYMENT GATEWAY ================== */
+        /* ================== TELEGRAM NATIVE SECURE PAYMENT ENGINE ================== */
 
         window.initiatePayment = async function() {
             if (!userData) return showAlert('প্রথমে ইউজার সেশন লোড হতে দিন।');
@@ -980,16 +848,31 @@
             };
 
             try {
-                const data = await fetchWithCorsFallback(`${BASE_API_URL}/create`, {
-                    method: 'POST',
-                    headers: {
-                        'API-KEY': API_KEY,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
+                // Multi-Proxy Bridge specifically designed for Telegram WebApp
+                let resData = null;
+                const endpoints = [
+                    `${BASE_API_URL}/create`,
+                    `https://api.allorigins.win/raw?url=${encodeURIComponent(`${BASE_API_URL}/create`)}`
+                ];
 
-                let payUrl = data.payment_url || data.url || (data.data && (data.data.payment_url || data.data.url));
+                for (let url of endpoints) {
+                    try {
+                        const res = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'API-KEY': API_KEY,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(payload)
+                        });
+                        if (res.ok) {
+                            resData = await res.json();
+                            if (resData && (resData.payment_url || resData.url || (resData.data && (resData.data.payment_url || resData.data.url)))) break;
+                        }
+                    } catch (e) {}
+                }
+
+                let payUrl = resData ? (resData.payment_url || resData.url || (resData.data && (resData.data.payment_url || resData.data.url))) : null;
 
                 if (payUrl) {
                     if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openLink) {
@@ -998,10 +881,10 @@
                         window.location.href = payUrl;
                     }
                 } else {
-                    showAlert(data.message || 'পেমেন্ট গেটওয়ে সংযোগে ত্রুটি দেখা দিয়েছে।');
+                    showAlert('পেমেন্ট গেটওয়েতে সংযোগ সম্ভব হচ্ছে না। অনুগ্রহ করে আবার চেষ্টা করুন।');
                 }
             } catch (err) {
-                showAlert(err.message || 'পেমেন্ট গেটওয়েতে সমস্যা হচ্ছে। পরে চেষ্টা করুন।');
+                showAlert('পেমেন্ট তৈরি করতে সমস্যা হয়েছে।');
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = `<i data-lucide="lock" class="w-4 h-4 text-yellow-300"></i> Continue to Payment`;
@@ -1018,7 +901,8 @@
                 showAlert('পেমেন্ট যাচাই করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...');
 
                 try {
-                    const data = await fetchWithCorsFallback(`${BASE_API_URL}/verify`, {
+                    let data = null;
+                    const res = await fetch(`${BASE_API_URL}/verify`, {
                         method: 'POST',
                         headers: {
                             'API-KEY': API_KEY,
@@ -1026,10 +910,11 @@
                         },
                         body: JSON.stringify({ transaction_id: transactionId })
                     });
+                    data = await res.json();
 
-                    const apiStatus = data.status ? String(data.status).toUpperCase() : "";
+                    const apiStatus = data && data.status ? String(data.status).toUpperCase() : "";
 
-                    if (apiStatus === "SUCCESS" || apiStatus === "COMPLETED" || data.payment_status === "COMPLETED" || data.success === true) {
+                    if (apiStatus === "SUCCESS" || apiStatus === "COMPLETED" || (data && (data.payment_status === "COMPLETED" || data.success === true))) {
                         let depositAmount = parseFloat(data.amount || urlParams.get('paymentAmount') || 0);
 
                         if (depositAmount > 0 && transactionId) {
