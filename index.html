@@ -98,7 +98,7 @@
                     <div class="sidebar-heading mt-3">Store Settings</div>
                     <a href="#" class="nav-link block py-2.5 px-5 text-xs font-semibold" data-page="set-products-page"><i data-lucide="package" class="inline-block w-4 h-4 mr-3 text-yellow-400"></i>Products & Services</a>
                     <a href="#" class="nav-link block py-2.5 px-5 text-xs font-semibold" data-page="set-categories-page"><i data-lucide="layout-grid" class="inline-block w-4 h-4 mr-3 text-pink-400"></i>Main Categories</a>
-                    <a href="#" class="nav-link block py-2.5 px-5 text-xs font-semibold" data-page="set-rules-page"><i data-lucide="sliders" class="inline-block w-4 h-4 mr-3 text-orange-400"></i>Order Rules & Timeouts</a>
+                    <a href="#" class="nav-link block py-2.5 px-5 text-xs font-semibold" data-page="set-rules-page"><i data-lucide="sliders" class="inline-block w-4 h-4 mr-3 text-orange-400"></i>Global Order Rules</a>
                     <a href="#" class="nav-link block py-2.5 px-5 text-xs font-semibold" data-page="set-support-page"><i data-lucide="headphones" class="inline-block w-4 h-4 mr-3 text-emerald-400"></i>Telegram Bot & Support</a>
 
                     <a href="#" id="admin-logout-btn" class="block py-3 px-5 mt-6 text-xs font-bold text-red-400 hover:bg-red-500 hover:text-white transition"><i data-lucide="log-out" class="inline-block w-4 h-4 mr-3"></i>Logout</a>
@@ -261,7 +261,7 @@
                     </div>
                 </div>
 
-                <!-- 9. PUSH NOTIFICATIONS PAGE (INTEGRATED WITH USER APP & 9+ BADGE) -->
+                <!-- 9. PUSH NOTIFICATIONS PAGE -->
                 <div id="notifications-page" class="page">
                     <h1 class="text-2xl font-bold mb-6 text-gray-800">Push Notifications Center</h1>
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -326,7 +326,7 @@
                     <div class="flex items-center justify-between mb-6">
                         <div>
                             <h1 class="text-2xl font-bold text-gray-800">Products & Services Configuration</h1>
-                            <p class="text-xs text-gray-500">অ্যাপের সকল সার্ভিস, মূল্য, ক্যাটাগরি ও বিবরণ পৃথকভাবে নিয়ন্ত্রণ করুন</p>
+                            <p class="text-xs text-gray-500">স্টক হাইড, API লিংক, আলাদা প্রি-অর্ডার ও মূল্য কনফিগারেশন</p>
                         </div>
                         <div class="flex gap-2">
                             <button id="add-mail-type-btn" class="btn bg-gray-800 text-white text-xs">+ Add Product</button>
@@ -353,21 +353,21 @@
                     </div>
                 </div>
 
-                <!-- 12. ORDER RULES & TIMEOUT SETTINGS PAGE -->
+                <!-- 12. GLOBAL ORDER RULES SETTINGS PAGE -->
                 <div id="set-rules-page" class="page">
                     <div class="flex items-center justify-between mb-6">
                         <div>
-                            <h1 class="text-2xl font-bold text-gray-800">Order Rules & Manual Timeouts</h1>
-                            <p class="text-xs text-gray-500">স্টক আউটের সময় 'Order Now' অপশন ও ডেলিভারির সময়সীমা নিয়ন্ত্রণ</p>
+                            <h1 class="text-2xl font-bold text-gray-800">Global Order Rules & Default Timeouts</h1>
+                            <p class="text-xs text-gray-500">স্টক আউটের সময় গ্লোবাল ডিফল্ট টাইম ও রিফান্ড নীতি</p>
                         </div>
-                        <button id="save-rules-btn" class="btn btn-primary text-xs shadow-md">Save Order Rules</button>
+                        <button id="save-rules-btn" class="btn btn-primary text-xs shadow-md">Save Rules</button>
                     </div>
 
                     <div class="stat-card p-6 max-w-2xl space-y-6">
                         <div class="flex items-center justify-between p-4 bg-orange-50 rounded-2xl border border-orange-200">
                             <div>
-                                <h3 class="text-sm font-bold text-orange-950">Allow Manual 'Order Now' When Out of Stock</h3>
-                                <p class="text-xs text-orange-800 mt-0.5">স্টক শূন্য হলে ইউজারদের প্রি-অর্ডার করার সুবিধা চালু বা বন্ধ রাখুন</p>
+                                <h3 class="text-sm font-bold text-orange-950">Global Manual Order Feature</h3>
+                                <p class="text-xs text-orange-800 mt-0.5">ম্যানুয়াল প্রি-অর্ডার সম্পূর্ণ বন্ধ বা চালু রাখতে এটি ব্যবহার করুন</p>
                             </div>
                             <label class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" id="rule-allow-manual" class="sr-only peer">
@@ -376,8 +376,8 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">Manual Order Timeout (Minutes)</label>
-                            <p class="text-xs text-gray-500 mb-2">কত মিনিটের মধ্যে অ্যাডমিন ডেলিভারি না দিলে ব্যালেন্স স্বয়ংক্রিয়ভাবে রিফান্ড হবে</p>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Global Default Timeout (Minutes)</label>
+                            <p class="text-xs text-gray-500 mb-2">প্রোডাক্টে আলাদা টাইম না দিলে এই ডিফল্ট সময়সীমা কার্যকর হবে</p>
                             <input type="number" id="rule-timeout-minutes" class="w-full max-w-xs p-2.5 border rounded-xl text-sm font-bold text-blue-600" placeholder="30">
                         </div>
                     </div>
@@ -695,7 +695,7 @@
             });
         }
 
-        // --- MANUAL ORDERS (DIRECT TELEGRAM BOT DISPATCH) ---
+        // --- MANUAL ORDERS ---
         function loadManualOrders() {
             const tableBody = document.getElementById('manual-orders-table-body');
             tableBody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-xs">Loading orders...</td></tr>`;
@@ -1128,7 +1128,7 @@
             navigator.clipboard.writeText(text).then(() => showAlert(`Copied ${snapshot.size} items to clipboard!`));
         };
 
-        // --- SMART PUSH NOTIFICATIONS (SYNCED TO USER APP) ---
+        // --- SMART PUSH NOTIFICATIONS ---
         async function handleBroadcastNotification() {
             const title = document.getElementById('broadcast-title').value.trim();
             const message = document.getElementById('broadcast-message').value.trim();
@@ -1142,7 +1142,6 @@
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             });
 
-            // Keep max 15 notices
             if (currentNotices.length > 15) currentNotices.pop();
 
             await setDoc(doc(db, 'config', 'main'), { notices: currentNotices }, { merge: true });
@@ -1158,7 +1157,6 @@
             const message = document.getElementById('direct-message').value.trim();
             if (!userId || !title || !message) return showAlert("Please fill in User ID, title, and message.");
 
-            // Add notification directly to User's notification subcollection
             await addDoc(collection(db, 'users', String(userId), 'notifications'), {
                 title: title,
                 message: message,
@@ -1166,7 +1164,6 @@
                 type: "admin_direct"
             });
 
-            // Also Dispatch via Telegram Bot
             const tgMsg = `🔔 <b>${title}</b>\n\n${message}`;
             await sendTelegramMessage(userId, tgMsg);
 
@@ -1178,7 +1175,7 @@
 
         // ================= CONFIG LOADERS & SAVERS =================
 
-        // 1. PRODUCTS CONFIG
+        // 1. PRODUCTS & SERVICES CONFIG (UPDATED WITH HIDE STOCK, API & MANUAL PRE-ORDER)
         async function loadProductsConfig() {
             await fetchAppConfig();
             const mailTypesContainer = document.getElementById('mail-types-container');
@@ -1190,48 +1187,86 @@
         function addMailTypeToUI(mail = {}) {
             const container = document.getElementById('mail-types-container');
             const card = document.createElement('div');
-            card.className = 'p-5 border rounded-2xl bg-white mail-type-card space-y-3 relative shadow-sm';
+            card.className = 'p-5 border rounded-2xl bg-white mail-type-card space-y-4 relative shadow-sm border-gray-200';
+            
             const isPopularChecked = (mail.isPopular || mail.popular) ? 'checked' : '';
+            const isHideStockChecked = mail.hideStock ? 'checked' : '';
+            const isAllowManualChecked = (mail.allowManual !== false) ? 'checked' : '';
 
             card.innerHTML = `
+                <!-- ROW 1: BASIC INFO -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
                     <div>
-                        <label class="block text-[11px] font-bold text-gray-600 mb-1">Product Title</label>
-                        <input type="text" placeholder="e.g., Hotmail Fresh" class="p-2 border rounded-lg w-full text-xs font-bold" data-field="type" value="${mail.type || ''}" required>
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1">Product Title</label>
+                        <input type="text" placeholder="e.g., Nord VPN 1 Month" class="p-2 border rounded-lg w-full text-xs font-bold text-gray-900" data-field="type" value="${mail.type || ''}" required>
                     </div>
                     <div>
-                        <label class="block text-[11px] font-bold text-gray-600 mb-1">Stock Collection Key</label>
-                        <input type="text" placeholder="e.g., hotmail_stock" class="p-2 border rounded-lg w-full text-xs font-mono" data-field="stockKey" value="${mail.stockKey || ''}" required>
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1">Stock Key (Collection)</label>
+                        <input type="text" placeholder="e.g., stock_nord_vpn" class="p-2 border rounded-lg w-full text-xs font-mono text-gray-800" data-field="stockKey" value="${mail.stockKey || ''}" required>
                     </div>
                     <div>
-                        <label class="block text-[11px] font-bold text-gray-600 mb-1">Category</label>
-                        <input type="text" placeholder="Hotmail / Gmail / Proxy" class="p-2 border rounded-lg w-full text-xs font-bold text-indigo-600" data-field="category" value="${mail.category || 'Hotmail'}" required>
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1">Category</label>
+                        <input type="text" placeholder="Hotmail / Gmail / Proxy / VPN" class="p-2 border rounded-lg w-full text-xs font-bold text-indigo-600" data-field="category" value="${mail.category || 'Hotmail'}" required>
                     </div>
                     <div>
-                        <label class="block text-[11px] font-bold text-gray-600 mb-1">Price (BDT)</label>
-                        <input type="number" step="0.01" placeholder="35.00" class="p-2 border rounded-lg w-full text-xs font-bold text-blue-600" data-field="priceBdt" value="${mail.priceBdt || ''}" required>
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-[11px] font-bold text-gray-600 mb-1">Logo URL (Icon)</label>
-                        <input type="url" placeholder="https://..." class="p-2 border rounded-lg w-full text-xs" data-field="logoUrl" value="${mail.logoUrl || ''}">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-[11px] font-bold text-gray-600 mb-1">Custom API URL (Optional)</label>
-                        <input type="url" placeholder="https://api..." class="p-2 border rounded-lg w-full text-xs font-mono" data-field="apiUrl" value="${mail.apiUrl || ''}">
-                    </div>
-                    <div class="md:col-span-4">
-                        <label class="block text-[11px] font-bold text-gray-600 mb-1">Details / Description</label>
-                        <textarea placeholder="Product description and usage instructions..." class="p-2 border rounded-lg w-full text-xs" data-field="details" rows="2">${mail.details || ''}</textarea>
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1">Standard Price (BDT)</label>
+                        <input type="number" step="0.01" placeholder="35.00" class="p-2 border rounded-lg w-full text-xs font-black text-blue-600" data-field="priceBdt" value="${mail.priceBdt || ''}" required>
                     </div>
                 </div>
-                
-                <div class="flex items-center justify-between pt-2 border-t border-gray-100">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" class="w-4 h-4 text-blue-600 rounded" data-field="isPopular" ${isPopularChecked}>
-                        <span class="text-xs font-bold text-orange-600 flex items-center gap-1">🔥 Highlight in App</span>
-                    </label>
+
+                <!-- ROW 2: API, LOGO & MANUAL ORDER CONTROLS -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-3 bg-gray-50/70 p-3.5 rounded-xl border border-gray-200">
+                    <div class="md:col-span-2">
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1 flex items-center gap-1">
+                            <i data-lucide="code" class="w-3 h-3 text-emerald-600"></i> API Endpoint / Link (বাটন সবুজ করতে লিংক দিন)
+                        </label>
+                        <input type="url" placeholder="https://api.yourdomain.com/nord" class="p-2 border rounded-lg w-full text-xs font-mono bg-white" data-field="apiUrl" value="${mail.apiUrl || ''}">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1">Logo URL (Icon)</label>
+                        <input type="url" placeholder="https://i.postimg.cc/..." class="p-2 border rounded-lg w-full text-xs bg-white" data-field="logoUrl" value="${mail.logoUrl || ''}">
+                    </div>
+
+                    <!-- CUSTOM MANUAL ORDER TIMEOUT & PRICE -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-orange-800 mb-1">Manual Order Time (Min)</label>
+                        <input type="number" placeholder="Default: 30" class="p-2 border rounded-lg w-full text-xs font-bold bg-white text-orange-600" data-field="manualDurationMinutes" value="${mail.manualDurationMinutes || ''}">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-orange-800 mb-1">Manual Order Price (BDT)</label>
+                        <input type="number" step="0.01" placeholder="Optional Custom Price" class="p-2 border rounded-lg w-full text-xs font-bold bg-white text-orange-600" data-field="manualPrice" value="${mail.manualPrice !== undefined ? mail.manualPrice : ''}">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-[11px] font-bold text-gray-700 mb-1">Details / Description</label>
+                        <input type="text" placeholder="Short description..." class="p-2 border rounded-lg w-full text-xs bg-white" data-field="details" value="${mail.details || ''}">
+                    </div>
+                </div>
+
+                <!-- ROW 3: TOGGLES & ACTIONS -->
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-gray-100">
+                    <div class="flex flex-wrap items-center gap-5">
+                        <!-- HIDE STOCK CHECKBOX -->
+                        <label class="flex items-center gap-1.5 cursor-pointer select-none">
+                            <input type="checkbox" class="w-4 h-4 text-purple-600 rounded" data-field="hideStock" ${isHideStockChecked}>
+                            <span class="text-xs font-bold text-purple-700">🔒 Hide Stock Count (সংখ্যা হাইড)</span>
+                        </label>
+
+                        <!-- ALLOW MANUAL ORDER CHECKBOX -->
+                        <label class="flex items-center gap-1.5 cursor-pointer select-none">
+                            <input type="checkbox" class="w-4 h-4 text-orange-600 rounded" data-field="allowManual" ${isAllowManualChecked}>
+                            <span class="text-xs font-bold text-orange-600">⏱️ Allow Manual Order (Order Now)</span>
+                        </label>
+
+                        <!-- POPULAR CHECKBOX -->
+                        <label class="flex items-center gap-1.5 cursor-pointer select-none">
+                            <input type="checkbox" class="w-4 h-4 text-blue-600 rounded" data-field="isPopular" ${isPopularChecked}>
+                            <span class="text-xs font-bold text-blue-600">🔥 Highlight (Popular)</span>
+                        </label>
+                    </div>
+
                     <button class="btn btn-danger text-xs py-1 px-3" onclick="this.closest('.mail-type-card').remove()">Remove Product</button>
                 </div>`;
+
             container.appendChild(card);
             lucide.createIcons();
         }
@@ -1247,6 +1282,8 @@
                     } else {
                         let val = input.value.trim();
                         if (field === 'priceBdt') val = parseFloat(val) || 0;
+                        if (field === 'manualPrice' && val !== '') val = parseFloat(val) || 0;
+                        if (field === 'manualDurationMinutes' && val !== '') val = parseInt(val) || 30;
                         mail[field] = val;
                     }
                 });
@@ -1312,7 +1349,7 @@
             showAlert("Categories saved successfully!");
         }
 
-        // 3. ORDER RULES CONFIG
+        // 3. GLOBAL ORDER RULES CONFIG
         async function loadOrderRulesConfig() {
             await fetchAppConfig();
             document.getElementById('rule-allow-manual').checked = appConfig.allowManualOrder !== false;
@@ -1328,7 +1365,7 @@
                 manualOrderTimeoutMinutes: timeoutMinutes
             }, { merge: true });
 
-            showAlert("Order rules and timeout settings saved successfully!");
+            showAlert("Global order rules and timeout settings saved successfully!");
         }
 
         // 4. TELEGRAM BOT & SUPPORT CONFIG
