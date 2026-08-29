@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALL BNB - Premium Services</title>
+    <title>ALL BNB</title>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -13,8 +13,8 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-            background-color: #f1f5f9;
-            color: #0f172a;
+            background-color: #f1f4f9;
+            color: #1e293b;
             -webkit-user-select: none;
             -ms-user-select: none;
             user-select: none;
@@ -27,78 +27,90 @@
             -webkit-touch-callout: default;
         }
         .main-header {
-            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+            background: linear-gradient(135deg, #1b64da 0%, #104fb5 100%);
             color: #ffffff;
-            padding: 14px 16px;
+            padding: 12px 16px;
             position: sticky;
             top: 0;
             z-index: 40;
-            box-shadow: 0 4px 15px rgba(29, 78, 216, 0.2);
+            box-shadow: 0 2px 10px rgba(27, 100, 218, 0.25);
         }
         .wallet-pill {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
             border-radius: 9999px;
-            padding: 6px 14px;
+            padding: 5px 12px;
             transition: all 0.2s ease;
         }
         .wallet-pill:active {
             transform: scale(0.96);
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.28);
         }
         .category-btn {
             background: #ffffff;
             color: #475569;
             border: 1px solid #e2e8f0;
-            border-radius: 14px;
+            border-radius: 12px;
             padding: 10px 12px;
-            font-size: 0.82rem;
+            font-size: 0.80rem;
             font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            text-align: center;
+        }
+        .category-btn:hover {
+            border-color: #93c5fd;
+            transform: translateY(-1px);
         }
         .category-btn.active {
-            background: #1d4ed8;
+            background: #1b64da;
             color: #ffffff;
-            border-color: #1d4ed8;
-            box-shadow: 0 4px 14px rgba(29, 78, 216, 0.35);
+            border-color: #1b64da;
+            box-shadow: 0 4px 12px rgba(27, 100, 218, 0.3);
         }
         .product-card {
             background: #ffffff;
-            border-radius: 18px;
+            border-radius: 16px;
             border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
             transition: all 0.25s ease;
         }
+        .product-card:hover {
+            box-shadow: 0 8px 22px rgba(27, 100, 218, 0.08);
+            border-color: #bfdbfe;
+        }
+        
+        /* BLUE BUY BUTTON (ORIGINAL) */
         .btn-buy {
-            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+            background: #1b64da;
             color: white;
             font-weight: 700;
-            border-radius: 12px;
+            border-radius: 10px;
             transition: all 0.2s ease;
         }
-        .btn-buy:active {
-            transform: scale(0.97);
-        }
-        .btn-preorder {
-            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        .btn-buy:hover { background: #1551b3; }
+        .btn-buy:active { transform: scale(0.97); }
+
+        /* ORANGE ORDER NOW BUTTON (WHEN OUT OF STOCK) */
+        .btn-order-orange {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
             color: white;
             font-weight: 700;
-            border-radius: 12px;
+            border-radius: 10px;
             transition: all 0.2s ease;
+            box-shadow: 0 3px 10px rgba(234, 88, 12, 0.25);
         }
-        .btn-preorder:active {
-            transform: scale(0.97);
-        }
+        .btn-order-orange:hover { background: #c2410c; }
+        .btn-order-orange:active { transform: scale(0.97); }
+
         .bottom-nav {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
+            background: #ffffff;
             border-top: 1px solid #e2e8f0;
             position: fixed;
             bottom: 0;
@@ -109,7 +121,7 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
-            height: 66px;
+            height: 64px;
             z-index: 50;
             padding: 0 4px;
         }
@@ -119,7 +131,7 @@
             align-items: center;
             justify-content: center;
             color: #64748b;
-            font-size: 0.72rem;
+            font-size: 0.70rem;
             font-weight: 600;
             transition: all 0.2s;
             cursor: pointer;
@@ -127,73 +139,18 @@
             border-radius: 12px;
             flex: 1;
         }
-        .nav-item.active {
-            color: #1d4ed8;
-        }
+        .nav-item.active { color: #1b64da; }
         .nav-item.active .nav-icon-wrapper {
-            background: #eff6ff;
-            color: #1d4ed8;
-            border-radius: 18px;
-            padding: 3px 14px;
+            background: #ebf3ff;
+            color: #1b64da;
+            border-radius: 20px;
+            padding: 2px 12px;
         }
-
-        /* PRO PAYMENT CARD DESIGN */
-        .pro-pay-card {
-            background: #ffffff;
-            border: 2px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 12px;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            cursor: pointer;
-        }
-        .pro-pay-card:hover {
-            border-color: #93c5fd;
-            transform: translateY(-2px);
-        }
-        .pro-pay-card.active-method {
-            border-color: #1d4ed8 !important;
-            background: #f8faff !important;
-            box-shadow: 0 6px 20px rgba(29, 78, 216, 0.12);
-        }
-        .pro-pay-card.active-method::after {
-            content: '✓';
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            width: 18px;
-            height: 18px;
-            background: #1d4ed8;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: bold;
-        }
-
-        .quick-amount-chip {
-            background: #f8fafc;
-            border: 1px solid #cbd5e1;
-            padding: 7px 12px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.80rem;
-            color: #334155;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-        .quick-amount-chip:hover, .quick-amount-chip:active {
-            background: #eff6ff;
-            border-color: #3b82f6;
-            color: #1d4ed8;
-        }
-
-        /* FLOATING SUPPORT */
+        
+        /* FLOATING SUPPORT WIDGET */
         .support-widget-container {
             position: fixed;
-            bottom: 78px;
+            bottom: 76px;
             right: 16px;
             z-index: 45;
             display: flex;
@@ -204,16 +161,16 @@
         .fab-support-main {
             width: 52px;
             height: 52px;
-            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+            background: linear-gradient(135deg, #1b64da 0%, #0d47a1 100%);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 24px rgba(29, 78, 216, 0.4);
+            box-shadow: 0 8px 24px rgba(27, 100, 218, 0.45);
             cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid #ffffff;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid rgba(255, 255, 255, 0.8);
             position: relative;
         }
         .fab-support-main::after {
@@ -222,8 +179,9 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 2px solid #60a5fa;
-            animation: pulse-ring 2.2s infinite;
+            border: 2px solid #38bdf8;
+            animation: pulse-ring 2.2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            pointer-events: none;
         }
         @keyframes pulse-ring {
             0% { transform: scale(0.95); opacity: 0.8; }
@@ -256,6 +214,34 @@
             text-decoration: none;
         }
 
+        .payment-card {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .payment-card.selected-method {
+            border-color: #1b64da !important;
+            background-color: #eff6ff !important;
+            box-shadow: 0 0 0 2px #1b64da;
+            transform: translateY(-2px);
+        }
+
+        .quick-amount-pill {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.78rem;
+            color: #334155;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .quick-amount-pill:hover, .quick-amount-pill:active {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #1b64da;
+        }
+
         .main-page { display: none; }
         .main-page.active { display: flex; animation: fadeIn 0.3s ease-in-out; }
         .sub-page { display: none; }
@@ -266,66 +252,110 @@
         .input-field {
             background-color: #f8fafc;
             border: 1px solid #cbd5e1;
-            color: #0f172a;
+            color: #1e293b;
         }
         .input-field:focus {
-            border-color: #1d4ed8;
+            border-color: #1b64da;
             background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15);
+            box-shadow: 0 0 0 3px rgba(27, 100, 218, 0.2);
             outline: none;
         }
 
+        /* ORIGINAL INTRO LOADER STYLES */
         #loader {
-            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+            background: radial-gradient(circle at center, #0f172a 0%, #030712 100%);
+            overflow: hidden;
         }
+        .float-item {
+            position: absolute;
+            animation: floating 4s ease-in-out infinite alternate;
+            opacity: 0.35;
+        }
+        .float-1 { top: 12%; left: 15%; animation-delay: 0s; color: #38bdf8; }
+        .float-2 { top: 18%; right: 15%; animation-delay: 1.2s; color: #10b981; }
+        .float-3 { bottom: 22%; left: 18%; animation-delay: 2.1s; color: #fbbf24; }
+        .float-4 { bottom: 18%; right: 18%; animation-delay: 0.8s; color: #a855f7; }
+
+        @keyframes floating {
+            0% { transform: translateY(0px) rotate(0deg) scale(0.9); }
+            100% { transform: translateY(-22px) rotate(12deg) scale(1.1); }
+        }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, #60a5fa 0%, #ffffff 50%, #60a5fa 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            animation: textShimmer 2.5s linear infinite;
+        }
+        @keyframes textShimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .loader-ring {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid rgba(59, 130, 246, 0.15);
+            border-top-color: #38bdf8;
+            border-right-color: #818cf8;
+            animation: spin 1s infinite cubic-bezier(0.55, 0.15, 0.45, 0.85);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
         .premium-loader-spinner {
             width: 34px;
             height: 34px;
             border-radius: 50%;
-            background: conic-gradient(#0000 10%, #1d4ed8);
+            background: conic-gradient(#0000 10%, #1b64da);
             -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 4px), #000 0);
             animation: spin 0.8s infinite linear;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="max-w-md mx-auto relative bg-[#f1f5f9] min-h-screen text-[#0f172a]">
+<body class="max-w-md mx-auto relative bg-[#f1f4f9] min-h-screen text-[#1e293b]">
 
-    <!-- INTRO LOADER -->
+    <!-- 1. ORIGINAL INTRO LOADER -->
     <div id="loader" class="fixed inset-0 flex flex-col items-center justify-center z-[100] p-6 select-none text-white">
+        <div class="float-item float-1"><i data-lucide="mail" class="w-8 h-8"></i></div>
+        <div class="float-item float-2"><i data-lucide="shield-check" class="w-9 h-9"></i></div>
+        <div class="float-item float-3"><i data-lucide="banknote" class="w-9 h-9"></i></div>
+        <div class="float-item float-4"><i data-lucide="globe" class="w-8 h-8"></i></div>
+
         <div class="relative flex items-center justify-center mb-6">
-            <div class="w-16 h-16 rounded-full border-4 border-blue-500/20 border-t-blue-400 animate-spin"></div>
+            <div class="loader-ring"></div>
             <div class="absolute inset-0 flex items-center justify-center">
-                <i data-lucide="zap" class="w-6 h-6 text-yellow-400 fill-yellow-400"></i>
+                <i data-lucide="zap" class="w-6 h-6 text-sky-400 fill-sky-400 animate-pulse"></i>
             </div>
         </div>
-        <div class="text-center space-y-1">
-            <h1 class="font-extrabold text-2xl tracking-wider text-white">ALL BNB</h1>
-            <p class="text-xs text-blue-200">Secure & Instant Service Platform</p>
+
+        <div class="text-center space-y-2 z-10">
+            <h1 class="font-extrabold text-2xl tracking-wider shimmer-text">ALL SERVICE</h1>
+            <p class="text-[11px] text-gray-400 font-medium tracking-wide mt-2">Fast, Secure & Automated System</p>
         </div>
     </div>
 
     <!-- MAIN APP WRAPPER -->
     <div id="app-container" class="min-h-screen flex-col main-page">
 
-        <!-- HEADER -->
+        <!-- HEADER WITH USER PHOTO -->
         <header class="main-header flex items-center justify-between">
             <div class="flex items-center gap-2.5 cursor-pointer" onclick="navigateTo('home-page')">
                 <div class="relative">
                     <img id="header-user-avatar" class="w-9 h-9 rounded-full border-2 border-white/80 object-cover hidden shadow-sm" src="" alt="Profile">
-                    <div id="header-user-fallback" class="w-9 h-9 rounded-full bg-white/20 border-2 border-white/60 flex items-center justify-center font-bold text-sm text-white">U</div>
+                    <div id="header-user-fallback" class="w-9 h-9 rounded-full bg-white/20 border-2 border-white/60 flex items-center justify-center font-bold text-sm text-white shadow-sm">
+                        U
+                    </div>
                 </div>
-                <div>
-                    <span class="text-lg font-black tracking-tight text-white block leading-tight">ALL BNB</span>
-                    <span class="text-[10px] text-blue-100 font-medium block">Verified Store</span>
-                </div>
+                <span class="text-xl font-black tracking-tight text-white">ALL BNB</span>
             </div>
 
             <div class="flex items-center gap-2.5">
-                <div id="header-balance-area" class="wallet-pill flex items-center gap-1.5 cursor-pointer" onclick="navigateTo('pay-page')" title="ডিপোজিট করুন">
+                <div id="header-balance-area" class="wallet-pill flex items-center gap-1.5 cursor-pointer" onclick="navigateTo('pay-page')" title="Deposit">
                     <i data-lucide="wallet" class="w-4 h-4 text-blue-100"></i>
                     <span id="header-coin-balance" class="font-bold text-sm text-white">৳0.00</span>
-                    <span class="bg-blue-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px] font-black">+</span>
                 </div>
                 <button id="header-menu-btn" class="bg-white/20 p-2 rounded-xl text-white hover:bg-white/30 transition">
                     <i data-lucide="menu" class="w-5 h-5"></i>
@@ -352,125 +382,87 @@
             </button>
         </div>
 
-        <!-- MAIN BODY CONTENT -->
+        <!-- MAIN CONTENT AREA -->
         <main class="flex-grow pb-24">
 
-            <!-- HOME PAGE -->
+            <!-- HOME PAGE (ORIGINAL LAYOUT & STYLES) -->
             <div id="home-page" class="p-4 space-y-4 sub-page">
+
+                <!-- CATEGORIES SECTION -->
                 <div class="grid grid-cols-3 gap-2" id="category-filter-grid"></div>
 
+                <!-- PRODUCT LISTING BANNER -->
                 <div class="mt-3 space-y-3.5">
-                    <div class="bg-gradient-to-r from-[#1d4ed8] to-[#1e40af] text-white p-4 rounded-2xl flex items-start gap-3 shadow-md">
+                    <div class="bg-gradient-to-r from-[#1b64da] to-[#0f4bb5] text-white p-3.5 rounded-2xl flex items-start gap-3 shadow-md">
                         <div class="bg-white/20 p-2 rounded-xl">
-                            <i data-lucide="sparkles" class="w-5 h-5 text-yellow-300"></i>
+                            <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
                         </div>
                         <div>
                             <h2 id="current-section-title" class="font-bold text-base leading-tight">All Available Services</h2>
-                            <p id="current-section-subtitle" class="text-[11px] text-blue-100 mt-0.5">Explore full collection of accounts, keys & proxies</p>
+                            <p id="current-section-subtitle" class="text-[11px] text-blue-100 mt-0.5">Explore our full collection of verified accounts & proxies</p>
                         </div>
                     </div>
 
+                    <!-- PRODUCTS CONTAINER -->
                     <div id="product-list-container" class="space-y-3 min-h-[220px]"></div>
                 </div>
+
             </div>
 
-            <!-- PRO RE-DESIGNED DEPOSIT / PAY PAGE -->
-            <div id="pay-page" class="p-4 space-y-4 sub-page">
-
-                <!-- DEPOSIT HEADER BANNER -->
-                <div class="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white p-5 rounded-3xl shadow-lg relative overflow-hidden">
-                    <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl pointer-events-none"></div>
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <span class="text-xs text-blue-300 font-semibold tracking-wide uppercase">Wallet Balance</span>
-                            <h3 id="deposit-page-balance" class="text-2xl font-black text-white mt-0.5">৳0.00</h3>
-                        </div>
-                        <div class="bg-blue-600/30 border border-blue-400/30 p-2.5 rounded-2xl backdrop-blur-md">
-                            <i data-lucide="shield-check" class="w-6 h-6 text-blue-400"></i>
-                        </div>
-                    </div>
-                    <div class="mt-3 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-gray-300">
-                        <span>⚡ স্বয়ংক্রিয় ডিপোজিট সাপোর্ট</span>
-                        <span class="text-emerald-400 font-bold flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> 24/7 Active</span>
-                    </div>
+            <!-- DEPOSIT / PAY PAGE -->
+            <div id="pay-page" class="p-4 space-y-5 sub-page">
+                <div class="text-center">
+                    <h2 class="text-xl font-black text-gray-800">Deposit Center</h2>
+                    <p class="text-xs text-gray-500">যেকোনো একটি নাম্বার কপি করুন, মেথড অটোমেটিক সিলেক্ট হয়ে যাবে</p>
                 </div>
 
-                <!-- EXTERNAL GATEWAY VIEW (IF ENABLED IN CONFIG) -->
                 <div id="external-deposit-view" class="hidden bg-white p-6 rounded-3xl border border-gray-200 shadow-sm text-center space-y-4">
                     <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto">
-                        <i data-lucide="credit-card" class="w-8 h-8"></i>
+                        <i data-lucide="shield-check" class="w-8 h-8"></i>
                     </div>
                     <div>
-                        <h3 class="text-lg font-bold text-gray-800" id="ext-deposit-title">Payment Gateway</h3>
-                        <p class="text-xs text-gray-500 mt-1" id="ext-deposit-subtitle">স্বয়ংক্রিয়ভাবে ব্যালেন্স যোগ করতে নিচে ক্লিক করুন</p>
+                        <h3 class="text-lg font-bold text-gray-800" id="ext-deposit-title">Deposit System</h3>
+                        <p class="text-xs text-gray-500 mt-1" id="ext-deposit-subtitle">ডিপোজিট করতে নিচের বাটনে চাপ দিন</p>
                     </div>
-                    <a id="external-deposit-btn-link" href="#" target="_blank" class="w-full inline-block py-3.5 px-4 rounded-xl btn-buy font-bold text-sm shadow-md text-center">
+                    <a id="external-deposit-btn-link" href="#" target="_blank" class="w-full inline-block py-3.5 px-4 rounded-xl btn-buy font-bold text-sm shadow-lg text-center">
                         Deposit Now
                     </a>
                 </div>
 
-                <!-- INTERNAL PRO DEPOSIT FORM -->
                 <div id="internal-deposit-view" class="space-y-4">
+                    <div id="dynamic-payment-cards-grid" class="grid grid-cols-2 gap-3"></div>
 
-                    <!-- STEP 1: SELECT METHOD -->
-                    <div class="space-y-2">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-extrabold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
-                                <span class="w-5 h-5 bg-blue-600 text-white rounded-full flex items-center justify-center text-[10px]">1</span>
-                                পেমেন্ট মেথড বেছে নিন (Send Money)
-                            </span>
-                            <span id="selected-method-indicator" class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded-full">মেথড সিলেক্ট করুন</span>
+                    <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between border-b pb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">ডিপোজিট সাবমিট ফর্ম</h3>
+                            <span id="selected-method-badge" class="text-xs bg-blue-100 text-blue-700 font-bold px-2.5 py-0.5 rounded-full">মেথড সিলেক্ট করুন</span>
                         </div>
-
-                        <div id="dynamic-payment-cards-grid" class="grid grid-cols-2 gap-2.5"></div>
-                    </div>
-
-                    <!-- STEP 2: FORM -->
-                    <div class="bg-white p-5 rounded-3xl border border-gray-200 shadow-sm space-y-4">
-                        <span class="text-xs font-extrabold text-gray-700 uppercase tracking-wider flex items-center gap-1.5">
-                            <span class="w-5 h-5 bg-blue-600 text-white rounded-full flex items-center justify-center text-[10px]">2</span>
-                            টাকার পরিমাণ ও TrxID দিন
-                        </span>
 
                         <!-- Quick Amounts -->
                         <div>
                             <label class="block text-[11px] font-bold text-gray-500 mb-1.5">কুইক সিলেক্ট (BDT)</label>
-                            <div class="grid grid-cols-4 gap-2">
-                                <button type="button" onclick="setQuickAmount(50)" class="quick-amount-chip">৳৫০</button>
-                                <button type="button" onclick="setQuickAmount(100)" class="quick-amount-chip">৳১০০</button>
-                                <button type="button" onclick="setQuickAmount(200)" class="quick-amount-chip">৳২০০</button>
-                                <button type="button" onclick="setQuickAmount(500)" class="quick-amount-chip">৳৫০০</button>
+                            <div class="grid grid-cols-4 gap-1.5">
+                                <button type="button" onclick="document.getElementById('deposit-amount').value=50" class="quick-amount-pill">৳৫০</button>
+                                <button type="button" onclick="document.getElementById('deposit-amount').value=100" class="quick-amount-pill">৳১০০</button>
+                                <button type="button" onclick="document.getElementById('deposit-amount').value=200" class="quick-amount-pill">৳২০০</button>
+                                <button type="button" onclick="document.getElementById('deposit-amount').value=500" class="quick-amount-pill">৳৫০০</button>
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">টাকার পরিমাণ (Amount)</label>
-                            <div class="relative">
-                                <span class="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-gray-400">৳</span>
-                                <input id="deposit-amount" type="number" placeholder="কত টাকা পাঠিয়েছেন" class="w-full pl-8 pr-3 py-2.5 rounded-xl input-field text-sm font-bold">
-                            </div>
+                            <label class="block text-xs font-bold text-gray-600 mb-1">টাকার পরিমাণ (BDT)</label>
+                            <input id="deposit-amount" type="number" placeholder="কত টাকা পাঠিয়েছেন লিখুন" class="w-full p-2.5 rounded-xl input-field text-sm font-semibold">
                         </div>
-
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">Transaction ID (TrxID)</label>
-                            <input id="deposit-txid" type="text" placeholder="যেমন: 9K7A5X2L1" class="w-full p-2.5 rounded-xl input-field text-sm font-mono uppercase font-semibold">
+                            <label class="block text-xs font-bold text-gray-600 mb-1">Transaction ID (TrxID)</label>
+                            <input id="deposit-txid" type="text" placeholder="TrxID এখানে দিন" class="w-full p-2.5 rounded-xl input-field text-sm uppercase font-mono">
                         </div>
-
-                        <!-- NOTICE -->
-                        <div class="bg-amber-50 border border-amber-200/80 rounded-xl p-2.5 flex items-start gap-2 text-[11px] text-amber-800">
-                            <i data-lucide="info" class="w-4 h-4 flex-shrink-0 mt-0.5 text-amber-600"></i>
-                            <span>টাকা পাঠানোর পর প্রাপ্ত TrxID দিয়ে সাবমিট করুন। অ্যাডমিন ভেরিফাই করে ১-৫ মিনিটের মধ্যে ব্যালেন্স যোগ করে দেবে।</span>
-                        </div>
-
-                        <button id="deposit-btn" class="w-full py-3.5 rounded-xl btn-buy font-bold text-sm shadow-md flex items-center justify-center gap-2">
-                            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-                            <span>Confirm & Submit Deposit</span>
-                        </button>
+                        <button id="deposit-btn" class="w-full py-3.5 rounded-xl btn-buy font-bold text-sm shadow-md">Confirm & Submit Deposit</button>
                     </div>
                 </div>
             </div>
 
-            <!-- ORDERS PAGE -->
+            <!-- ORDERS / PURCHASE HISTORY PAGE -->
             <div id="orders-page" class="p-4 space-y-4 sub-page">
                 <div class="flex items-center justify-between border-b pb-3">
                     <div>
@@ -478,8 +470,8 @@
                         <p class="text-xs text-gray-500">আপনার ক্রয়কৃত সকল আইটেমের তালিকা</p>
                     </div>
                     <div class="flex gap-2">
-                        <button id="copy-orders-btn" class="bg-blue-50 text-blue-600 p-2 rounded-lg text-xs font-bold flex items-center gap-1 border border-blue-200"><i data-lucide="copy" class="w-3.5 h-3.5"></i> 4h Copy</button>
-                        <button id="download-orders-btn" class="bg-emerald-50 text-emerald-600 p-2 rounded-lg text-xs font-bold flex items-center gap-1 border border-emerald-200"><i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i> Excel</button>
+                        <button id="copy-orders-btn" class="bg-blue-50 text-blue-600 p-2 rounded-lg text-xs font-bold flex items-center gap-1 border border-blue-200 hover:bg-blue-100 transition"><i data-lucide="copy" class="w-3.5 h-3.5"></i> Copy 4h</button>
+                        <button id="download-orders-btn" class="bg-emerald-50 text-emerald-600 p-2 rounded-lg text-xs font-bold flex items-center gap-1 border border-emerald-200 hover:bg-emerald-100 transition"><i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i> Excel</button>
                     </div>
                 </div>
 
@@ -510,18 +502,20 @@
                 </div>
             </div>
 
-            <!-- HISTORY PAGE -->
+            <!-- HISTORY / STATS PAGE (WITH LIVE COUNTDOWN TIMERS) -->
             <div id="history-page" class="p-4 space-y-6 sub-page">
-                <!-- PRE-ORDERS SECTION -->
+
+                <!-- 1. MANUAL / PRE-ORDER REAL-TIME COUNTDOWN SECTION -->
                 <div>
                     <h3 class="text-md font-bold text-gray-800 mb-3 flex items-center gap-2">
-                        <i data-lucide="clock" class="w-5 h-5 text-amber-600"></i>
-                        <span>Manual / Pre-Order Status</span>
+                        <i data-lucide="hourglass" class="w-5 h-5 text-orange-500"></i>
+                        <span>Manual / Pre-Orders Status</span>
                     </h3>
-                    <div id="preorder-history-list" class="space-y-2.5"></div>
+                    <div id="manual-orders-history-list" class="space-y-2.5"></div>
                 </div>
 
-                <div class="pt-2 border-t border-gray-200">
+                <!-- 2. DEPOSITS -->
+                <div class="pt-3 border-t border-gray-200">
                     <h3 class="text-md font-bold text-gray-800 mb-3 flex items-center gap-2">
                         <i data-lucide="wallet-cards" class="w-5 h-5 text-blue-600"></i>
                         <span>Deposit History</span>
@@ -529,9 +523,10 @@
                     <div id="payment-history-list" class="space-y-2.5"></div>
                 </div>
 
-                <div class="pt-2 border-t border-gray-200">
+                <!-- 3. REPLACEMENTS -->
+                <div class="pt-3 border-t border-gray-200">
                     <h3 class="text-md font-bold text-gray-800 mb-3 flex items-center gap-2">
-                        <i data-lucide="history" class="w-5 h-5 text-orange-600"></i>
+                        <i data-lucide="history" class="w-5 h-5 text-purple-600"></i>
                         <span>Replace / Report History</span>
                     </h3>
                     <div id="replace-history-list" class="space-y-2.5"></div>
@@ -541,7 +536,7 @@
             <!-- PROFILE PAGE -->
             <div id="profile-page" class="p-4 space-y-5 sub-page">
                 <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col items-center text-center">
-                    <img id="profile-pic" class="w-20 h-20 rounded-full border-2 border-blue-600 object-cover mb-3" src="" alt="Profile">
+                    <img id="profile-pic" class="w-20 h-20 rounded-full border-2 border-blue-600 object-cover mb-3" src="" alt="Profile" loading="lazy">
                     <div id="profile-initials-avatar" class="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center border-2 border-blue-600 hidden mb-3">
                         <span id="profile-initials" class="text-2xl font-bold text-blue-700"></span>
                     </div>
@@ -575,27 +570,27 @@
 
             <!-- ADMIN PANEL -->
             <div id="admin-page" class="p-4 space-y-6 sub-page">
-                <h2 class="text-xl font-black text-center text-gray-800">Admin Control Center</h2>
+                <h2 class="text-xl font-bold text-center text-gray-800">Admin Control Center</h2>
 
-                <!-- 1. PENDING MANUAL PRE-ORDERS (ADMIN FULFILLMENT) -->
-                <div class="bg-white p-5 rounded-2xl border border-amber-200 shadow-sm space-y-3">
+                <!-- 1. PENDING MANUAL ORDERS PROCESSING (WITH TELEGRAM BOT API DISPATCH) -->
+                <div class="bg-white p-5 rounded-2xl border border-orange-200 shadow-sm space-y-3">
                     <div class="flex items-center justify-between border-b pb-2">
-                        <h3 class="font-bold text-sm text-amber-900 flex items-center gap-1.5">
-                            <i data-lucide="clock" class="w-4 h-4 text-amber-600"></i>
-                            ম্যানুয়াল প্রি-অর্ডার প্রসেসিং
+                        <h3 class="font-bold text-sm text-orange-950 flex items-center gap-1.5">
+                            <i data-lucide="clock" class="w-4 h-4 text-orange-600"></i>
+                            ম্যানুয়াল প্রি-অর্ডার ডেলিভারি
                         </h3>
-                        <span id="admin-preorder-count" class="bg-amber-100 text-amber-800 text-xs px-2 py-0.5 rounded-full font-bold">0 Pending</span>
+                        <span id="admin-manual-order-count" class="bg-orange-100 text-orange-800 text-xs px-2 py-0.5 rounded-full font-bold">0 Pending</span>
                     </div>
-                    <p class="text-[11px] text-gray-500">ইউজারের অ্যাকাউন্টের তথ্য লিখে অ্যাপ্রুভ করলে ইউজারের টেলিগ্রামে সরাসরি চলে যাবে।</p>
-                    <div id="admin-preorders-list" class="space-y-3"></div>
+                    <p class="text-[11px] text-gray-500">ডাটা পূরণ করে ডেলিভারি দিলে বটের মাধ্যমে স্বয়ংক্রিয়ভাবে ইউজারের টেলিগ্রামে চলে যাবে।</p>
+                    <div id="admin-manual-orders-list" class="space-y-3"></div>
                 </div>
 
                 <!-- 2. ADD INSTANT STOCK -->
                 <div class="bg-white p-5 rounded-2xl border border-gray-200 space-y-4">
-                    <h3 class="font-bold text-sm">Add Items to Instant Stock</h3>
-                    <p class="text-xs text-gray-500">ফরম্যাট: <code>email/pass</code> বা <code>token</code></p>
+                    <h3 class="font-bold text-sm">Add Items to Stock</h3>
+                    <p class="text-xs text-gray-500">ফরম্যাট: <code>email/pass/token</code></p>
                     <div>
-                        <select id="mail-type-select" class="w-full p-2.5 rounded-xl input-field text-sm font-semibold"></select>
+                        <select id="mail-type-select" class="w-full p-2.5 rounded-xl input-field text-sm"></select>
                     </div>
                     <div>
                         <textarea id="mail-data-textarea" rows="4" placeholder="One item per line..." class="w-full p-2.5 rounded-xl input-field font-mono text-xs"></textarea>
@@ -612,7 +607,7 @@
 
         </main>
 
-        <!-- BOTTOM NAVIGATION -->
+        <!-- BOTTOM NAVIGATION BAR -->
         <nav class="bottom-nav">
             <div class="nav-item active" data-page="home-page" onclick="navigateTo('home-page')">
                 <div class="nav-icon-wrapper flex items-center justify-center">
@@ -660,25 +655,25 @@
 
     </div>
 
-    <!-- PRE-ORDER CONFIRMATION MODAL -->
-    <div id="preorder-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[70] p-4 backdrop-blur-sm">
+    <!-- ORDER NOW (MANUAL ORDER) CONFIRMATION MODAL -->
+    <div id="manual-order-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[70] p-4 backdrop-blur-sm">
         <div class="bg-white rounded-3xl p-6 w-full max-w-sm space-y-4 relative text-center">
-            <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto">
-                <i data-lucide="hourglass" class="w-7 h-7"></i>
+            <div class="w-14 h-14 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto">
+                <i data-lucide="clock" class="w-7 h-7"></i>
             </div>
             <div>
-                <h3 class="text-lg font-bold text-gray-800" id="preorder-modal-title">ম্যানুয়াল প্রি-অর্ডার</h3>
-                <p class="text-xs text-gray-500 mt-1">বর্তমানে ইনস্ট্যান্ট স্টক খালি আছে।</p>
+                <h3 class="text-lg font-bold text-gray-800" id="manual-modal-title">Order Now (ম্যানুয়াল অর্ডার)</h3>
+                <p class="text-xs text-gray-500 mt-1">বর্তমানে ইনস্ট্যান্ট স্টক শেষ, কিন্তু আপনি প্রি-অর্ডার করতে পারবেন।</p>
             </div>
-            <div class="bg-amber-50 p-3.5 rounded-2xl border border-amber-200/80 text-left text-xs text-amber-900 space-y-1.5">
-                <p>• মূল্য: <b id="preorder-modal-price" class="text-blue-700">৳0.00</b></p>
-                <p>• ডেলিভারি সময়সীমা: <b id="preorder-modal-deadline" class="text-amber-800">৩০ মিনিট</b></p>
+            <div class="bg-orange-50 p-3.5 rounded-2xl border border-orange-200 text-left text-xs text-orange-950 space-y-1.5">
+                <p>• মূল্য: <b id="manual-modal-price" class="text-blue-700">৳0.00</b></p>
+                <p>• ডেলিভারি সময়সীমা: <b id="manual-modal-duration" class="text-orange-700 font-bold">৩০ মিনিট</b></p>
                 <p>• অ্যাডমিন নির্ধারিত সময়ের মধ্যে অ্যাকাউন্ট রেডি করে সরাসরি আপনার <b>টেলিগ্রাম ইনবক্সে</b> পাঠিয়ে দেবে।</p>
-                <p class="text-[11px] text-red-600 font-semibold">• সময় শেষ হওয়ার মধ্যে ডেলিভারি না পেলে আপনার ব্যালেন্স স্বয়ংক্রিয়ভাবে <b>রিফান্ড</b> হয়ে যাবে।</p>
+                <p class="text-[11px] text-red-600 font-semibold">• টাইমের মধ্যে ডেলিভারি না পেলে ব্যালেন্স অটোমেটিক <b>রিফান্ড</b> করা হবে।</p>
             </div>
-            <div class="flex gap-2">
-                <button onclick="document.getElementById('preorder-modal').classList.add('hidden')" class="w-1/2 py-2.5 bg-gray-100 font-bold rounded-xl text-xs">Cancel</button>
-                <button id="confirm-preorder-btn" class="w-1/2 py-2.5 btn-preorder font-bold rounded-xl text-xs">Place Pre-Order</button>
+            <div class="flex gap-2 pt-1">
+                <button onclick="document.getElementById('manual-order-modal').classList.add('hidden')" class="w-1/2 py-2.5 bg-gray-100 font-bold rounded-xl text-xs">বাতিল</button>
+                <button id="confirm-manual-order-btn" class="w-1/2 py-2.5 btn-order-orange font-bold rounded-xl text-xs">Confirm Order</button>
             </div>
         </div>
     </div>
@@ -717,7 +712,7 @@
         </div>
     </div>
 
-    <!-- FIREBASE & CORE ENGINE -->
+    <!-- FIREBASE & CORE SCRIPT -->
     <script type="module">
         const ADMIN_UID = "6954647230";
         const firebaseConfig = {
@@ -742,16 +737,10 @@
         let selectedCategory = 'all';
         let currentSelectedDepositMethod = '';
         let userPurchasesCache = [];
-        let activePreOrderData = null;
+        let pendingOrderToPlace = null;
+        let countdownTimerInterval = null;
 
-        // Default Payment Methods
-        const defaultPaymentMethods = [
-            { id: "bKash", name: "বিকাশ (Personal)", number: "01827750260", icon: "https://i.postimg.cc/tCwGVkdH/20250922-113514.png" },
-            { id: "Nagad", name: "নগদ (Personal)", number: "01864260513", icon: "https://i.postimg.cc/Jh9s6jWw/20250922-113350.png" },
-            { id: "Rocket", name: "রকেট (Personal)", number: "018277502604", icon: "https://i.postimg.cc/htsw10Tj/20250922-113924.png" },
-            { id: "Binance", name: "Binance Pay ID", number: "1105989483", icon: "https://i.postimg.cc/L6LFLfxY/20250922-113752.png" }
-        ];
-
+        // Default Categories
         const defaultCategories = [
             { id: "all", name: "All Services", icon: "layout-grid" },
             { id: "Hotmail", name: "Hotmail", icon: "mail" },
@@ -759,6 +748,14 @@
             { id: "Proxy", name: "Proxy", icon: "globe" },
             { id: "VPN", name: "VPN", icon: "shield-check" },
             { id: "Social", name: "Social", icon: "users" }
+        ];
+
+        // Default Payment Methods
+        const defaultPaymentMethods = [
+            { id: "Nagad", name: "নগদ (Personal)", number: "01864260513", icon: "https://i.postimg.cc/Jh9s6jWw/20250922-113350.png" },
+            { id: "bKash", name: "বিকাশ (Personal)", number: "01827750260", icon: "https://i.postimg.cc/tCwGVkdH/20250922-113514.png" },
+            { id: "Rocket", name: "রকেট (Personal)", number: "018277502604", icon: "https://i.postimg.cc/htsw10Tj/20250922-113924.png" },
+            { id: "Binance", name: "Binance Pay ID", number: "1105989483", icon: "https://i.postimg.cc/L6LFLfxY/20250922-113752.png" }
         ];
 
         const loader = document.getElementById('loader');
@@ -779,14 +776,15 @@
             setupEventListeners();
             await initUserSession();
             
-            // Check for expired preorders automatically on load
-            checkAndRefundExpiredPreOrders();
+            // Check for expired orders and start countdown loop
+            checkAndRefundExpiredOrders();
+            startCountdownTimerRoutine();
 
             setTimeout(() => {
                 loader.style.transition = 'opacity 0.4s ease';
                 loader.style.opacity = '0';
                 setTimeout(() => loader.style.display = 'none', 400);
-            }, 700);
+            }, 800);
         };
 
         async function initUserSession() {
@@ -856,12 +854,14 @@
 
         function renderDynamicCategories() {
             const grid = document.getElementById('category-filter-grid');
-            const categories = appConfig.categories && appConfig.categories.length > 0 ? appConfig.categories : defaultCategories;
+            const categories = appConfig.categories && Array.isArray(appConfig.categories) && appConfig.categories.length > 0 
+                                ? appConfig.categories 
+                                : defaultCategories;
 
             grid.innerHTML = categories.map((cat, index) => {
                 const isActive = (selectedCategory === cat.id || (index === 0 && selectedCategory === 'all')) ? 'active' : '';
                 return `
-                <button class="category-btn ${isActive}" onclick="filterByCategory('${cat.id}', this)">
+                <button class="category-btn ${isActive}" data-category="${cat.id}" onclick="filterByCategory('${cat.id}', this)">
                     <i data-lucide="${cat.icon || 'tag'}" class="w-3.5 h-3.5"></i>
                     <span class="truncate">${cat.name}</span>
                 </button>`;
@@ -886,51 +886,47 @@
             internalView.classList.remove('hidden');
 
             const container = document.getElementById('dynamic-payment-cards-grid');
-            const methods = appConfig.paymentMethods && appConfig.paymentMethods.length > 0 ? appConfig.paymentMethods : defaultPaymentMethods;
+            const methods = appConfig.paymentMethods && Array.isArray(appConfig.paymentMethods) && appConfig.paymentMethods.length > 0
+                            ? appConfig.paymentMethods
+                            : defaultPaymentMethods;
 
-            container.innerHTML = methods.map((pm, i) => `
-                <div class="pro-pay-card" onclick="selectAndCopyDepositMethod('${pm.id}', '${pm.number}', this)">
-                    <div class="flex items-center gap-2.5">
-                        <img src="${pm.icon || 'https://i.postimg.cc/mD1YdG5y/mail.png'}" class="w-8 h-8 rounded-full object-cover">
-                        <div class="overflow-hidden">
-                            <p class="font-bold text-xs text-gray-800 truncate">${pm.name}</p>
-                            <p class="text-[11px] font-mono font-semibold text-blue-600 truncate">${pm.number}</p>
-                        </div>
-                    </div>
-                    <div class="mt-2 pt-1.5 border-t border-gray-100 flex items-center justify-between text-[10px] text-gray-500 font-semibold">
-                        <span>Tap to copy</span>
-                        <i data-lucide="copy" class="w-3 h-3 text-blue-500"></i>
-                    </div>
+            container.innerHTML = methods.map(pm => `
+                <div id="card-${pm.id.toLowerCase()}" onclick="selectAndCopyMethod('${pm.id}', '${pm.number}', this)" class="payment-card bg-white p-3.5 rounded-2xl text-center border border-gray-200 shadow-sm relative">
+                    <img src="${pm.icon || 'https://i.postimg.cc/mD1YdG5y/mail.png'}" alt="${pm.name}" class="w-9 h-9 rounded-full mx-auto mb-1.5 object-cover" loading="lazy">
+                    <p class="font-bold text-sm text-gray-800">${pm.name}</p>
+                    <p class="text-gray-600 font-mono text-xs my-1 font-semibold">${pm.number}</p>
+                    <button class="w-full text-xs py-1 px-2 bg-blue-50 text-blue-700 font-semibold rounded-lg hover:bg-blue-100 flex items-center justify-center gap-1">
+                        <i data-lucide="copy" class="w-3 h-3"></i><span>Copy & Select</span>
+                    </button>
                 </div>
             `).join('');
             lucide.createIcons();
         }
 
-        window.selectAndCopyDepositMethod = function(methodName, number, cardElement) {
+        window.selectAndCopyMethod = function(methodName, number, cardElement) {
             currentSelectedDepositMethod = methodName;
-            document.querySelectorAll('.pro-pay-card').forEach(c => c.classList.remove('active-method'));
-            if(cardElement) cardElement.classList.add('active-method');
+            document.querySelectorAll('.payment-card').forEach(c => c.classList.remove('selected-method'));
+            if(cardElement) cardElement.classList.add('selected-method');
 
-            const badge = document.getElementById('selected-method-indicator');
+            const badge = document.getElementById('selected-method-badge');
             if(badge) {
-                badge.textContent = `✓ ${methodName}`;
-                badge.className = 'text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2.5 py-0.5 rounded-full';
+                badge.textContent = `সিলেক্টেড: ${methodName}`;
+                badge.className = 'text-xs bg-emerald-100 text-emerald-700 font-bold px-2.5 py-0.5 rounded-full';
             }
 
             navigator.clipboard.writeText(number);
-            showAlert(`নম্বরটি কপি করা হয়েছে: ${number}\nটাকা পাঠিয়ে নিচের ফর্মে TrxID ও পরিমাণ দিন।`);
-        };
-
-        window.setQuickAmount = function(val) {
-            document.getElementById('deposit-amount').value = val;
+            const btnText = cardElement.querySelector('button span');
+            if (btnText) {
+                const originalText = btnText.textContent;
+                btnText.textContent = "Copied!";
+                setTimeout(() => { btnText.textContent = originalText; }, 1500);
+            }
         };
 
         function updateUI() {
             if (!userData) return;
             const balanceFormatted = (userData.balance || 0).toFixed(2);
             document.getElementById('header-coin-balance').textContent = `৳${balanceFormatted}`;
-            const depBal = document.getElementById('deposit-page-balance');
-            if (depBal) depBal.textContent = `৳${balanceFormatted}`;
         }
 
         function showMainPage(pageId) {
@@ -952,9 +948,9 @@
                 'pay-page': updateUI,
                 'orders-page': loadOrdersHistory,
                 'features-page': loadFeaturesPage,
-                'history-page': () => { loadPreOrderHistory(); loadPaymentHistory(); loadReplaceHistory(); },
+                'history-page': () => { loadManualOrdersHistory(); loadPaymentHistory(); loadReplaceHistory(); },
                 'profile-page': loadProfilePage,
-                'admin-page': () => { loadAdminPreOrders(); populateAdminMailTypes(); loadReplaceRequests(); }
+                'admin-page': () => { loadAdminManualOrders(); populateAdminMailTypes(); loadReplaceRequests(); }
             };
 
             if (routes[pageId]) routes[pageId]();
@@ -971,7 +967,7 @@
             const subEl = document.getElementById('current-section-subtitle');
             if (category.toLowerCase() === 'all') {
                 titleEl.textContent = 'All Available Services';
-                subEl.textContent = 'Explore full collection of accounts, keys & proxies';
+                subEl.textContent = 'Explore our full collection of verified accounts & proxies';
             } else {
                 titleEl.textContent = `${category} Category`;
                 subEl.textContent = `High quality verified ${category} services with instant delivery`;
@@ -1003,6 +999,7 @@
             }
         };
 
+        // --- PRODUCT RENDERING WITH FIREBASE ON/OFF & ORANGE ORDER NOW BUTTON ---
         async function renderProductsBySelection() {
             const container = document.getElementById('product-list-container');
             container.innerHTML = getLoadingHTML();
@@ -1027,6 +1024,9 @@
             const stockPromises = filtered.map(item => getStockCount(item.stockKey));
             const stockCounts = await Promise.all(stockPromises);
 
+            // Check if Manual / Pre-Orders are globally enabled in Firebase (Default: true)
+            const isManualOrderEnabled = appConfig.allowManualOrder !== false;
+
             container.innerHTML = filtered.map((item, idx) => {
                 const stock = stockCounts[idx] || 0;
                 const outOfStock = stock <= 0;
@@ -1039,16 +1039,13 @@
                 <div class="product-card p-4 space-y-3">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center p-2">
+                            <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center p-2">
                                 <img src="${item.logoUrl || 'https://i.postimg.cc/mD1YdG5y/mail.png'}" class="w-full h-full object-contain" alt="Logo">
                             </div>
                             <div>
-                                <div class="flex items-center gap-1.5">
+                                <div class="flex items-center gap-2">
                                     <h4 class="font-extrabold text-gray-800 text-sm">${item.type}</h4>
-                                    ${outOfStock 
-                                        ? `<span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Pre-Order</span>`
-                                        : `<span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full">Instant</span>`
-                                    }
+                                    <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded-full">Instant</span>
                                 </div>
                                 <div class="flex items-center gap-2 mt-0.5">
                                     <span class="text-xs text-gray-400 line-through">৳${originalPrice}</span>
@@ -1063,35 +1060,44 @@
                     </div>
 
                     <div id="${detailsId}" class="hidden text-xs text-gray-600 bg-gray-50 p-3 rounded-xl border border-gray-100 leading-relaxed font-normal selectable-text">
-                        ${item.details ? item.details.replace(/\n/g, '<br>') : 'এই সার্ভিসের জন্য অতিরিক্ত কোনো বিবরণ নেই।'}
+                        ${item.details ? item.details.replace(/\n/g, '<br>') : 'এই প্রোডাক্টের জন্য কোনো অতিরিক্ত বিবরণ দেওয়া হয়নি।'}
                     </div>
 
                     <div class="flex items-center justify-between pt-2 border-t border-gray-100 text-xs">
                         <div class="flex items-center gap-2">
-                            <span class="font-semibold ${outOfStock ? 'text-amber-600' : 'text-emerald-600'}">
-                                ${outOfStock ? 'Stock: <b>0 (Pre-order)</b>' : `Stock: <b>${stock}</b>`}
+                            <span class="font-semibold ${outOfStock ? 'text-orange-500' : 'text-emerald-600'}">
+                                Stock: <b>${stock}</b>
                             </span>
 
                             ${hasApi ? `
-                                <a href="${item.apiUrl}" target="_blank" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-blue-600 text-white flex items-center gap-1">
+                                <a href="${item.apiUrl}" target="_blank" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-sm flex items-center gap-1 transition">
                                     <i data-lucide="code" class="w-3 h-3"></i> API
                                 </a>
-                            ` : ''}
+                            ` : `
+                                <button disabled class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed flex items-center gap-1">
+                                    <i data-lucide="code" class="w-3 h-3"></i> API
+                                </button>
+                            `}
                         </div>
 
-                        ${outOfStock ? `
-                            <!-- PRE-ORDER BUTTON (IF STOCK 0) -->
-                            <button class="btn-preorder px-4 py-2 text-xs flex items-center gap-1.5" 
-                                    onclick="openPreOrderModal('${item.type}', ${item.priceBdt}, '${item.stockKey}', '${item.category || 'service'}')">
-                                <i data-lucide="hourglass" class="w-3.5 h-3.5"></i>
-                                <span>Pre-Order</span>
-                            </button>
-                        ` : `
-                            <!-- BUY BUTTON (INSTANT STOCK) -->
+                        ${!outOfStock ? `
+                            <!-- 1. IN-STOCK BUY BUTTON (BLUE) -->
                             <button id="buy-btn-${idx}" 
-                                    class="btn-buy px-5 py-2 text-xs flex items-center gap-1.5" 
+                                    class="btn-buy px-5 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5" 
                                     onclick="buyItem('${item.type}', ${item.priceBdt}, '${item.stockKey}', '${item.category || 'service'}', 'buy-btn-${idx}')">
                                 <span>Buy Now</span>
+                            </button>
+                        ` : isManualOrderEnabled ? `
+                            <!-- 2. OUT-OF-STOCK BUT MANUAL ORDER ENABLED (ORANGE BUTTON: ORDER NOW) -->
+                            <button class="btn-order-orange px-4 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-1"
+                                    onclick="openManualOrderModal('${item.type}', ${item.priceBdt}, '${item.stockKey}', '${item.category || 'service'}')">
+                                <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                                <span>Order Now</span>
+                            </button>
+                        ` : `
+                            <!-- 3. OUT OF STOCK AND MANUAL ORDER DISABLED IN FIREBASE -->
+                            <button disabled class="px-4 py-2 rounded-xl text-xs font-bold bg-gray-100 text-gray-400 cursor-not-allowed">
+                                Out of Stock
                             </button>
                         `}
                     </div>
@@ -1100,7 +1106,7 @@
             lucide.createIcons();
         }
 
-        // --- INSTANT PURCHASE LOGIC ---
+        // --- INSTANT BUY ACTION ---
         window.buyItem = async function(mailType, costParam, stockKey, pageType, btnId) {
             const cost = parseFloat(costParam);
             if (!confirm(`আপনি কি ৳${cost.toFixed(2)} দিয়ে ${mailType} কিনতে চান?`)) return;
@@ -1110,7 +1116,7 @@
             if (btn) {
                 originalBtnHtml = btn.innerHTML;
                 btn.disabled = true;
-                btn.innerHTML = `<span class="animate-spin inline-block w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full mr-1"></span> অপেক্ষা করুন...`;
+                btn.innerHTML = `<span class="animate-spin inline-block w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full mr-1"></span> <span>অপেক্ষা করুন...</span>`;
             }
 
             try {
@@ -1118,7 +1124,7 @@
                 const itemQuerySnapshot = await getDocs(itemQuery);
 
                 if (itemQuerySnapshot.empty) {
-                    throw new Error("দুঃখিত, স্টক শেষ! আপনি চাইলে প্রি-অর্ডার করতে পারেন।");
+                    throw new Error("দুঃখিত, স্টক শেষ! আপনি 'Order Now' দিয়ে প্রি-অর্ডার করতে পারেন।");
                 }
 
                 const itemDocToPurchase = itemQuerySnapshot.docs[0];
@@ -1130,7 +1136,7 @@
                     const buyerSnap = await transaction.get(buyerRef);
                     
                     if (!buyerSnap.exists() || buyerSnap.data().balance < cost) {
-                        throw new Error("আপনার পর্যাপ্ত ব্যালেন্স নেই। অনুগ্রহ করে আগে ডিপোজিট করুন।");
+                        throw new Error("আপনার পর্যাপ্ত ব্যালেন্স নেই। ডিপোজিট করুন।");
                     }
 
                     const counterSnap = await transaction.get(counterRef);
@@ -1173,23 +1179,23 @@
             }
         };
 
-        // --- PRE-ORDER / MANUAL ORDER SYSTEM ---
-        window.openPreOrderModal = function(mailType, price, stockKey, category) {
-            activePreOrderData = { mailType, price: parseFloat(price), stockKey, category };
-            const timeoutMinutes = appConfig.preOrderTimeoutMinutes || 30;
+        // --- ORDER NOW (MANUAL ORDER MODAL & SUBMIT) ---
+        window.openManualOrderModal = function(mailType, price, stockKey, category) {
+            pendingOrderToPlace = { mailType, price: parseFloat(price), stockKey, category };
+            const timeoutMinutes = appConfig.manualOrderTimeoutMinutes || 30;
 
-            document.getElementById('preorder-modal-title').textContent = `${mailType} (প্রি-অর্ডার)`;
-            document.getElementById('preorder-modal-price').textContent = `৳${parseFloat(price).toFixed(2)}`;
-            document.getElementById('preorder-modal-deadline').textContent = `${timeoutMinutes} মিনিট`;
-            document.getElementById('preorder-modal').classList.remove('hidden');
+            document.getElementById('manual-modal-title').textContent = `${mailType} (Order Now)`;
+            document.getElementById('manual-modal-price').textContent = `৳${parseFloat(price).toFixed(2)}`;
+            document.getElementById('manual-modal-duration').textContent = `${timeoutMinutes} মিনিট`;
+            document.getElementById('manual-order-modal').classList.remove('hidden');
         };
 
-        async function handleConfirmPreOrder() {
-            if (!activePreOrderData) return;
-            const { mailType, price, stockKey, category } = activePreOrderData;
-            const timeoutMinutes = appConfig.preOrderTimeoutMinutes || 30;
+        async function handleConfirmManualOrder() {
+            if (!pendingOrderToPlace) return;
+            const { mailType, price, stockKey, category } = pendingOrderToPlace;
+            const timeoutMinutes = appConfig.manualOrderTimeoutMinutes || 30;
 
-            const btn = document.getElementById('confirm-preorder-btn');
+            const btn = document.getElementById('confirm-manual-order-btn');
             btn.disabled = true;
             btn.textContent = "Processing...";
 
@@ -1197,17 +1203,17 @@
                 await runTransaction(db, async (transaction) => {
                     const buyerRef = doc(db, "users", String(userData.tgChatId));
                     const buyerSnap = await transaction.get(buyerRef);
+                    
                     if (!buyerSnap.exists() || buyerSnap.data().balance < price) {
-                        throw new Error("আপনার পর্যাপ্ত ব্যালেন্স নেই। অনুগ্রহ করে আগে ডিপোজিট করুন।");
+                        throw new Error("আপনার পর্যাপ্ত ব্যালেন্স নেই। অনুগ্রহ করে ডিপোজিট করুন।");
                     }
 
-                    // Deduct balance to escrow
                     transaction.update(buyerRef, { balance: buyerSnap.data().balance - price });
 
-                    const expiresAtDate = new Date(Date.now() + timeoutMinutes * 60 * 1000);
-
-                    const preOrderRef = doc(collection(db, "pre_orders"));
-                    transaction.set(preOrderRef, {
+                    const expiryDate = new Date(Date.now() + timeoutMinutes * 60 * 1000);
+                    const manualOrderRef = doc(collection(db, "manual_orders"));
+                    
+                    transaction.set(manualOrderRef, {
                         userId: String(userData.tgChatId),
                         userName: userData.name || 'User',
                         mailType: mailType,
@@ -1215,32 +1221,32 @@
                         cost: price,
                         status: "pending",
                         createdAt: serverTimestamp(),
-                        expiresAt: Timestamp.fromDate(expiresAtDate),
-                        timeoutMinutes: timeoutMinutes
+                        expiresAt: Timestamp.fromDate(expiryDate),
+                        durationMinutes: timeoutMinutes
                     });
                 });
 
-                document.getElementById('preorder-modal').classList.add('hidden');
-                showAlert(`আপনার ${mailType} প্রি-অর্ডার সফল হয়েছে! অ্যাডমিন ${timeoutMinutes} মিনিটের মধ্যে আপনার টেলিগ্রামে পাঠিয়ে দেবে। অন্যথায় ব্যালেন্স অটো রিফান্ড হবে।`);
+                document.getElementById('manual-order-modal').classList.add('hidden');
+                showAlert(`আপনার ${mailType} অর্ডারটি গ্রহণ করা হয়েছে! অ্যাডমিন ${timeoutMinutes} মিনিটের মধ্যে আপনার টেলিগ্রাম ইনবক্সে পাঠিয়ে দেবে।`);
                 
                 const userSnap = await getDoc(doc(db, "users", String(userData.tgChatId)));
                 userData = userSnap.data();
                 updateUI();
                 navigateTo('history-page');
 
-            } catch (e) {
-                showAlert(e.message || "প্রি-অর্ডার সাবমিট করতে সমস্যা হয়েছে।");
+            } catch(e) {
+                showAlert(e.message || "অর্ডার সাবমিট করতে সমস্যা হয়েছে।");
             } finally {
                 btn.disabled = false;
-                btn.textContent = "Place Pre-Order";
+                btn.textContent = "Confirm Order";
             }
         }
 
-        // --- TELEGRAM BOT API HELPER ---
+        // --- TELEGRAM BOT API DISPATCH ---
         async function sendTelegramMessage(chatId, text) {
-            const botToken = appConfig.botToken || "YOUR_TELEGRAM_BOT_TOKEN";
-            if (!botToken || botToken === "YOUR_TELEGRAM_BOT_TOKEN") {
-                console.warn("Telegram Bot Token is not configured in Firestore config/main (botToken)");
+            const botToken = appConfig.botToken || "YOUR_BOT_TOKEN_HERE";
+            if (!botToken || botToken === "YOUR_BOT_TOKEN_HERE") {
+                console.warn("Telegram Bot Token is not set in Firestore config/main!");
                 return;
             }
             try {
@@ -1254,23 +1260,110 @@
                     })
                 });
             } catch (err) {
-                console.error("Failed to send Telegram message:", err);
+                console.error("Telegram API Error:", err);
             }
         }
 
-        // --- ADMIN: LOAD & PROCESS PRE-ORDERS ---
-        async function loadAdminPreOrders() {
-            const list = document.getElementById('admin-preorders-list');
-            const countBadge = document.getElementById('admin-preorder-count');
+        // --- LIVE REAL-TIME COUNTDOWN TIMER IN HISTORY ---
+        function startCountdownTimerRoutine() {
+            if (countdownTimerInterval) clearInterval(countdownTimerInterval);
+            countdownTimerInterval = setInterval(() => {
+                const timerElements = document.querySelectorAll('.live-order-countdown');
+                const now = new Date().getTime();
+
+                timerElements.forEach(el => {
+                    const expiryTime = parseInt(el.dataset.expiryTime);
+                    const orderId = el.dataset.orderId;
+                    const diff = expiryTime - now;
+
+                    if (diff <= 0) {
+                        el.innerHTML = `<span class="text-red-500 font-bold font-mono">00:00 (Expired)</span>`;
+                    } else {
+                        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                        const s = Math.floor((diff % (1000 * 60)) / 1000);
+                        el.innerHTML = `<span class="text-orange-600 font-bold font-mono">${m}m ${s < 10 ? '0' : ''}${s}s</span>`;
+                    }
+                });
+            }, 1000);
+        }
+
+        // --- LOAD MANUAL ORDERS IN USER HISTORY ---
+        async function loadManualOrdersHistory() {
+            const list = document.getElementById('manual-orders-history-list');
+            if(!list) return;
+            list.innerHTML = getLoadingHTML();
+            try {
+                const q = query(collection(db, "manual_orders"), where("userId", "in", [String(userData.tgChatId), Number(userData.tgChatId)]));
+                const snap = await getDocs(q);
+                if (snap.empty) return list.innerHTML = '<p class="text-center text-xs text-gray-400 py-2">কোনো ম্যানুয়াল অর্ডার হিস্ট্রি নেই</p>';
+
+                const docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                docs.sort((a,b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+
+                list.innerHTML = docs.map(p => {
+                    const expiryMillis = p.expiresAt ? p.expiresAt.toDate().getTime() : 0;
+                    const isPending = p.status === 'pending';
+
+                    return `
+                    <div class="bg-white p-3.5 rounded-xl border border-gray-200 flex justify-between items-center text-xs shadow-sm">
+                        <div>
+                            <p class="font-bold text-gray-800">${p.mailType} (৳${p.cost})</p>
+                            ${isPending ? `
+                                <div class="flex items-center gap-1 mt-0.5 text-[11px] text-gray-500">
+                                    <span>Time Remaining:</span>
+                                    <span class="live-order-countdown" data-order-id="${p.id}" data-expiry-time="${expiryMillis}">Calculating...</span>
+                                </div>
+                            ` : `
+                                <p class="text-[10px] text-gray-400">মেয়াদ ছিল: ${p.durationMinutes || 30} মিনিট</p>
+                            `}
+                        </div>
+                        <span class="font-bold uppercase text-[10px] px-2 py-1 rounded ${
+                            p.status === 'approved' ? 'bg-emerald-100 text-emerald-700' :
+                            p.status === 'pending' ? 'bg-orange-100 text-orange-800' : 'bg-red-100 text-red-600'
+                        }">${p.status.replace(/_/g, ' ')}</span>
+                    </div>`;
+                }).join('');
+                lucide.createIcons();
+            } catch(e) {}
+        }
+
+        // --- CHECK & AUTO REFUND EXPIRED ORDERS ---
+        async function checkAndRefundExpiredOrders() {
+            try {
+                const now = new Date();
+                const q = query(collection(db, "manual_orders"), where("status", "==", "pending"));
+                const snap = await getDocs(q);
+
+                snap.docs.forEach(async (docSnap) => {
+                    const po = docSnap.data();
+                    if (po.expiresAt && po.expiresAt.toDate() <= now) {
+                        await runTransaction(db, async (t) => {
+                            const moRef = doc(db, "manual_orders", docSnap.id);
+                            const userRef = doc(db, "users", String(po.userId));
+                            t.update(moRef, { status: "expired_auto_refunded", refundedAt: serverTimestamp() });
+                            t.update(userRef, { balance: increment(parseFloat(po.cost)) });
+                        });
+
+                        const botMsg = `⏰ <b>অর্ডার সময়সীমা শেষ (Auto Refund)</b>\n\nআপনার <b>${po.mailType}</b> অর্ডারটি নির্ধারিত সময়ের মধ্যে সম্পন্ন না হওয়ায় পুরো <b>৳${po.cost}</b> আপনার ব্যালেন্সে রিফান্ড করা হয়েছে।`;
+                        await sendTelegramMessage(po.userId, botMsg);
+                    }
+                });
+            } catch(e) {}
+        }
+
+        // --- ADMIN: LOAD & PROCESS MANUAL ORDERS ---
+        async function loadAdminManualOrders() {
+            const list = document.getElementById('admin-manual-orders-list');
+            const countBadge = document.getElementById('admin-manual-order-count');
             if (!list) return;
 
             list.innerHTML = getLoadingHTML();
             try {
-                const q = query(collection(db, "pre_orders"), where("status", "==", "pending"));
+                const q = query(collection(db, "manual_orders"), where("status", "==", "pending"));
                 const snap = await getDocs(q);
 
                 if (snap.empty) {
-                    list.innerHTML = '<p class="text-xs text-center text-gray-400 py-3">কোনো পেন্ডিং প্রি-অর্ডার নেই</p>';
+                    list.innerHTML = '<p class="text-xs text-center text-gray-400 py-3">কোনো পেন্ডিং অর্ডার নেই</p>';
                     countBadge.textContent = '0 Pending';
                     return;
                 }
@@ -1280,24 +1373,24 @@
                 list.innerHTML = snap.docs.map(docSnap => {
                     const po = docSnap.data();
                     const poId = docSnap.id;
-                    const timeLeftMin = po.expiresAt ? Math.max(0, Math.round((po.expiresAt.toDate() - new Date()) / 60000)) : 0;
+                    const expiryMillis = po.expiresAt ? po.expiresAt.toDate().getTime() : 0;
 
                     return `
-                    <div class="bg-amber-50/70 p-3.5 rounded-2xl border border-amber-200 space-y-2.5 text-xs">
+                    <div class="bg-orange-50/70 p-3.5 rounded-2xl border border-orange-200 space-y-2 text-xs">
                         <div class="flex justify-between items-center font-bold">
                             <span class="text-gray-800">${po.mailType} - ৳${po.cost}</span>
-                            <span class="text-amber-700 bg-amber-200/80 px-2 py-0.5 rounded-md font-mono text-[11px]">${timeLeftMin}m left</span>
+                            <span class="live-order-countdown bg-orange-200/80 px-2 py-0.5 rounded-md" data-order-id="${poId}" data-expiry-time="${expiryMillis}">Calculating...</span>
                         </div>
                         <p class="text-gray-600 text-[11px]">User: <b>${po.userName}</b> (TG ID: <code>${po.userId}</code>)</p>
                         
                         <div class="space-y-1.5 pt-1">
-                            <input id="admin-acc-data-${poId}" type="text" placeholder="Email / IP / Data" class="w-full p-2 rounded-xl input-field text-xs">
-                            <input id="admin-acc-pass-${poId}" type="text" placeholder="Password / Key (optional)" class="w-full p-2 rounded-xl input-field text-xs">
+                            <input id="admin-manual-data-${poId}" type="text" placeholder="Email / IP / Account Info" class="w-full p-2 rounded-xl input-field text-xs">
+                            <input id="admin-manual-pass-${poId}" type="text" placeholder="Password / Key (Optional)" class="w-full p-2 rounded-xl input-field text-xs">
                         </div>
 
                         <div class="flex justify-end gap-2 pt-1">
-                            <button onclick="handleAdminCancelPreOrder('${poId}', '${po.userId}', ${po.cost}, '${po.mailType}')" class="bg-red-500 text-white font-bold px-3 py-1.5 rounded-xl text-xs">Reject & Refund</button>
-                            <button onclick="handleAdminApprovePreOrder('${poId}', '${po.userId}', ${po.cost}, '${po.mailType}')" class="bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1">
+                            <button onclick="handleAdminCancelManualOrder('${poId}', '${po.userId}', ${po.cost}, '${po.mailType}')" class="bg-red-500 text-white font-bold px-3 py-1.5 rounded-xl text-xs">Reject & Refund</button>
+                            <button onclick="handleAdminApproveManualOrder('${poId}', '${po.userId}', ${po.cost}, '${po.mailType}')" class="bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-xl text-xs flex items-center gap-1">
                                 <i data-lucide="send" class="w-3.5 h-3.5"></i> Deliver via Bot
                             </button>
                         </div>
@@ -1309,27 +1402,27 @@
             }
         }
 
-        window.handleAdminApprovePreOrder = async function(preOrderId, userId, cost, mailType) {
-            const accData = document.getElementById(`admin-acc-data-${preOrderId}`)?.value.trim();
-            const accPass = document.getElementById(`admin-acc-pass-${preOrderId}`)?.value.trim() || '';
+        window.handleAdminApproveManualOrder = async function(orderId, userId, cost, mailType) {
+            const accData = document.getElementById(`admin-manual-data-${orderId}`)?.value.trim();
+            const accPass = document.getElementById(`admin-manual-pass-${orderId}`)?.value.trim() || '';
 
             if (!accData) return showAlert("দয়া করে অ্যাকাউন্টের ডাটা/ইমেইল লিখুন।");
 
             try {
                 await runTransaction(db, async (t) => {
-                    const poRef = doc(db, "pre_orders", preOrderId);
+                    const moRef = doc(db, "manual_orders", orderId);
                     const counterRef = doc(db, "counters", "item_purchase");
                     const counterSnap = await t.get(counterRef);
                     const saleId = counterSnap.exists() ? counterSnap.data().currentId : 1000;
 
-                    t.update(poRef, { status: "approved", deliveredData: accData, deliveredPass: accPass, fulfilledAt: serverTimestamp() });
+                    t.update(moRef, { status: "approved", deliveredData: accData, deliveredPass: accPass, fulfilledAt: serverTimestamp() });
 
                     const purchaseRef = doc(collection(db, "purchases"));
                     t.set(purchaseRef, {
                         saleId: saleId,
                         userId: String(userId),
                         mailType: mailType,
-                        category: "manual_preorder",
+                        category: "manual_order",
                         cost: parseFloat(cost),
                         purchasedAt: serverTimestamp(),
                         mail: accData,
@@ -1338,89 +1431,36 @@
                     t.set(counterRef, { currentId: saleId + 1 }, { merge: true });
                 });
 
-                // Send Delivery via Telegram Bot API
-                const botMsg = `🎉 <b>আপনার প্রি-অর্ডারটি সফলভাবে ডেলিভারি হয়েছে!</b>\n\n📦 <b>সার্ভিস:</b> ${mailType}\n💰 <b>মূল্য:</b> ৳${cost}\n\n🔑 <b>অ্যাকাউন্ট ডাটা:</b>\n<code>${accData}</code>\n${accPass ? `🔒 <b>পাসওয়ার্ড:</b> <code>${accPass}</code>\n` : ''}\nধন্যবাদ আমাদের সাথে থাকার জন্য! ❤️`;
+                // Send Telegram Notification to user
+                const botMsg = `🎉 <b>আপনার অর্ডার সফলভাবে ডেলিভারি হয়েছে!</b>\n\n📦 <b>সার্ভিস:</b> ${mailType}\n💰 <b>মূল্য:</b> ৳${cost}\n\n🔑 <b>অ্যাকাউন্ট ডাটা:</b>\n<code>${accData}</code>\n${accPass ? `🔒 <b>পাসওয়ার্ড:</b> <code>${accPass}</code>\n` : ''}\nআমাদের সাথে থাকার জন্য ধন্যবাদ! ❤️`;
                 await sendTelegramMessage(userId, botMsg);
 
-                showAlert("অর্ডারটি সফলভাবে ডেলিভারি করা হয়েছে এবং ইউজারের টেলিগ্রামে পাঠানো হয়েছে!");
-                loadAdminPreOrders();
+                showAlert("অর্ডারটি সফলভাবে ডেলিভারি করা হয়েছে ও ইউজারের বটে মেসেজ পাঠানো হয়েছে!");
+                loadAdminManualOrders();
             } catch(e) {
                 showAlert(e.message || "ডেলিভারি করতে সমস্যা হয়েছে।");
             }
         };
 
-        window.handleAdminCancelPreOrder = async function(preOrderId, userId, cost, mailType) {
-            if (!confirm("আপনি কি নিশ্চিতভাবে এই অর্ডারটি বাতিল করে ইউজারের ব্যালেন্স রিফান্ড করতে চান?")) return;
+        window.handleAdminCancelManualOrder = async function(orderId, userId, cost, mailType) {
+            if (!confirm("আপনি কি নিশ্চিতভাবে এই অর্ডারটি বাতিল করে ব্যালেন্স রিফান্ড করতে চান?")) return;
             try {
                 await runTransaction(db, async (t) => {
-                    const poRef = doc(db, "pre_orders", preOrderId);
+                    const moRef = doc(db, "manual_orders", orderId);
                     const userRef = doc(db, "users", String(userId));
-                    t.update(poRef, { status: "cancelled_refunded", refundedAt: serverTimestamp() });
+                    t.update(moRef, { status: "cancelled_refunded", refundedAt: serverTimestamp() });
                     t.update(userRef, { balance: increment(parseFloat(cost)) });
                 });
 
-                const botMsg = `⚠️ <b>আপনার প্রি-অর্ডার বাতিল ও রিফান্ড হয়েছে!</b>\n\nসার্ভিস: ${mailType}\nপরিমাণ: ৳${cost} আপনার ব্যালেন্সে ফিরিয়ে দেওয়া হয়েছে।`;
+                const botMsg = `⚠️ <b>আপনার অর্ডারটি বাতিল করা হয়েছে!</b>\n\nসার্ভিস: ${mailType}\nপরিমাণ: ৳${cost} আপনার ব্যালেন্সে ফিরিয়ে দেওয়া হয়েছে।`;
                 await sendTelegramMessage(userId, botMsg);
 
-                showAlert("অর্ডার বাতিল ও রিফান্ড সম্পন্ন হয়েছে!");
-                loadAdminPreOrders();
+                showAlert("অর্ডার বাতিল ও রিফান্ড সফল হয়েছে!");
+                loadAdminManualOrders();
             } catch(e) {
                 showAlert(e.message);
             }
         };
-
-        // --- AUTOMATIC EXPIRED PRE-ORDER REFUND ENGINE ---
-        async function checkAndRefundExpiredPreOrders() {
-            try {
-                const now = new Date();
-                const q = query(collection(db, "pre_orders"), where("status", "==", "pending"));
-                const snap = await getDocs(q);
-
-                snap.docs.forEach(async (docSnap) => {
-                    const po = docSnap.data();
-                    if (po.expiresAt && po.expiresAt.toDate() <= now) {
-                        // Expired! Trigger refund
-                        await runTransaction(db, async (t) => {
-                            const poRef = doc(db, "pre_orders", docSnap.id);
-                            const userRef = doc(db, "users", String(po.userId));
-                            t.update(poRef, { status: "expired_auto_refunded", refundedAt: serverTimestamp() });
-                            t.update(userRef, { balance: increment(parseFloat(po.cost)) });
-                        });
-
-                        const botMsg = `⏰ <b>প্রি-অর্ডার সময়সীমা শেষ (Auto-Refund)</b>\n\nআপনার <b>${po.mailType}</b> অর্ডারটি নির্ধারিত সময়ের মধ্যে অ্যাডমিন নিশ্চিত করতে না পারায় সম্পূর্ণ ৳${po.cost} ব্যালেন্স আপনার ওয়ালেটে রিফান্ড করা হয়েছে।`;
-                        await sendTelegramMessage(po.userId, botMsg);
-                    }
-                });
-            } catch(e) {
-                console.error("Auto refund check error:", e);
-            }
-        }
-
-        async function loadPreOrderHistory() {
-            const list = document.getElementById('preorder-history-list');
-            if(!list) return;
-            list.innerHTML = getLoadingHTML();
-            try {
-                const q = query(collection(db, "pre_orders"), where("userId", "in", [String(userData.tgChatId), Number(userData.tgChatId)]));
-                const snap = await getDocs(q);
-                if (snap.empty) return list.innerHTML = '<p class="text-center text-xs text-gray-400">কোনো প্রি-অর্ডার হিস্ট্রি নেই</p>';
-
-                const docs = snap.docs.map(d => d.data());
-                docs.sort((a,b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
-
-                list.innerHTML = docs.map(p => `
-                    <div class="bg-white p-3 rounded-xl border border-gray-200 flex justify-between items-center text-xs">
-                        <div>
-                            <p class="font-bold text-gray-800">${p.mailType} (৳${p.cost})</p>
-                            <p class="text-[10px] text-gray-400 font-medium">টাইমআউট: ${p.timeoutMinutes || 30} মিনিট</p>
-                        </div>
-                        <span class="font-bold uppercase text-[10px] px-2 py-0.5 rounded ${
-                            p.status === 'approved' ? 'bg-emerald-100 text-emerald-700' :
-                            p.status === 'pending' ? 'bg-amber-100 text-amber-800' : 'bg-red-100 text-red-600'
-                        }">${p.status.replace('_', ' ')}</span>
-                    </div>`).join('');
-            } catch(e) {}
-        }
 
         // --- ORDER HISTORY & EXCEL ---
         async function loadOrdersHistory() {
@@ -1498,9 +1538,9 @@
             copyToClipboard(textList, null, `গত ৪ ঘণ্টার মোট ${recent.length} টি আইটেম কপি করা হয়েছে!`);
         }
 
-        // --- DEPOSIT SUBMISSION ---
+        // --- DEPOSIT REQUEST ---
         async function handleDepositRequest() {
-            if (!currentSelectedDepositMethod) return showAlert("অনুগ্রহ করে উপরের বিকাশ/নগদ/রকেট বা বাইন্যান্স মেথড সিলেক্ট করুন!");
+            if (!currentSelectedDepositMethod) return showAlert("অনুগ্রহ করে উপরের মেথডগুলোর মধ্যে একটি সিলেক্ট করুন!");
             const amount = parseFloat(document.getElementById('deposit-amount').value);
             const transactionId = document.getElementById('deposit-txid').value.trim();
 
@@ -1508,7 +1548,7 @@
 
             const btn = document.getElementById('deposit-btn');
             btn.disabled = true;
-            btn.innerHTML = `<span class="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"></span> জমা দেওয়া হচ্ছে...`;
+            btn.textContent = "Processing...";
             try {
                 await addDoc(collection(db, "deposits"), {
                     userId: String(userData.tgChatId),
@@ -1519,7 +1559,7 @@
                     status: "pending",
                     requestedAt: serverTimestamp()
                 });
-                showAlert("আপনার ডিপোজিট অনুরোধ সফলভাবে জমা হয়েছে। অ্যাডমিন ভেরিফাই করে ব্যালেন্স যোগ করবেন।");
+                showAlert("আপনার ডিপোজিট অনুরোধ সফলভাবে জমা হয়েছে। অতি শীঘ্রই ব্যালেন্স যুক্ত হবে।");
                 document.getElementById('deposit-amount').value = '';
                 document.getElementById('deposit-txid').value = '';
                 navigateTo('history-page');
@@ -1527,8 +1567,7 @@
                 showAlert("ডিপোজিট সাবমিট করতে সমস্যা হয়েছে।");
             } finally {
                 btn.disabled = false;
-                btn.innerHTML = `<i data-lucide="check-circle-2" class="w-4 h-4"></i><span>Confirm & Submit Deposit</span>`;
-                lucide.createIcons();
+                btn.textContent = "Confirm & Submit Deposit";
             }
         }
 
@@ -1549,7 +1588,7 @@
                             <p class="font-bold text-gray-800">${d.method} (৳${d.amount})</p>
                             <p class="text-gray-400 font-mono text-[10px]">${d.transactionId}</p>
                         </div>
-                        <span class="font-bold capitalize ${d.status==='approved'?'text-emerald-600':d.status==='rejected'?'text-red-500':'text-amber-600'}">${d.status}</span>
+                        <span class="font-bold capitalize ${d.status==='approved'?'text-green-600':d.status==='rejected'?'text-red-500':'text-yellow-600'}">${d.status}</span>
                     </div>`).join('');
             } catch(e) {}
         }
@@ -1571,7 +1610,7 @@
                             <p class="font-bold text-gray-800">${r.mailType}</p>
                             <p class="text-gray-500 text-[10px]">${r.reason}</p>
                         </div>
-                        <span class="font-bold uppercase ${r.status==='approved'?'text-emerald-600':r.status==='rejected'?'text-red-500':'text-amber-600'}">${r.status}</span>
+                        <span class="font-bold uppercase ${r.status==='approved'?'text-green-600':r.status==='rejected'?'text-red-500':'text-yellow-600'}">${r.status}</span>
                     </div>`).join('');
             } catch(e) {}
         }
@@ -1610,7 +1649,7 @@
             document.getElementById('deposit-btn').addEventListener('click', handleDepositRequest);
             document.getElementById('download-orders-btn').addEventListener('click', exportOrdersToExcel);
             document.getElementById('copy-orders-btn').addEventListener('click', copyLast4HoursOrders);
-            document.getElementById('confirm-preorder-btn').addEventListener('click', handleConfirmPreOrder);
+            document.getElementById('confirm-manual-order-btn').addEventListener('click', handleConfirmManualOrder);
             document.getElementById('features-receive-btn').addEventListener('click', () => {
                 copyToClipboard(userData.tgChatId, null, `আপনার রিসিভ আইডি:\n${userData.tgChatId}`);
             });
