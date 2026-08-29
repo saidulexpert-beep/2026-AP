@@ -20,27 +20,27 @@
             user-select: none;
             -webkit-touch-callout: none;
         }
-        input, textarea, #mail-details-content, #orders-purchase-history .font-mono, #replace-history-list .text-sm, .selectable-text {
+        input, textarea, #orders-purchase-history .font-mono, #replace-history-list .text-sm, .selectable-text {
             -webkit-user-select: text;
             -ms-user-select: text;
             user-select: text;
             -webkit-touch-callout: default;
         }
         .main-header {
-            background: #1b64da;
+            background: linear-gradient(135deg, #1b64da 0%, #104fb5 100%);
             color: #ffffff;
             padding: 12px 16px;
             position: sticky;
             top: 0;
             z-index: 40;
-            box-shadow: 0 2px 10px rgba(27, 100, 218, 0.2);
+            box-shadow: 0 2px 10px rgba(27, 100, 218, 0.25);
         }
         .wallet-pill {
             background: rgba(255, 255, 255, 0.18);
             border: 1px solid rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(8px);
             border-radius: 9999px;
-            padding: 4px 12px;
+            padding: 5px 12px;
             transition: all 0.2s ease;
         }
         .wallet-pill:active {
@@ -53,13 +53,13 @@
             border: 1px solid #e2e8f0;
             border-radius: 12px;
             padding: 10px 12px;
-            font-size: 0.82rem;
+            font-size: 0.80rem;
             font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             text-align: center;
@@ -72,13 +72,13 @@
             background: #1b64da;
             color: #ffffff;
             border-color: #1b64da;
-            box-shadow: 0 4px 12px rgba(27, 100, 218, 0.35);
+            box-shadow: 0 4px 12px rgba(27, 100, 218, 0.3);
         }
         .product-card {
             background: #ffffff;
             border-radius: 16px;
             border: 1px solid #e2e8f0;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
             transition: all 0.25s ease;
         }
         .product-card:hover {
@@ -138,7 +138,7 @@
             padding: 2px 12px;
         }
         
-        /* EXPANDABLE SUPPORT FLOATING WIDGET */
+        /* PREMIUM SUPPORT FLOATING WIDGET */
         .support-widget-container {
             position: fixed;
             bottom: 76px;
@@ -158,13 +158,28 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 22px rgba(27, 100, 218, 0.4);
+            box-shadow: 0 8px 24px rgba(27, 100, 218, 0.45);
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border: 2px solid rgba(255, 255, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+        }
+        .fab-support-main::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #38bdf8;
+            animation: pulse-ring 2.2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+            pointer-events: none;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            100% { transform: scale(1.4); opacity: 0; }
         }
         .fab-support-main:hover {
-            transform: scale(1.06);
+            transform: scale(1.08);
         }
         .support-options-menu {
             display: flex;
@@ -184,20 +199,19 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 14px;
+            padding: 9px 15px;
             border-radius: 9999px;
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             font-weight: 700;
             color: white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             transition: transform 0.2s;
             text-decoration: none;
         }
         .support-sub-btn:hover {
-            transform: scale(1.04) translateX(-2px);
+            transform: scale(1.05) translateX(-2px);
         }
 
-        /* PAYMENT CARD STYLING */
         .payment-card {
             transition: all 0.2s ease;
             cursor: pointer;
@@ -287,12 +301,12 @@
         @keyframes spin { to { transform: rotate(360deg); } }
         
         .premium-loader-spinner {
-            width: 38px;
-            height: 38px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             background: conic-gradient(#0000 10%, #1b64da);
-            -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 5px), #000 0);
-            animation: spin 0.9s infinite linear;
+            -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 4px), #000 0);
+            animation: spin 0.8s infinite linear;
         }
     </style>
 </head>
@@ -321,27 +335,30 @@
     <!-- MAIN APP WRAPPER -->
     <div id="app-container" class="min-h-screen flex-col main-page">
 
-        <!-- HEADER (Updated title to ALL BNB) -->
+        <!-- HEADER WITH USER PHOTO -->
         <header class="main-header flex items-center justify-between">
-            <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('home-page')">
-                <div class="bg-white/20 p-2 rounded-xl flex items-center justify-center">
-                    <i data-lucide="layers" class="w-6 h-6 text-white stroke-[2.5]"></i>
+            <div class="flex items-center gap-2.5 cursor-pointer" onclick="navigateTo('home-page')">
+                <div class="relative">
+                    <img id="header-user-avatar" class="w-9 h-9 rounded-full border-2 border-white/80 object-cover hidden shadow-sm" src="" alt="Profile">
+                    <div id="header-user-fallback" class="w-9 h-9 rounded-full bg-white/20 border-2 border-white/60 flex items-center justify-center font-bold text-sm text-white shadow-sm">
+                        U
+                    </div>
                 </div>
                 <span class="text-xl font-black tracking-tight text-white">ALL BNB</span>
             </div>
 
-            <div class="flex items-center gap-3">
-                <div id="header-balance-area" class="wallet-pill flex items-center gap-2 cursor-pointer" onclick="navigateTo('pay-page')" title="Deposit">
-                    <i data-lucide="wallet" class="w-4 h-4 text-white"></i>
+            <div class="flex items-center gap-2.5">
+                <div id="header-balance-area" class="wallet-pill flex items-center gap-1.5 cursor-pointer" onclick="navigateTo('pay-page')" title="Deposit">
+                    <i data-lucide="wallet" class="w-4 h-4 text-blue-100"></i>
                     <span id="header-coin-balance" class="font-bold text-sm text-white">৳0.00</span>
                 </div>
                 <button id="header-menu-btn" class="bg-white/20 p-2 rounded-xl text-white hover:bg-white/30 transition">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
+                    <i data-lucide="menu" class="w-5 h-5"></i>
                 </button>
             </div>
         </header>
 
-        <!-- EXPANDABLE SUPPORT FLOATING WIDGET (WhatsApp + Telegram) -->
+        <!-- FLOATING SUPPORT WIDGET -->
         <div class="support-widget-container">
             <div id="support-options-menu" class="support-options-menu">
                 <a id="whatsapp-support-link" href="https://wa.me/8801827750260" target="_blank" class="support-sub-btn bg-[#25D366]">
@@ -355,7 +372,7 @@
             </div>
 
             <button id="support-toggle-btn" onclick="toggleSupportWidget()" class="fab-support-main" title="Customer Support">
-                <span id="support-icon-open"><i data-lucide="headphones" class="w-6 h-6"></i></span>
+                <span id="support-icon-open"><i data-lucide="headset" class="w-6 h-6"></i></span>
                 <span id="support-icon-close" class="hidden"><i data-lucide="x" class="w-6 h-6"></i></span>
             </button>
         </div>
@@ -364,27 +381,27 @@
         <main class="flex-grow pb-24">
 
             <!-- HOME PAGE -->
-            <div id="home-page" class="p-4 space-y-5 sub-page">
+            <div id="home-page" class="p-4 space-y-4 sub-page">
 
-                <!-- DYNAMIC MAIN CATEGORIES SECTION -->
-                <div class="grid grid-cols-2 gap-2.5" id="category-filter-grid">
-                    <!-- Loaded dynamically from Firebase config or defaults -->
+                <!-- CATEGORIES SECTION -->
+                <div class="grid grid-cols-3 gap-2" id="category-filter-grid">
+                    <!-- Dynamic categories loaded here -->
                 </div>
 
                 <!-- PRODUCT LISTING BANNER -->
-                <div class="mt-4 space-y-4">
-                    <div class="bg-gradient-to-r from-[#1b64da] to-[#0f4bb5] text-white p-4 rounded-2xl flex items-start gap-3 shadow-md">
-                        <div class="bg-white/20 p-2.5 rounded-xl">
-                            <i data-lucide="sparkles" class="w-6 h-6 text-white"></i>
+                <div class="mt-3 space-y-3.5">
+                    <div class="bg-gradient-to-r from-[#1b64da] to-[#0f4bb5] text-white p-3.5 rounded-2xl flex items-start gap-3 shadow-md">
+                        <div class="bg-white/20 p-2 rounded-xl">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
                         </div>
                         <div>
-                            <h2 id="current-section-title" class="font-bold text-lg leading-tight">All Available Services</h2>
-                            <p id="current-section-subtitle" class="text-xs text-blue-100 mt-0.5">Explore our full collection of verified accounts & proxies</p>
+                            <h2 id="current-section-title" class="font-bold text-base leading-tight">All Available Services</h2>
+                            <p id="current-section-subtitle" class="text-[11px] text-blue-100 mt-0.5">Explore our full collection of verified accounts & proxies</p>
                         </div>
                     </div>
 
                     <!-- PRODUCTS CONTAINER -->
-                    <div id="product-list-container" class="space-y-3.5 min-h-[220px]"></div>
+                    <div id="product-list-container" class="space-y-3 min-h-[220px]"></div>
                 </div>
 
             </div>
@@ -396,7 +413,6 @@
                     <p class="text-xs text-gray-500">যেকোনো একটি নাম্বার কপি করুন, মেথড অটোমেটিক সিলেক্ট হয়ে যাবে</p>
                 </div>
 
-                <!-- EXTERNAL DEPOSIT MODE (Controlled via Firebase) -->
                 <div id="external-deposit-view" class="hidden bg-white p-6 rounded-3xl border border-gray-200 shadow-sm text-center space-y-4">
                     <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto">
                         <i data-lucide="shield-check" class="w-8 h-8"></i>
@@ -410,14 +426,9 @@
                     </a>
                 </div>
 
-                <!-- STANDARD IN-APP DEPOSIT VIEW -->
                 <div id="internal-deposit-view" class="space-y-5">
-                    <!-- DYNAMIC PAYMENT METHODS CARDS -->
-                    <div id="dynamic-payment-cards-grid" class="grid grid-cols-2 gap-3">
-                        <!-- Loaded dynamically from Firebase -->
-                    </div>
+                    <div id="dynamic-payment-cards-grid" class="grid grid-cols-2 gap-3"></div>
 
-                    <!-- DEPOSIT SUBMISSION FORM (Sender number removed) -->
                     <div class="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-4">
                         <div class="flex items-center justify-between border-b pb-2">
                             <h3 class="font-bold text-gray-800 text-sm">ডিপোজিট সাবমিট ফর্ম</h3>
@@ -657,15 +668,6 @@
         </div>
     </div>
 
-    <!-- PRODUCT DETAILS MODAL -->
-    <div id="mail-details-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[70] p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl p-6 w-full max-w-sm space-y-4">
-            <h3 id="mail-details-title" class="text-lg font-bold text-gray-800 text-center">Product Details</h3>
-            <div id="mail-details-content" class="text-xs text-gray-600 bg-gray-50 p-4 rounded-xl max-h-60 overflow-y-auto leading-relaxed"></div>
-            <button onclick="document.getElementById('mail-details-modal').classList.add('hidden')" class="w-full py-2.5 rounded-xl btn-buy font-bold text-xs">Got it</button>
-        </div>
-    </div>
-
     <!-- REPORT ISSUE MODAL -->
     <div id="report-issue-modal" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-[70] p-4 backdrop-blur-sm">
         <div class="bg-white rounded-3xl p-6 w-full max-w-sm space-y-4">
@@ -727,7 +729,7 @@
 
         // Default Main Categories
         const defaultCategories = [
-            { id: "all", name: "All", icon: "layout-grid" },
+            { id: "all", name: "All Services", icon: "layout-grid" },
             { id: "Hotmail", name: "Hotmail", icon: "mail" },
             { id: "Gmail", name: "Gmail", icon: "tag" },
             { id: "Proxy", name: "Proxy", icon: "globe" },
@@ -794,6 +796,19 @@
                 await setDoc(userRef, userData);
             }
 
+            // Render Header Avatar
+            const headerAvatar = document.getElementById('header-user-avatar');
+            const headerFallback = document.getElementById('header-user-fallback');
+            if (currentUserTg.photo_url || (userData && userData.photo_url)) {
+                headerAvatar.src = currentUserTg.photo_url || userData.photo_url;
+                headerAvatar.classList.remove('hidden');
+                headerFallback.classList.add('hidden');
+            } else {
+                headerAvatar.classList.add('hidden');
+                headerFallback.classList.remove('hidden');
+                headerFallback.textContent = ((userData && userData.name) || 'U').charAt(0).toUpperCase();
+            }
+
             await fetchAppConfig();
 
             if (tgChatId === ADMIN_UID) {
@@ -811,7 +826,6 @@
                 const configSnap = await getDoc(configRef);
                 appConfig = configSnap.exists() ? configSnap.data() : {};
 
-                // Dynamic Support Links
                 if (appConfig.telegramSupportUrl) {
                     const tgSupport = document.getElementById('telegram-support-link');
                     if (tgSupport) tgSupport.href = appConfig.telegramSupportUrl;
@@ -820,7 +834,6 @@
                     const waSupport = document.getElementById('whatsapp-support-link');
                     if (waSupport) waSupport.href = appConfig.whatsappSupportUrl;
                 }
-
                 if (appConfig.telegramChannelUrl) {
                     const ch = document.getElementById('menu-telegram-channel');
                     if (ch) ch.href = appConfig.telegramChannelUrl;
@@ -839,7 +852,6 @@
             }
         }
 
-        // Render main dynamic categories from Firebase
         function renderDynamicCategories() {
             const grid = document.getElementById('category-filter-grid');
             const categories = appConfig.categories && Array.isArray(appConfig.categories) && appConfig.categories.length > 0 
@@ -850,19 +862,17 @@
                 const isActive = (selectedCategory === cat.id || (index === 0 && selectedCategory === 'all')) ? 'active' : '';
                 return `
                 <button class="category-btn ${isActive}" data-category="${cat.id}" onclick="filterByCategory('${cat.id}', this)">
-                    <i data-lucide="${cat.icon || 'tag'}" class="w-4 h-4 text-blue-500"></i>
-                    <span>${cat.name}</span>
+                    <i data-lucide="${cat.icon || 'tag'}" class="w-3.5 h-3.5"></i>
+                    <span class="truncate">${cat.name}</span>
                 </button>`;
             }).join('');
             lucide.createIcons();
         }
 
-        // Render dynamic payment methods and external link mode from Firebase
         function renderDepositMethods() {
             const externalView = document.getElementById('external-deposit-view');
             const internalView = document.getElementById('internal-deposit-view');
 
-            // Check if external deposit mode is enabled in Firebase
             if (appConfig.externalDeposit && appConfig.externalDeposit.enabled) {
                 externalView.classList.remove('hidden');
                 internalView.classList.add('hidden');
@@ -895,7 +905,6 @@
             lucide.createIcons();
         }
 
-        // Silent copy without alert popups
         window.selectAndCopyMethod = function(methodName, number, cardElement) {
             currentSelectedDepositMethod = methodName;
             
@@ -908,7 +917,6 @@
                 badge.className = 'text-xs bg-emerald-100 text-emerald-700 font-bold px-2.5 py-0.5 rounded-full';
             }
 
-            // Copy to clipboard silently without any popup
             navigator.clipboard.writeText(number);
 
             const btnText = cardElement.querySelector('button span');
@@ -919,7 +927,6 @@
             }
         };
 
-        // Support Toggle System
         window.toggleSupportWidget = function() {
             const menu = document.getElementById('support-options-menu');
             const openIcon = document.getElementById('support-icon-open');
@@ -975,7 +982,7 @@
 
         window.filterByCategory = function(category, element) {
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-            element.classList.add('active');
+            if(element) element.classList.add('active');
             selectedCategory = category;
 
             const titleEl = document.getElementById('current-section-title');
@@ -984,20 +991,37 @@
                 titleEl.textContent = 'All Available Services';
                 subEl.textContent = 'Explore our full collection of verified accounts & proxies';
             } else {
-                titleEl.textContent = `${category}`;
-                subEl.textContent = `High quality verified ${category} with instant delivery`;
+                titleEl.textContent = `${category} Category`;
+                subEl.textContent = `High quality verified ${category} services with instant delivery`;
             }
 
             renderProductsBySelection();
         };
 
         async function getStockCount(collectionName) {
+            if(!collectionName) return 0;
             try {
                 const q = query(collection(db, collectionName), where("isSold", "==", false));
                 const snapshot = await getCountFromServer(q);
                 return snapshot.data().count;
             } catch (e) { return 0; }
         }
+
+        // Toggle Details inside card (No popup)
+        window.toggleCardDetails = function(detailsId, btnElement) {
+            const el = document.getElementById(detailsId);
+            if (el) {
+                const isHidden = el.classList.contains('hidden');
+                el.classList.toggle('hidden');
+                if (btnElement) {
+                    const icon = btnElement.querySelector('i');
+                    if (icon) {
+                        icon.setAttribute('data-lucide', isHidden ? 'chevron-up' : 'chevron-down');
+                        lucide.createIcons();
+                    }
+                }
+            }
+        };
 
         async function renderProductsBySelection() {
             const container = document.getElementById('product-list-container');
@@ -1026,11 +1050,13 @@
             container.innerHTML = filtered.map((item, idx) => {
                 const stock = stockCounts[idx] || 0;
                 const outOfStock = stock <= 0;
-                const originalPrice = (parseFloat(item.priceBdt) * 1.15).toFixed(2);
-                const currentPrice = parseFloat(item.priceBdt).toFixed(2);
+                const originalPrice = (parseFloat(item.priceBdt || 0) * 1.15).toFixed(2);
+                const currentPrice = parseFloat(item.priceBdt || 0).toFixed(2);
+                const detailsId = `card-details-${idx}`;
+                const hasApi = !!(item.apiUrl && item.apiUrl.trim() !== '');
 
                 return `
-                <div class="product-card p-4 space-y-3.5">
+                <div class="product-card p-4 space-y-3">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center p-2">
@@ -1047,17 +1073,41 @@
                                 </div>
                             </div>
                         </div>
-                        <button onclick="showMailDetails('${item.type}', '${encodeURIComponent(item.details || '')}')" class="text-xs font-bold text-gray-500 bg-gray-100 hover:bg-gray-200 px-2.5 py-1.5 rounded-lg">Details</button>
+                        <button onclick="toggleCardDetails('${detailsId}', this)" class="text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 px-2.5 py-1.5 rounded-lg flex items-center gap-1 transition">
+                            <span>Details</span>
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+
+                    <!-- IN-CARD COLLAPSIBLE DETAILS -->
+                    <div id="${detailsId}" class="hidden text-xs text-gray-600 bg-gray-50 p-3 rounded-xl border border-gray-100 leading-relaxed font-normal selectable-text">
+                        ${item.details ? item.details.replace(/\n/g, '<br>') : 'এই প্রোডাক্টের জন্য কোনো অতিরিক্ত বিবরণ দেওয়া হয়নি।'}
                     </div>
 
                     <div class="flex items-center justify-between pt-2 border-t border-gray-100 text-xs">
-                        <span class="font-semibold ${outOfStock ? 'text-red-500' : 'text-emerald-600'}">
-                            Stock: <b>${stock}</b>
-                        </span>
-                        <button class="btn-buy px-6 py-2 rounded-xl text-xs font-bold ${outOfStock ? 'opacity-50 cursor-not-allowed' : ''}" 
+                        <div class="flex items-center gap-2">
+                            <span class="font-semibold ${outOfStock ? 'text-red-500' : 'text-emerald-600'}">
+                                Stock: <b>${stock}</b>
+                            </span>
+
+                            <!-- API BUTTON -->
+                            ${hasApi ? `
+                                <a href="${item.apiUrl}" target="_blank" class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-sm flex items-center gap-1 transition">
+                                    <i data-lucide="code" class="w-3 h-3"></i> API
+                                </a>
+                            ` : `
+                                <button disabled class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-gray-100 text-gray-400 border border-gray-200 cursor-not-allowed flex items-center gap-1">
+                                    <i data-lucide="code" class="w-3 h-3"></i> API
+                                </button>
+                            `}
+                        </div>
+
+                        <!-- BUY BUTTON WITH NORMAL SPINNER -->
+                        <button id="buy-btn-${idx}" 
+                                class="btn-buy px-5 py-2 rounded-xl text-xs font-bold ${outOfStock ? 'opacity-50 cursor-not-allowed' : ''} flex items-center justify-center gap-1.5" 
                                 ${outOfStock ? 'disabled' : ''} 
-                                onclick="buyItem('${item.type}', ${item.priceBdt}, '${item.stockKey}', '${item.category || 'service'}')">
-                            Buy Now
+                                onclick="buyItem('${item.type}', ${item.priceBdt}, '${item.stockKey}', '${item.category || 'service'}', 'buy-btn-${idx}')">
+                            <span>Buy Now</span>
                         </button>
                     </div>
                 </div>`;
@@ -1065,12 +1115,18 @@
             lucide.createIcons();
         }
 
-        window.buyItem = async function(mailType, costParam, stockKey, pageType) {
+        window.buyItem = async function(mailType, costParam, stockKey, pageType, btnId) {
             const cost = parseFloat(costParam);
             if (!confirm(`আপনি কি ৳${cost.toFixed(2)} দিয়ে ${mailType} কিনতে চান?`)) return;
 
-            loader.style.display = 'flex';
-            loader.style.opacity = '1';
+            const btn = document.getElementById(btnId);
+            let originalBtnHtml = '';
+            if (btn) {
+                originalBtnHtml = btn.innerHTML;
+                btn.disabled = true;
+                btn.innerHTML = `<svg class="animate-spin -ml-1 mr-1.5 h-3.5 w-3.5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg> <span>অপেক্ষা করুন...</span>`;
+            }
+
             try {
                 const itemQuery = query(collection(db, stockKey), where("isSold", "==", false), limit(1));
                 const itemQuerySnapshot = await getDocs(itemQuery);
@@ -1083,22 +1139,24 @@
                 const itemData = itemDocToPurchase.data();
 
                 await runTransaction(db, async (transaction) => {
-                    const buyerRef = doc(db, "users", userData.tgChatId);
+                    const buyerRef = doc(db, "users", String(userData.tgChatId));
                     const counterRef = doc(db, "counters", "item_purchase");
                     const buyerSnap = await transaction.get(buyerRef);
                     
-                    if (buyerSnap.data().balance < cost) throw new Error("আপনার পর্যাপ্ত ব্যালেন্স নেই। ডিপোজিট করুন।");
+                    if (!buyerSnap.exists() || buyerSnap.data().balance < cost) {
+                        throw new Error("আপনার পর্যাপ্ত ব্যালেন্স নেই। ডিপোজিট করুন।");
+                    }
 
                     const counterSnap = await transaction.get(counterRef);
                     const saleId = counterSnap.exists() ? counterSnap.data().currentId : 1000;
 
                     transaction.update(buyerRef, { balance: buyerSnap.data().balance - cost });
-                    transaction.update(itemDocToPurchase.ref, { isSold: true, soldTo: userData.tgChatId, soldAt: serverTimestamp() });
+                    transaction.update(itemDocToPurchase.ref, { isSold: true, soldTo: String(userData.tgChatId), soldAt: serverTimestamp() });
                     
                     const purchaseLogRef = doc(collection(db, "purchases"));
                     transaction.set(purchaseLogRef, {
                         saleId: saleId,
-                        userId: userData.tgChatId,
+                        userId: String(userData.tgChatId),
                         mailType: mailType,
                         category: pageType,
                         cost: cost,
@@ -1113,23 +1171,28 @@
                 document.getElementById('purchase-success-password').textContent = itemData.password || 'N/A';
                 document.getElementById('purchase-success-modal').classList.remove('hidden');
 
-                const userSnap = await getDoc(doc(db, "users", userData.tgChatId));
+                const userSnap = await getDoc(doc(db, "users", String(userData.tgChatId)));
                 userData = userSnap.data();
                 updateUI();
                 renderProductsBySelection();
 
             } catch (e) {
-                showAlert(e.message);
+                showAlert(e.message || "ক্রয় সম্পন্ন করা সম্ভব হয়নি।");
             } finally {
-                loader.style.display = 'none';
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = originalBtnHtml;
+                    lucide.createIcons();
+                }
             }
         };
 
+        // LOAD ORDERS HISTORY (FIXED: Supports composite queries & client-side sorting)
         async function loadOrdersHistory() {
             const listEl = document.getElementById('orders-purchase-history');
             listEl.innerHTML = getLoadingHTML();
             try {
-                const q = query(collection(db, "purchases"), where("userId", "==", userData.tgChatId), orderBy("purchasedAt", "desc"), limit(100));
+                const q = query(collection(db, "purchases"), where("userId", "in", [String(userData.tgChatId), Number(userData.tgChatId)]));
                 const snap = await getDocs(q);
 
                 if (snap.empty) {
@@ -1138,10 +1201,17 @@
                     return;
                 }
 
-                userPurchasesCache = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                userPurchasesCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+                // Client-side descending sort by date
+                userPurchasesCache.sort((a, b) => {
+                    const timeA = a.purchasedAt ? (a.purchasedAt.seconds || new Date(a.purchasedAt).getTime() / 1000) : 0;
+                    const timeB = b.purchasedAt ? (b.purchasedAt.seconds || new Date(b.purchasedAt).getTime() / 1000) : 0;
+                    return timeB - timeA;
+                });
 
                 listEl.innerHTML = userPurchasesCache.map(p => {
-                    const date = p.purchasedAt ? p.purchasedAt.toDate().toLocaleString('en-GB') : '';
+                    const date = p.purchasedAt && p.purchasedAt.toDate ? p.purchasedAt.toDate().toLocaleString('en-GB') : 'Just now';
                     const fullCopy = `${p.mail}|${p.password || ''}`;
 
                     return `
@@ -1151,27 +1221,28 @@
                                 <h4 class="font-extrabold text-sm text-gray-800">${p.mailType}</h4>
                                 <p class="text-[11px] text-gray-400 mt-0.5">${date} • ID: #${p.saleId || 'N/A'}</p>
                             </div>
-                            <span class="text-sm font-black text-blue-600">৳${p.cost.toFixed(2)}</span>
+                            <span class="text-sm font-black text-blue-600">৳${p.cost ? p.cost.toFixed(2) : '0.00'}</span>
                         </div>
                         <div class="bg-gray-50 p-2.5 rounded-xl border border-gray-100 space-y-1.5 font-mono text-xs">
                             <div class="flex justify-between items-center">
-                                <span class="truncate text-gray-700">${p.mail}</span>
-                                <button onclick="copyToClipboard('${p.mail}', this)" class="text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+                                <span class="truncate text-gray-700">${p.mail || ''}</span>
+                                <button onclick="copyToClipboard('${p.mail}', this)" class="text-blue-600 hover:text-blue-800 p-1"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
                             </div>
                             ${p.password ? `<div class="flex justify-between items-center border-t pt-1">
                                 <span class="text-gray-600">${p.password}</span>
-                                <button onclick="copyToClipboard('${p.password}', this)" class="text-blue-600"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="copyToClipboard('${p.password}', this)" class="text-blue-600 hover:text-blue-800 p-1"><i data-lucide="copy" class="w-3.5 h-3.5"></i></button>
                             </div>` : ''}
                         </div>
                         <div class="flex justify-between items-center pt-1 text-xs">
-                            <button onclick="showReportForm('${p.id}', '${p.mailType}', ${p.cost}, '${p.saleId}')" class="text-orange-600 font-bold bg-orange-50 px-3 py-1.5 rounded-lg">Report</button>
+                            <button onclick="showReportForm('${p.id}', '${p.mailType}', ${p.cost}, '${p.saleId}')" class="text-orange-600 font-bold bg-orange-50 hover:bg-orange-100 px-3 py-1.5 rounded-lg transition">Report</button>
                             <button onclick="copyToClipboard('${fullCopy}', this)" class="btn-buy px-3.5 py-1.5 rounded-lg font-bold">Copy Full</button>
                         </div>
                     </div>`;
                 }).join('');
                 lucide.createIcons();
             } catch (e) {
-                listEl.innerHTML = `<p class="text-center text-red-500 text-xs">অর্ডার হিস্ট্রি লোড করা যায়নি।</p>`;
+                console.error("Order history loading error:", e);
+                listEl.innerHTML = `<p class="text-center text-red-500 text-xs">অর্ডার হিস্ট্রি লোড করতে সমস্যা হয়েছে: ${e.message}</p>`;
             }
         }
 
@@ -1185,7 +1256,7 @@
                 "Credentials / Email": p.mail || '',
                 "Password / Key": p.password || '',
                 "Cost (BDT)": p.cost || 0,
-                "Date": p.purchasedAt ? p.purchasedAt.toDate().toLocaleString('en-GB') : ''
+                "Date": p.purchasedAt && p.purchasedAt.toDate ? p.purchasedAt.toDate().toLocaleString('en-GB') : ''
             }));
 
             const worksheet = XLSX.utils.json_to_sheet(dataToExport);
@@ -1199,7 +1270,7 @@
                 return showAlert("কপি করার মতো কোনো অর্ডার হিস্ট্রি নেই।");
             }
             const fourHoursAgo = new Date(Date.now() - 4 * 60 * 60 * 1000);
-            const recent = userPurchasesCache.filter(p => p.purchasedAt && p.purchasedAt.toDate() >= fourHoursAgo);
+            const recent = userPurchasesCache.filter(p => p.purchasedAt && p.purchasedAt.toDate && p.purchasedAt.toDate() >= fourHoursAgo);
 
             if (recent.length === 0) {
                 return showAlert("গত ৪ ঘণ্টার মধ্যে কোনো অর্ডার পাওয়া যায়নি।");
@@ -1214,20 +1285,21 @@
             if(!list) return;
             list.innerHTML = getLoadingHTML();
             try {
-                const q = query(collection(db, "deposits"), where("userId", "==", userData.tgChatId), orderBy("requestedAt", "desc"));
+                const q = query(collection(db, "deposits"), where("userId", "in", [String(userData.tgChatId), Number(userData.tgChatId)]));
                 const snap = await getDocs(q);
                 if (snap.empty) return list.innerHTML = '<p class="text-center text-xs text-gray-400">কোনো হিস্ট্রি নেই</p>';
-                list.innerHTML = snap.docs.map(doc => {
-                    const d = doc.data();
-                    return `
+                
+                const docs = snap.docs.map(d => d.data());
+                docs.sort((a,b) => (b.requestedAt?.seconds || 0) - (a.requestedAt?.seconds || 0));
+
+                list.innerHTML = docs.map(d => `
                     <div class="bg-white p-3 rounded-xl border border-gray-200 flex justify-between items-center text-xs">
                         <div>
                             <p class="font-bold text-gray-800">${d.method} (৳${d.amount})</p>
                             <p class="text-gray-400 font-mono text-[10px]">${d.transactionId}</p>
                         </div>
                         <span class="font-bold capitalize ${d.status==='approved'?'text-green-600':d.status==='rejected'?'text-red-500':'text-yellow-600'}">${d.status}</span>
-                    </div>`;
-                }).join('');
+                    </div>`).join('');
             } catch(e) {}
         }
 
@@ -1236,31 +1308,32 @@
             if(!list) return;
             list.innerHTML = getLoadingHTML();
             try {
-                const q = query(collection(db, "replace_requests"), where("userId", "==", userData.tgChatId), orderBy("requestedAt", "desc"));
+                const q = query(collection(db, "replace_requests"), where("userId", "in", [String(userData.tgChatId), Number(userData.tgChatId)]));
                 const snap = await getDocs(q);
                 if (snap.empty) return list.innerHTML = '<p class="text-center text-xs text-gray-400">কোনো রেকর্ড নেই</p>';
-                list.innerHTML = snap.docs.map(doc => {
-                    const r = doc.data();
-                    return `
+                
+                const docs = snap.docs.map(d => d.data());
+                docs.sort((a,b) => (b.requestedAt?.seconds || 0) - (a.requestedAt?.seconds || 0));
+
+                list.innerHTML = docs.map(r => `
                     <div class="bg-white p-3 rounded-xl border border-gray-200 flex justify-between items-center text-xs">
                         <div>
                             <p class="font-bold text-gray-800">${r.mailType}</p>
                             <p class="text-gray-500 text-[10px]">${r.reason}</p>
                         </div>
                         <span class="font-bold uppercase ${r.status==='approved'?'text-green-600':r.status==='rejected'?'text-red-500':'text-yellow-600'}">${r.status}</span>
-                    </div>`;
-                }).join('');
+                    </div>`).join('');
             } catch(e) {}
         }
 
         async function loadFeaturesPage() {
             try {
-                const receivedQuery = query(collection(db, "transfers"), where("toId", "==", userData.tgChatId));
-                const sentQuery = query(collection(db, "transfers"), where("fromId", "==", userData.tgChatId));
+                const receivedQuery = query(collection(db, "transfers"), where("toId", "==", String(userData.tgChatId)));
+                const sentQuery = query(collection(db, "transfers"), where("fromId", "==", String(userData.tgChatId)));
                 const [recSnap, sentSnap] = await Promise.all([getDocs(receivedQuery), getDocs(sentQuery)]);
                 
-                const recTotal = recSnap.docs.reduce((sum, d) => sum + d.data().amount, 0);
-                const sentTotal = sentSnap.docs.reduce((sum, d) => sum + d.data().amount, 0);
+                const recTotal = recSnap.docs.reduce((sum, d) => sum + (d.data().amount || 0), 0);
+                const sentTotal = sentSnap.docs.reduce((sum, d) => sum + (d.data().amount || 0), 0);
 
                 document.getElementById('total-receive-display').textContent = `৳${recTotal.toFixed(2)}`;
                 document.getElementById('total-send-display').textContent = `৳${sentTotal.toFixed(2)}`;
@@ -1274,6 +1347,8 @@
             document.getElementById('profile-id').textContent = `ID: ${userData.tgChatId}`;
             if (userData.photo_url) {
                 document.getElementById('profile-pic').src = userData.photo_url;
+                document.getElementById('profile-pic').classList.remove('hidden');
+                document.getElementById('profile-initials-avatar').classList.add('hidden');
             } else {
                 document.getElementById('profile-pic').classList.add('hidden');
                 document.getElementById('profile-initials-avatar').classList.remove('hidden');
@@ -1307,11 +1382,12 @@
                 return showAlert("অনুগ্রহ করে টাকার পরিমাণ ও Transaction ID পূরণ করুন।");
             }
 
-            loader.style.display = 'flex';
-            loader.style.opacity = '1';
+            const btn = document.getElementById('deposit-btn');
+            btn.disabled = true;
+            btn.textContent = "Processing...";
             try {
                 await addDoc(collection(db, "deposits"), {
-                    userId: userData.tgChatId,
+                    userId: String(userData.tgChatId),
                     userName: userData.name,
                     method: currentSelectedDepositMethod,
                     amount,
@@ -1326,7 +1402,8 @@
             } catch(e) {
                 showAlert("ডিপোজিট সাবমিট করতে সমস্যা হয়েছে।");
             } finally {
-                loader.style.display = 'none';
+                btn.disabled = false;
+                btn.textContent = "Confirm & Submit Deposit";
             }
         }
 
@@ -1334,18 +1411,19 @@
             const recipientId = document.getElementById('send-recipient-id').value.trim();
             const amount = parseFloat(document.getElementById('send-amount').value);
             if (!recipientId || isNaN(amount) || amount < 20) return showAlert("সঠিক আইডি ও সর্বনিম্ন ৳২০ দিন।");
-            if (recipientId === userData.tgChatId) return showAlert("নিজেকে ব্যালেন্স পাঠাতে পারবেন না।");
+            if (recipientId === String(userData.tgChatId)) return showAlert("নিজেকে ব্যালেন্স পাঠাতে পারবেন না।");
 
             const fee = amount * 0.05;
             const total = amount + fee;
 
             if (total > userData.balance) return showAlert("অপর্যাপ্ত ব্যালেন্স।");
 
-            loader.style.display = 'flex';
-            loader.style.opacity = '1';
+            const btn = document.getElementById('submit-send-btn');
+            btn.disabled = true;
+            btn.textContent = "Processing...";
             try {
                 await runTransaction(db, async (t) => {
-                    const senderRef = doc(db, "users", userData.tgChatId);
+                    const senderRef = doc(db, "users", String(userData.tgChatId));
                     const recRef = doc(db, "users", recipientId);
                     const [sSnap, rSnap] = await Promise.all([t.get(senderRef), t.get(recRef)]);
 
@@ -1354,7 +1432,7 @@
                     t.update(senderRef, { balance: sSnap.data().balance - total });
                     t.update(recRef, { balance: rSnap.data().balance + amount });
                     t.set(doc(collection(db, "transfers")), {
-                        fromId: userData.tgChatId,
+                        fromId: String(userData.tgChatId),
                         fromName: userData.name,
                         toId: recipientId,
                         toName: rSnap.data().name,
@@ -1371,15 +1449,10 @@
             } catch (e) {
                 showAlert(e.message);
             } finally {
-                loader.style.display = 'none';
+                btn.disabled = false;
+                btn.textContent = "Submit Send";
             }
         }
-
-        window.showMailDetails = (title, details) => {
-            document.getElementById('mail-details-title').textContent = title;
-            document.getElementById('mail-details-content').textContent = decodeURIComponent(details) || 'No details provided.';
-            document.getElementById('mail-details-modal').classList.remove('hidden');
-        };
 
         window.showReportForm = (purchaseId, mailType, cost, saleId) => {
             document.getElementById('report-modal-mail-type').textContent = `${mailType} (ID: #${saleId})`;
@@ -1398,11 +1471,9 @@
             const reason = document.getElementById('report-reason').value.trim();
             const proof = document.getElementById('report-proof').value.trim();
 
-            loader.style.display = 'flex';
-            loader.style.opacity = '1';
             try {
                 await addDoc(collection(db, "replace_requests"), {
-                    userId: userData.tgChatId,
+                    userId: String(userData.tgChatId),
                     userName: userData.name,
                     purchaseId,
                     saleId,
@@ -1417,8 +1488,6 @@
                 document.getElementById('report-issue-modal').classList.add('hidden');
             } catch(err) {
                 showAlert(err.message);
-            } finally {
-                loader.style.display = 'none';
             }
         }
 
@@ -1436,8 +1505,6 @@
             if (!stockKey || !text) return showAlert("সব ঘর পূরণ করুন।");
 
             const lines = text.split('\n').filter(l => l.trim().length > 0);
-            loader.style.display = 'flex';
-            loader.style.opacity = '1';
             try {
                 const batch = writeBatch(db);
                 lines.forEach(line => {
@@ -1455,8 +1522,6 @@
                 document.getElementById('mail-data-textarea').value = '';
             } catch(e) {
                 showAlert("যোগ করতে সমস্যা হয়েছে।");
-            } finally {
-                loader.style.display = 'none';
             }
         }
 
@@ -1488,14 +1553,12 @@
         }
 
         window.handleResolveReport = async (reqId, userId, cost, purchaseId, isApprove) => {
-            loader.style.display = 'flex';
-            loader.style.opacity = '1';
             try {
                 await runTransaction(db, async (t) => {
                     const rRef = doc(db, "replace_requests", reqId);
                     t.update(rRef, { status: isApprove ? 'approved' : 'rejected' });
                     if (isApprove) {
-                        const uRef = doc(db, "users", userId);
+                        const uRef = doc(db, "users", String(userId));
                         t.update(uRef, { balance: increment(cost) });
                     }
                 });
@@ -1503,8 +1566,6 @@
                 loadReplaceRequests();
             } catch(e) {
                 showAlert(e.message);
-            } finally {
-                loader.style.display = 'none';
             }
         };
 
@@ -1514,6 +1575,7 @@
         }
 
         window.copyToClipboard = (text, btn, msg) => {
+            if(!text) return;
             navigator.clipboard.writeText(text).then(() => {
                 if (btn) {
                     const old = btn.innerHTML;
